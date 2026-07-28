@@ -7,7 +7,7 @@ This document is both the **student user manual** and the **operational guide** 
 
 ---
 
-**▶ Live tool:** **[Comp Negotiation](**https://coryjburk.github.io/comp_negotation/**)**
+**▶ Live tool:** **[Comp Negotiation](**https://coryjburk.github.io/comp_negotation/)**
 
 ---
 
