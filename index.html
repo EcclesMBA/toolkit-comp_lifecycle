@@ -3,853 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MBA Compensation &amp; Negotiation Tool — Eccles School of Business</title>
+<title>Compensation Toolkit — Eccles Full-Time MBA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F7F5F1;
-    --ink:#1D1B18;
-    --ink-soft:#5B564E;
-    --crimson:#CC0000;
-    --crimson-dark:#990000;
-    --line:#D9D3C7;
-    --panel:#FFFFFF;
-    --amber:#B7791F;
-    --green:#2F6F4E;
-    --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-    --serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
-    --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --red:#CC0000;
+    --red-dark:#990000;
+    --charcoal:#1A1A1A;
+    --muted:#6B6B6B;
+    --border:#E2E2E2;
+    --surface:#F7F6F4;
+    --white:#FFFFFF;
+    --serif:'EB Garamond', Georgia, serif;
+    --sans:'DM Sans', system-ui, sans-serif;
   }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;}
-  a{color:var(--crimson-dark);}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 80px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);color:var(--charcoal);background:var(--surface);line-height:1.5;}
 
-  /* Header / masthead */
-  .masthead{border-bottom:3px solid var(--crimson);padding:36px 24px 22px;background:var(--panel);}
-  .masthead-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;}
-  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--crimson-dark);margin:0 0 6px;}
-  h1{font-family:var(--serif);font-size:34px;font-weight:600;margin:0;letter-spacing:-.01em;}
-  .subtitle{font-size:14.5px;color:var(--ink-soft);margin-top:6px;max-width:640px;}
-  .version-tag{font-family:var(--mono);font-size:11px;color:var(--ink-soft);border:1px solid var(--line);padding:4px 10px;border-radius:2px;white-space:nowrap;}
+  header{background:var(--charcoal);padding:0 2rem;height:56px;display:flex;align-items:center;gap:12px;}
+  .logo-mark{width:34px;height:34px;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:20px;color:#fff;flex-shrink:0;}
+  .logo-text .school{font-size:13px;font-weight:500;color:#fff;}
+  .logo-text .program{font-size:11px;color:rgba(255,255,255,.55);}
 
-  /* Nav */
-  .tabnav{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;overflow-x:auto;gap:2px;padding:0 24px;}
-  .tabnav-inner{display:flex;gap:2px;max-width:1080px;margin:0 auto;width:100%;}
-  .tabbtn{font-family:var(--mono);font-size:12px;letter-spacing:.03em;text-transform:uppercase;background:none;border:none;padding:14px 16px;color:var(--ink-soft);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;}
-  .tabbtn:hover{color:var(--ink);}
-  .tabbtn.active{color:var(--crimson-dark);border-bottom-color:var(--crimson);font-weight:600;}
+  .hero{background:var(--white);border-bottom:1px solid var(--border);padding:2.5rem 2rem 2rem;text-align:center;}
+  .hero h1{font-family:var(--serif);font-size:32px;font-weight:400;margin-bottom:10px;}
+  .hero h1 em{color:var(--red);font-style:italic;}
+  .hero p{font-size:14px;color:var(--muted);max-width:560px;margin:0 auto;line-height:1.7;}
 
-  section.panel{display:none;padding-top:32px;}
-  section.panel.active{display:block;animation:fade .25s ease;}
-  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+  .wrap{max-width:960px;margin:0 auto;padding:2.5rem 2rem;}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+  @media (max-width:820px){.cards{grid-template-columns:1fr;}}
 
-  h2{font-family:var(--serif);font-size:22px;margin:0 0 4px;}
-  .section-note{color:var(--ink-soft);font-size:13.5px;margin:0 0 20px;max-width:720px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .card .num{font-family:var(--serif);font-size:13px;color:var(--red);font-weight:500;margin-bottom:6px;}
+  .card h2{font-family:var(--serif);font-size:19px;font-weight:500;margin-bottom:8px;}
+  .card p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;flex:1;}
+  .card .use{font-size:11.5px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px;margin-bottom:14px;}
+  .card .use strong{color:var(--charcoal);font-weight:500;}
+  .btn{display:inline-block;text-align:center;background:var(--red);color:#fff;text-decoration:none;font-size:13px;font-weight:500;padding:9px 16px;border-radius:6px;transition:background .15s;}
+  .btn:hover{background:var(--red-dark);}
 
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:22px 24px;margin-bottom:20px;}
-  .card h3{font-family:var(--serif);font-size:16.5px;margin:0 0 4px;}
-  .card .hint{font-size:12.5px;color:var(--ink-soft);margin:0 0 16px;}
+  .flow{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem;margin-top:1.5rem;}
+  .flow h3{font-family:var(--serif);font-size:16px;font-weight:500;margin-bottom:10px;}
+  .flow p{font-size:13px;color:var(--muted);line-height:1.7;}
+  .flow .steps{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap;font-size:12.5px;}
+  .flow .step{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 14px;}
+  .flow .arrow{color:var(--red);font-size:15px;}
 
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-  @media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr;}}
+  .manual-note{margin-top:1.5rem;font-size:12.5px;color:var(--muted);text-align:center;}
+  .manual-note a{color:var(--red-dark);}
 
-  label.field{display:block;font-size:12px;color:var(--ink-soft);margin-bottom:5px;font-family:var(--mono);letter-spacing:.02em;}
-  input[type=number],input[type=text],input[type=url],select,textarea{
-    width:100%;font-family:var(--mono);font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:2px;background:#FEFEFD;color:var(--ink);
-  }
-  textarea{font-family:var(--sans);resize:vertical;}
-  input:focus,select:focus,textarea:focus{outline:2px solid var(--crimson);outline-offset:1px;border-color:var(--crimson);}
-  .field-row{margin-bottom:14px;}
-
-  table{width:100%;border-collapse:collapse;font-size:13.5px;}
-  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;}
-  th:first-child,td:first-child{text-align:left;}
-  th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);font-weight:600;}
-  td.num,th.num{font-family:var(--mono);}
-  tr.total td{font-weight:700;border-top:2px solid var(--ink);}
-  .delta-pos{color:var(--green);}
-  .delta-neg{color:var(--crimson-dark);}
-
-  .status-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;text-transform:uppercase;padding:5px 12px;border-radius:20px;font-weight:600;}
-  .status-valid{background:#E7F2EC;color:var(--green);}
-  .status-invalid{background:#FBE9EA;color:var(--crimson-dark);}
-
-  .outputs-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:6px;}
-  .out-cell{background:var(--panel);padding:16px 18px;}
-  .out-cell .lbl{font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;}
-  .out-cell .val{font-family:var(--mono);font-size:24px;font-weight:600;margin-top:4px;}
-  .out-cell.floor .val{color:var(--ink-soft);}
-  .out-cell.target .val{color:var(--crimson-dark);}
-  .out-cell.stretch .val{color:var(--green);}
-
-  .flag{background:#FBF3E4;border-left:3px solid var(--amber);padding:10px 14px;font-size:12.5px;color:#6b5220;margin:10px 0;}
-  .flag strong{color:var(--amber);}
-
-  /* AI chat */
-  .prompt-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
-  .ptab{font-family:var(--mono);font-size:12px;padding:8px 14px;border:1px solid var(--line);background:var(--panel);border-radius:20px;cursor:pointer;color:var(--ink-soft);}
-  .ptab.active{background:var(--crimson);color:#fff;border-color:var(--crimson);}
-  .chat-window{border:1px solid var(--line);border-radius:3px;background:var(--panel);min-height:340px;max-height:460px;overflow-y:auto;padding:16px;margin-bottom:12px;}
-  .msg{margin-bottom:14px;max-width:88%;}
-  .msg.user{margin-left:auto;text-align:right;}
-  .msg .bubble{display:inline-block;padding:9px 13px;border-radius:8px;font-size:13.5px;line-height:1.5;text-align:left;white-space:pre-wrap;}
-  .msg.user .bubble{background:var(--crimson);color:#fff;}
-  .msg.ai .bubble{background:#F1EFE9;color:var(--ink);}
-  .msg .who{font-family:var(--mono);font-size:10px;color:var(--ink-soft);text-transform:uppercase;margin-bottom:3px;}
-  .chat-input-row{display:flex;gap:8px;}
-  .chat-input-row textarea{flex:1;min-height:44px;}
-  button.send{font-family:var(--mono);font-size:12px;text-transform:uppercase;background:var(--crimson);color:#fff;border:none;padding:0 18px;border-radius:2px;cursor:pointer;}
-  button.send:disabled{background:#c7b9bd;cursor:not-allowed;}
-  button.ghost{font-family:var(--mono);font-size:11px;text-transform:uppercase;background:none;border:1px solid var(--line);padding:8px 14px;border-radius:2px;cursor:pointer;color:var(--ink-soft);}
-  .loading-dot::after{content:'●●●';letter-spacing:2px;animation:blink 1.2s infinite;}
-  @keyframes blink{0%,100%{opacity:.2;}50%{opacity:1;}}
-
-  .rubric-row td:nth-child(2),.rubric-row td:nth-child(3),.rubric-row td:nth-child(4){font-size:12px;color:var(--ink-soft);text-align:left;}
-  select.score{width:64px;font-family:var(--mono);}
-
-  footer{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;color:var(--ink-soft);text-align:center;}
+  footer{max-width:960px;margin:2.5rem auto 0;padding:1.25rem 2rem 2rem;font-size:11.5px;color:var(--muted);border-top:1px solid var(--border);text-align:center;line-height:1.7;}
 </style>
 </head>
 <body>
 
-<div class="masthead">
-  <div class="masthead-inner">
-    <div>
-      <p class="eyebrow">David Eccles School of Business · Full-Time MBA Program</p>
-      <h1>Compensation &amp; Negotiation Tool</h1>
-      <p class="subtitle">Triangulate a defensible salary target, compare competing offers on a risk-adjusted basis, then practice the conversation before you're in it.</p>
-    </div>
-    <span class="version-tag">v1.2 · web</span>
+<header>
+  <div class="logo-mark">U</div>
+  <div class="logo-text">
+    <div class="school">Full-Time MBA Program · David Eccles School of Business</div>
+    <div class="program">University of Utah</div>
   </div>
-</div>
+</header>
 
-<div class="tabnav"><div class="tabnav-inner" id="tabnavInner"></div></div>
+<div class="hero">
+  <h1>Compensation <em>Toolkit</em></h1>
+  <p>Three standalone tools covering a compensation negotiation end to end — from exploring an industry, to setting a target and practicing the conversation, to modeling a real offer letter in detail.</p>
+</div>
 
 <div class="wrap">
-
-  <!-- ============ TAB 1: ATTESTATION ============ -->
-  <section class="panel" id="tab-attestation">
-    <h2>Step 1 — Benchmark Sources (optional)</h2>
-    <p class="section-note">You can add up to three benchmark sources to strengthen your target. Sources are optional — this tool works with zero sources entered — but you are responsible for verifying the accuracy of any figures you rely on in a real negotiation.</p>
+  <div class="cards">
 
     <div class="card">
-      <h3>Sources</h3>
-      <div id="attestRows"></div>
-      <button class="ghost" id="addSourceBtn">+ Add a source</button>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <h3>Baseline</h3>
-        <table>
-          <tr><td>Sources entered</td><td class="num" id="sourceCount">0 of 3</td></tr>
-          <tr><td>Average of entered sources</td><td class="num" id="valWeighted">—</td></tr>
-        </table>
-        <div class="field-row" style="margin-top:14px;">
-          <label class="field">Baseline market salary — used in Step 2 (editable)</label>
-          <input type="number" id="manualBaseline" value="125000">
-        </div>
-        <button class="ghost" id="useAverageBtn">↺ Use average from sources</button>
-        <p class="hint" style="margin-top:10px;">Pre-fill this from your sources, or type a number directly if you have zero sources.</p>
-      </div>
-      <div class="card">
-        <h3>Note</h3>
-        <div class="flag">
-          <strong>Note —</strong> the 88% floor is a reference point, not an automatic walk-away number. Weigh total compensation, role quality, alternatives, and career capital alongside it.
-        </div>
-        <div class="flag" style="margin-top:10px;">
-          <strong>Accountability —</strong> this tool does not verify that a source, URL, or dollar figure you enter is accurate. That responsibility is yours — double-check anything you plan to cite in an actual negotiation.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TAB 2: TRIANGULATION ============ -->
-  <section class="panel" id="tab-triangulation">
-    <h2>Step 2 — Base Salary Triangulation</h2>
-    <p class="section-note">Anchors your ask in verified data before you speak to a recruiter, rather than a number based on personal need.</p>
-
-    <div class="grid2">
-      <div class="card">
-        <h3>Inputs</h3>
-        <div class="field-row"><label class="field">Relevant pre-MBA experience (years)</label><input type="number" id="expYears" value="3" step="0.5" min="0"></div>
-        <div class="field-row"><label class="field">Experience premium rate (per year)</label><input type="number" id="premRate" value="0.015" step="0.001"></div>
-        <div class="field-row"><label class="field">Experience premium cap</label><input type="number" id="premCap" value="0.075" step="0.001"></div>
-        <div class="field-row"><label class="field">Geographic differential</label><input type="number" id="geoDiff" value="0.05" step="0.001"></div>
-        <p class="hint">Use BEA Regional Price Parities or BLS OEWS wage data for the geographic differential — not a local CPI index.</p>
-      </div>
-      <div class="card">
-        <h3>Intermediate calculation</h3>
-        <table>
-          <tr><td>Baseline market salary (Step 1)</td><td class="num" id="tBaseline">—</td></tr>
-          <tr><td>Uncapped experience premium</td><td class="num" id="tUncapped">—</td></tr>
-          <tr><td>Applied experience premium (capped)</td><td class="num" id="tApplied">—</td></tr>
-        </table>
-        <p class="hint" style="margin-top:12px;">The experience premium is a teaching assumption, not a labor-market rule. Apply it only to direct, differentiating experience above what the role already expects.</p>
-      </div>
+      <div class="num">01</div>
+      <h2>Compensation Intelligence Framework</h2>
+      <p>Model a rough total-compensation value, compare cost of living across cities, benchmark industries on a heatmap, score competing offers, and see which skills carry a pay premium right now.</p>
+      <div class="use"><strong>Use when:</strong> you're exploring options before you have a specific offer.</div>
+      <a class="btn" href="compensation_intelligence_framework.html">Open tool →</a>
     </div>
 
     <div class="card">
-      <h3>Your negotiation range</h3>
-      <div class="outputs-strip">
-        <div class="out-cell floor"><div class="lbl">Reference floor (88%)</div><div class="val" id="outFloor">—</div></div>
-        <div class="out-cell target"><div class="lbl">Triangulated target base</div><div class="val" id="outTarget">—</div></div>
-        <div class="out-cell stretch"><div class="lbl">Stretch base (110%)</div><div class="val" id="outStretch">—</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TAB 3: OFFER COMPARISON ============ -->
-  <section class="panel" id="tab-comparison">
-    <h2>Step 3 — Offer Comparison &amp; Risk-Adjusted Value</h2>
-    <p class="section-note">A dollar of unvested equity is not a dollar of base salary. Risk weights make that visible before you decide what to trade for what.</p>
-
-    <div class="card">
-      <h3>Terms</h3>
-      <table id="offerTable">
-        <thead><tr><th>Metric</th><th class="num">Risk weight</th><th class="num">Initial offer</th><th class="num">Student counter</th><th class="num">Variance</th></tr></thead>
-        <tbody></tbody>
-      </table>
+      <div class="num">02</div>
+      <h2>Compensation &amp; Negotiation Tool</h2>
+      <p>Triangulate a defensible salary target from your own sources (or none), compare an offer against your counter on a risk-adjusted basis, practice the conversation, and score your performance.</p>
+      <div class="use"><strong>Use when:</strong> you're setting a target and rehearsing before a call.</div>
+      <a class="btn" href="mba_comp_negotiation_tool.html">Open tool →</a>
     </div>
 
     <div class="card">
-      <h3>Clawback terms</h3>
-      <p class="hint">Recovery of paid cash (e.g. signing bonus) if you leave before the clawback period ends — separate from equity vesting above.</p>
-      <div class="grid2">
-        <div>
-          <label class="field">Trigger — initial offer</label>
-          <select id="clawTriggerInitial"><option value="vol">Voluntary resignation only</option><option value="any">Any separation, incl. layoff</option><option value="cause">For-cause termination only</option></select>
-        </div>
-        <div>
-          <label class="field">Trigger — counter</label>
-          <select id="clawTriggerCounter"><option value="vol">Voluntary resignation only</option><option value="any">Any separation, incl. layoff</option><option value="cause">For-cause termination only</option></select>
-        </div>
-        <div>
-          <label class="field">Repayment basis — initial offer</label>
-          <select id="clawBasisInitial"><option value="gross">Gross (pre-tax amount)</option><option value="net">Net (after-tax amount received)</option></select>
-        </div>
-        <div>
-          <label class="field">Repayment basis — counter</label>
-          <select id="clawBasisCounter"><option value="gross">Gross (pre-tax amount)</option><option value="net">Net (after-tax amount received)</option></select>
-        </div>
-      </div>
-      <div class="flag" id="clawFlag" style="margin-top:14px;"></div>
+      <div class="num">03</div>
+      <h2>Offer Compensation Planner</h2>
+      <p>Model a real offer letter in detail — startup or corporate, including bonus structure, equity vesting, 401(k) match, and clawback terms with trigger and repayment basis.</p>
+      <div class="use"><strong>Use when:</strong> you have a real offer letter in hand.</div>
+      <a class="btn" href="offer_compensation_planner.html">Open tool →</a>
     </div>
 
-    <div class="card">
-      <h3>Calculated outputs — Year 1</h3>
-      <table id="outputsTable">
-        <thead><tr><th>Output</th><th class="num">Initial offer</th><th class="num">Student counter</th><th class="num">Net gain</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
+  </div>
 
-    <div class="card">
-      <h3>3-year projection <span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);">(3% annual merit assumption)</span></h3>
-      <table id="projTable">
-        <thead><tr><th>Output</th><th class="num">Initial offer</th><th class="num">Student counter</th><th class="num">Net gain</th></tr></thead>
-        <tbody></tbody>
-      </table>
-      <p class="hint" style="margin-top:12px;">Vesting is modeled straight-line from Year 1. If your equity has a cliff longer than one year, the Year 1–2 vested-equity figures above will overstate what actually vests — adjust manually or treat Year 1 equity value as $0 until your cliff passes.</p>
+  <div class="flow">
+    <h3>Using more than one together</h3>
+    <p>Each tool is fully standalone — none of them requires another to be open. When you do want to carry numbers from one to the next, look for the "Handoff" or "Continue to…" box near the bottom of each tool: copy the block it generates, then paste it into the next tool's import box.</p>
+    <div class="steps">
+      <span class="step">Compensation Intelligence Framework</span>
+      <span class="arrow">→</span>
+      <span class="step">Negotiation Tool</span>
+      <span class="arrow">⇄</span>
+      <span class="step">Offer Planner</span>
     </div>
-  </section>
+  </div>
 
-  <!-- ============ TAB 4: AI PRACTICE ============ -->
-  <section class="panel" id="tab-ai">
-    <h2>Step 4 — Practice With AI</h2>
-    <p class="section-note">No API key is used by this tool. Copy the prompt below into Claude, ChatGPT, or any AI assistant you already have access to, then log your own responses here — by typing or by speaking — so they can be scored.</p>
-
-    <div class="prompt-tabs" id="promptTabs"></div>
-    <div id="promptDescription" class="hint" style="margin-bottom:10px;"></div>
-
-    <div class="card">
-      <h3>Prompt to copy</h3>
-      <textarea id="promptText" rows="8" readonly style="font-family:var(--sans);"></textarea>
-      <button class="ghost" id="copyPromptBtn" style="margin-top:10px;">Copy prompt</button>
-      <span id="copyMsg" class="hint" style="margin-left:10px;"></span>
-    </div>
-
-    <div class="card">
-      <h3>Your practice response</h3>
-      <p class="hint">Type what you'd say, or use the microphone to dictate it (Chrome desktop works best — not all browsers support voice input).</p>
-      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-        <button class="ghost" id="micBtn">🎤 Start speaking</button>
-        <button class="ghost" id="clearResponseBtn">Clear</button>
-      </div>
-      <textarea id="responseLog" rows="6" placeholder="Type your negotiation response here, or use the microphone…"></textarea>
-    </div>
-
-    <div class="card">
-      <h3>Optional — paste your external AI transcript</h3>
-      <textarea id="externalTranscript" rows="6" placeholder="Paste your full conversation from Claude/ChatGPT here (optional) — it will be scored alongside your response above."></textarea>
-    </div>
-
-    <div class="card">
-      <h3>Score this practice</h3>
-      <p class="hint">Heuristic keyword-based scoring — a starting estimate, not a substitute for your own or a coach's judgment. Every score lands in Step 5, where you can review and adjust it.</p>
-      <button class="send" id="scoreBtn">Score my response →</button>
-      <div id="scoreSummary" style="margin-top:14px;"></div>
-    </div>
-  </section>
-
-  <!-- ============ TAB 5: RUBRIC ============ -->
-  <section class="panel" id="tab-rubric">
-    <h2>Roleplay Evaluation Rubric</h2>
-    <p class="section-note">Score your own transcript (or have a peer/coach score it) before submitting. Scored 0–5 per criterion.</p>
-    <div class="card">
-      <table id="rubricTable">
-        <thead><tr><th>Criterion</th><th>0 — Missing</th><th>2–3 — Developing</th><th>4–5 — Proficient</th><th class="num">Score (0–5)</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="grid3">
-      <div class="card"><h3>Total score</h3><div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricTotal">0 / 50</div></div></div>
-      <div class="card"><h3>Performance level</h3><div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricLevel" style="font-size:18px;">—</div></div></div>
-      <div class="card"><h3>Automatic cap</h3><div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricCap" style="font-size:13px;font-family:var(--sans);color:var(--ink-soft);">—</div></div></div>
-    </div>
-    <div class="flag">Submission requirement: calculator screenshot + attestation (if used) + AI transcript + reflection.</div>
-  </section>
-
-  <!-- ============ TAB 6: TRACKER ============ -->
-  <section class="panel" id="tab-tracker">
-    <h2>Practice Tracker</h2>
-    <p class="section-note">Save a snapshot after each practice session to track improvement over time. Stored in this browser only — not shared or backed up elsewhere.</p>
-    <div class="card">
-      <button class="send" id="saveSessionBtn">+ Save current session</button>
-    </div>
-    <div class="card">
-      <table id="trackerTable">
-        <thead><tr><th>Saved</th><th class="num">Target base</th><th class="num">Counter base</th><th class="num">Rubric score</th><th>Level</th><th></th></tr></thead>
-        <tbody></tbody>
-      </table>
-      <p class="hint" id="trackerEmpty">No sessions saved yet.</p>
-      <button class="ghost" id="clearTrackerBtn" style="margin-top:10px;">Clear all saved sessions</button>
-    </div>
-  </section>
-
-  <footer>
-    Developed by Cory Burk, Senior Manager, Program Management · Full-Time MBA Program · David Eccles School of Business.<br>
-    © 2026 University of Utah, David Eccles School of Business. All rights reserved.
-  </footer>
+  <p class="manual-note">Full instructions for each tool, and how the handoffs work, are in the <a href="README.md">README</a>.</p>
 </div>
 
-<script src="./shared/comp-profile.js"></script>
-<script>
-/* ---------------- Tabs ---------------- */
-const TABS = [
-  {id:'attestation', label:'1 · Sources'},
-  {id:'triangulation', label:'2 · Triangulation'},
-  {id:'comparison', label:'3 · Offer Comparison'},
-  {id:'ai', label:'4 · AI Practice'},
-  {id:'rubric', label:'5 · Rubric'},
-  {id:'tracker', label:'6 · Tracker'},
-];
-const tabnav = document.getElementById('tabnavInner');
-TABS.forEach((t,i)=>{
-  const b = document.createElement('button');
-  b.className='tabbtn'+(i===0?' active':'');
-  b.textContent=t.label;
-  b.onclick=()=>selectTab(t.id);
-  b.dataset.tab=t.id;
-  tabnav.appendChild(b);
-});
-function selectTab(id){
-  document.querySelectorAll('.tabbtn').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
-  document.querySelectorAll('section.panel').forEach(s=>s.classList.toggle('active', s.id==='tab-'+id));
-}
-selectTab('attestation');
+<footer>
+  Developed by Cory Burk, Senior Manager, Program Management · Full-Time MBA Program · David Eccles School of Business.<br>
+  © 2026 University of Utah, David Eccles School of Business. All rights reserved.
+</footer>
 
-const INSTITUTIONS = [
-  'Eccles MBA Employment Report',
-  'NACE Salary Survey',
-  'BLS Occupational Employment & Wage Statistics (OEWS)',
-  'U.S. DOL H-1B / LCA Database',
-  'Levels.fyi',
-  'Glassdoor',
-  'LinkedIn Salary',
-  'PayScale',
-  'Robert Half Salary Guide',
-  'Other (type below)'
-];
-
-/* ---------------- State ---------------- */
-const state = {
-  attest: [], // up to 3 rows: {institution, customName, value, url}
-  expYears:3, premRate:0.015, premCap:0.075, geoDiff:0.05,
-  offer: {
-    base:      {weight:1.00, initial:120000, counter:null}, // counter auto = target base
-    signing:   {weight:0.95, initial:10000, counter:15000},
-    bonusPct:  {weight:0.70, initial:0.10, counter:0.10},
-    equity:    {weight:0.50, initial:20000, counter:20000},
-    vestYears: {initial:4, counter:4},
-    clawback:  {initial:12, counter:12},
-    clawbackTrigger: {initial:'vol', counter:'vol'},
-    clawbackBasis: {initial:'gross', counter:'gross'},
-    taxRate:   {initial:0.30, counter:0.30},
-  }
-};
-const TRIGGER_LABEL = {vol:'Voluntary resignation only', any:'Any separation, including layoff', cause:'For-cause termination only'};
-
-/* ---------------- Attestation (sources) ---------------- */
-function renderAttest(){
-  const wrap = document.getElementById('attestRows');
-  wrap.innerHTML='';
-  state.attest.forEach((row,i)=>{
-    const div = document.createElement('div');
-    div.style.cssText='display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:14px;';
-    div.innerHTML = `
-      <div>
-        <label class="field">Source ${i+1}</label>
-        <select data-i="${i}" data-f="institution">${INSTITUTIONS.map(n=>`<option value="${n}"${row.institution===n?' selected':''}>${n}</option>`).join('')}</select>
-        ${row.institution==='Other (type below)' ? `<input type="text" data-i="${i}" data-f="customName" placeholder="Source name" value="${(row.customName||'').replace(/"/g,'&quot;')}" style="margin-top:6px;">` : ''}
-      </div>
-      <div><label class="field">Benchmark ($)</label><input type="number" data-i="${i}" data-f="value" value="${row.value||''}"></div>
-      <div><label class="field">URL (optional)</label><input type="url" data-i="${i}" data-f="url" value="${(row.url||'').replace(/"/g,'&quot;')}" placeholder="https://…"></div>
-      <div><button class="ghost" data-i="${i}" data-action="remove">Remove</button></div>
-    `;
-    wrap.appendChild(div);
-  });
-  wrap.querySelectorAll('select,input').forEach(el=>{
-    el.addEventListener(el.tagName==='SELECT'?'change':'input', e=>{
-      const i=+e.target.dataset.i, f=e.target.dataset.f;
-      state.attest[i][f] = f==='value' ? parseFloat(e.target.value)||0 : e.target.value;
-      if(f==='institution') renderAttest();
-      recalcAll();
-    });
-  });
-  wrap.querySelectorAll('[data-action="remove"]').forEach(btn=>{
-    btn.addEventListener('click', e=>{
-      state.attest.splice(+e.target.dataset.i,1);
-      renderAttest(); recalcAll();
-    });
-  });
-  document.getElementById('addSourceBtn').disabled = state.attest.length>=3;
-  document.getElementById('addSourceBtn').style.opacity = state.attest.length>=3 ? '0.5' : '1';
-}
-document.getElementById('addSourceBtn').addEventListener('click', ()=>{
-  if(state.attest.length>=3) return;
-  state.attest.push({institution:INSTITUTIONS[0], customName:'', value:'', url:''});
-  renderAttest(); recalcAll();
-});
-document.getElementById('useAverageBtn').addEventListener('click', ()=>{
-  const entered = state.attest.filter(r=>r.value && parseFloat(r.value)>0);
-  if(entered.length){
-    const avg = entered.reduce((s,r)=>s+parseFloat(r.value),0)/entered.length;
-    document.getElementById('manualBaseline').value = Math.round(avg);
-    recalcAll();
-  }
-});
-document.getElementById('manualBaseline').addEventListener('input', recalcAll);
-renderAttest();
-
-['expYears','premRate','premCap','geoDiff'].forEach(id=>{
-  document.getElementById(id).addEventListener('input', e=>{
-    state[id]=parseFloat(e.target.value)||0; recalcAll();
-  });
-});
-
-/* ---------------- Offer table ---------------- */
-const OFFER_ROWS = [
-  {key:'base', label:'Base salary ($)', hasWeight:true, isPct:false},
-  {key:'signing', label:'Signing bonus ($)', hasWeight:true, isPct:false},
-  {key:'bonusPct', label:'Annual target bonus (%)', hasWeight:true, isPct:true},
-  {key:'equity', label:'Equity / RSU grant ($)', hasWeight:true, isPct:false},
-  {key:'vestYears', label:'Equity vesting period (years)', hasWeight:false, isPct:false},
-  {key:'clawback', label:'Signing bonus clawback (months)', hasWeight:false, isPct:false},
-  {key:'taxRate', label:'Estimated effective cash tax rate', hasWeight:false, isPct:true},
-];
-const offerBody = document.querySelector('#offerTable tbody');
-function renderOfferTable(){
-  offerBody.innerHTML='';
-  OFFER_ROWS.forEach(r=>{
-    const o = state.offer[r.key];
-    const counterIsAuto = r.key==='base';
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${r.label}</td>
-      <td class="num">${r.hasWeight ? o.weight.toFixed(2) : '—'}</td>
-      <td class="num"><input type="number" data-key="${r.key}" data-side="initial" value="${o.initial}" step="${r.isPct?'0.01':'1'}"></td>
-      <td class="num">${counterIsAuto
-          ? `<span id="counterBaseDisplay">—</span> <span class="hint" style="font-family:var(--sans);">(= target base)</span>`
-          : `<input type="number" data-key="${r.key}" data-side="counter" value="${o.counter}" step="${r.isPct?'0.01':'1'}">`}
-      </td>
-      <td class="num" id="variance-${r.key}">—</td>
-    `;
-    offerBody.appendChild(tr);
-  });
-  offerBody.querySelectorAll('input').forEach(inp=>{
-    inp.addEventListener('input', e=>{
-      const key=e.target.dataset.key, side=e.target.dataset.side;
-      state.offer[key][side]=parseFloat(e.target.value)||0;
-      recalcAll();
-    });
-  });
-}
-renderOfferTable();
-
-['clawTriggerInitial','clawTriggerCounter','clawBasisInitial','clawBasisCounter'].forEach(id=>{
-  document.getElementById(id).value = id.includes('Initial') ? (id.includes('Trigger')?state.offer.clawbackTrigger.initial:state.offer.clawbackBasis.initial) : (id.includes('Trigger')?state.offer.clawbackTrigger.counter:state.offer.clawbackBasis.counter);
-  document.getElementById(id).addEventListener('change', e=>{
-    if(id==='clawTriggerInitial') state.offer.clawbackTrigger.initial = e.target.value;
-    if(id==='clawTriggerCounter') state.offer.clawbackTrigger.counter = e.target.value;
-    if(id==='clawBasisInitial') state.offer.clawbackBasis.initial = e.target.value;
-    if(id==='clawBasisCounter') state.offer.clawbackBasis.counter = e.target.value;
-    recalcAll();
-  });
-});
-
-/* ---------------- Formatting ---------------- */
-const fmt$ = n => n===null||isNaN(n) ? '—' : '$' + Math.round(n).toLocaleString();
-const fmtPct = n => n===null||isNaN(n) ? '—' : (n*100).toFixed(1)+'%';
-const round100 = n => Math.round(n/100)*100;
-
-/* ---------------- Core recalculation (mirrors workbook formulas) ---------------- */
-let LAST = {}; // holds latest computed outputs, used to seed AI prompts
-
-function recalcAll(){
-  // Sources (optional) — compute average of whatever's entered, no gating
-  const entered = state.attest.filter(r=>r.value && parseFloat(r.value)>0);
-  const avg = entered.length ? entered.reduce((s,r)=>s+parseFloat(r.value),0)/entered.length : null;
-  document.getElementById('sourceCount').textContent = entered.length + ' of 3';
-  document.getElementById('valWeighted').textContent = avg!=null ? fmt$(avg) : '—';
-
-  const baseline = parseFloat(document.getElementById('manualBaseline').value)||0;
-
-  // Triangulation
-  const uncapped = state.expYears * state.premRate;
-  const applied = Math.min(uncapped, state.premCap);
-  let target=null, floor=null, stretch=null;
-  if(baseline>0){
-    target = round100(baseline * (1+applied) * (1+state.geoDiff));
-    floor = round100(target*0.88);
-    stretch = round100(target*1.10);
-  }
-  document.getElementById('tBaseline').textContent = baseline>0 ? fmt$(baseline) : '— enter a baseline above';
-  document.getElementById('tUncapped').textContent = fmtPct(uncapped);
-  document.getElementById('tApplied').textContent = fmtPct(applied);
-  document.getElementById('outFloor').textContent = fmt$(floor);
-  document.getElementById('outTarget').textContent = fmt$(target);
-  document.getElementById('outStretch').textContent = fmt$(stretch);
-
-  // Offer comparison — counter base auto-fills from target
-  state.offer.base.counter = target;
-  const cbd = document.getElementById('counterBaseDisplay');
-  if(cbd) cbd.textContent = fmt$(target);
-
-  const o = state.offer;
-  const varianceMap = {
-    base: o.base.counter - o.base.initial,
-    signing: o.signing.counter - o.signing.initial,
-    bonusPct: o.bonusPct.counter - o.bonusPct.initial,
-    equity: o.equity.counter - o.equity.initial,
-    vestYears: o.vestYears.counter - o.vestYears.initial,
-    clawback: o.clawback.counter - o.clawback.initial,
-    taxRate: o.taxRate.counter - o.taxRate.initial,
-  };
-  OFFER_ROWS.forEach(r=>{
-    const el = document.getElementById('variance-'+r.key);
-    const v = varianceMap[r.key];
-    const disp = r.isPct ? fmtPct(v) : (r.key==='vestYears'||r.key==='clawback' ? v : fmt$(v));
-    el.textContent = (v>0?'+':'') + disp;
-    el.className = 'num ' + (v>0?'delta-pos':(v<0?'delta-neg':''));
-  });
-
-  function yr1(side){
-    const b=o.base[side], s=o.signing[side], bp=o.bonusPct[side], e=o.equity[side], vy=o.vestYears[side], tax=o.taxRate[side];
-    const nominal = b + s + (b*bp) + (vy>0 ? e/vy : 0);
-    const guaranteed = b + s;
-    const riskAdj = b*o.base.weight + s*o.signing.weight + (b*bp)*o.bonusPct.weight + (vy>0?e/vy:0)*o.equity.weight;
-    const afterTax = (b + s + (b*bp)) * (1-tax);
-    return {nominal, guaranteed, riskAdj, afterTax};
-  }
-  const y1i = yr1('initial'), y1c = yr1('counter');
-
-  function threeYear(side){
-    const b0=o.base[side], s=o.signing[side], bp=o.bonusPct[side], e=o.equity[side], vy=o.vestYears[side];
-    const merit=0.03;
-    const baseYears=[b0, b0*(1+merit), b0*(1+merit)*(1+merit)];
-    const signYears=[s,0,0];
-    const bonusYears=baseYears.map(b=>b*bp);
-    const equityYears=[1,2,3].map(y=> vy>=y ? e/vy : 0);
-    const nominalTotal = baseYears.reduce((a,b)=>a+b,0) + signYears.reduce((a,b)=>a+b,0) + bonusYears.reduce((a,b)=>a+b,0) + equityYears.reduce((a,b)=>a+b,0);
-    const riskAdjTotal = baseYears.reduce((a,b)=>a+b,0)*o.base.weight + signYears.reduce((a,b)=>a+b,0)*o.signing.weight + bonusYears.reduce((a,b)=>a+b,0)*o.bonusPct.weight + equityYears.reduce((a,b)=>a+b,0)*o.equity.weight;
-    return {nominalTotal, riskAdjTotal};
-  }
-  const t3i = threeYear('initial'), t3c = threeYear('counter');
-
-  const outputsBody = document.querySelector('#outputsTable tbody');
-  const outRows = [
-    ['Nominal Year 1 total compensation', y1i.nominal, y1c.nominal],
-    ['Guaranteed / contractual cash — Year 1', y1i.guaranteed, y1c.guaranteed],
-    ['Risk-adjusted economic value — Year 1', y1i.riskAdj, y1c.riskAdj],
-    ['Estimated after-tax cash — Year 1', y1i.afterTax, y1c.afterTax],
-  ];
-  outputsBody.innerHTML = outRows.map(([label,i,c])=>`
-    <tr><td>${label}</td><td class="num">${fmt$(i)}</td><td class="num">${fmt$(c)}</td>
-    <td class="num ${c-i>0?'delta-pos':'delta-neg'}">${c-i>0?'+':''}${fmt$(c-i)}</td></tr>`).join('');
-
-  const projBody = document.querySelector('#projTable tbody');
-  projBody.innerHTML = `
-    <tr><td>3-year nominal total value</td><td class="num">${fmt$(t3i.nominalTotal)}</td><td class="num">${fmt$(t3c.nominalTotal)}</td>
-      <td class="num ${t3c.nominalTotal-t3i.nominalTotal>0?'delta-pos':'delta-neg'}">${t3c.nominalTotal-t3i.nominalTotal>0?'+':''}${fmt$(t3c.nominalTotal-t3i.nominalTotal)}</td></tr>
-    <tr><td>3-year risk-adjusted economic value</td><td class="num">${fmt$(t3i.riskAdjTotal)}</td><td class="num">${fmt$(t3c.riskAdjTotal)}</td>
-      <td class="num ${t3c.riskAdjTotal-t3i.riskAdjTotal>0?'delta-pos':'delta-neg'}">${t3c.riskAdjTotal-t3i.riskAdjTotal>0?'+':''}${fmt$(t3c.riskAdjTotal-t3i.riskAdjTotal)}</td></tr>
-  `;
-
-  // Clawback interpretive note (ported from the Offer Compensation Planner)
-  const trigI = o.clawbackTrigger.initial, trigC = o.clawbackTrigger.counter;
-  const basisI = o.clawbackBasis.initial, basisC = o.clawbackBasis.counter;
-  let clawNote = `<strong>Initial —</strong> ${TRIGGER_LABEL[trigI]}. ${basisI==='gross' ? 'Gross basis: you repay the full pre-tax amount even though you received less after tax.' : 'Net basis: you repay only what you actually received after tax.'}`;
-  if(trigI==='any') clawNote += ' You would owe this even if let go through no fault of your own — a strong point to push back on.';
-  clawNote += `<br><strong>Counter —</strong> ${TRIGGER_LABEL[trigC]}. ${basisC==='gross' ? 'Gross basis.' : 'Net basis.'}`;
-  document.getElementById('clawFlag').innerHTML = clawNote;
-
-  LAST = {
-    target, floor, stretch, hasTarget: target!=null,
-    initial: {base:o.base.initial, signing:o.signing.initial, bonusPct:o.bonusPct.initial, equity:o.equity.initial, vestYears:o.vestYears.initial, clawback:o.clawback.initial, clawbackTrigger:trigI, clawbackBasis:basisI, taxRate:o.taxRate.initial},
-    counter: {base:o.base.counter, signing:o.signing.counter, bonusPct:o.bonusPct.counter, equity:o.equity.counter, vestYears:o.vestYears.counter, clawback:o.clawback.counter, clawbackTrigger:trigC, clawbackBasis:basisC, taxRate:o.taxRate.counter},
-  };
-
-  // Sync to the shared cross-tool offer profile (fails silently if unavailable)
-  if(window.CompProfile){
-    window.CompProfile.patch({
-      triangulation: {target, floor, stretch, modelValid:true},
-      initial: {base:o.base.initial, signing:o.signing.initial, bonusPct:o.bonusPct.initial, equity:o.equity.initial, vestYears:o.vestYears.initial, clawbackMonths:o.clawback.initial, clawbackTrigger:trigI, clawbackBasis:basisI, taxRate:o.taxRate.initial},
-      counter: {base:o.base.counter, signing:o.signing.counter, bonusPct:o.bonusPct.counter, equity:o.equity.counter, vestYears:o.vestYears.counter, clawbackMonths:o.clawback.counter, clawbackTrigger:trigC, clawbackBasis:basisC, taxRate:o.taxRate.counter},
-    }, 'mba-comp-tool');
-  }
-}
-
-// Load any existing shared profile before first render (does not overwrite attestation, which this tool owns)
-(function loadSharedProfile(){
-  if(!window.CompProfile) return;
-  const p = window.CompProfile.load();
-  if(p.initial && p.initial.base!=null) state.offer.base.initial = p.initial.base;
-  if(p.initial && p.initial.signing!=null) state.offer.signing.initial = p.initial.signing;
-  if(p.initial && p.initial.bonusPct!=null) state.offer.bonusPct.initial = p.initial.bonusPct;
-  if(p.initial && p.initial.equity!=null) state.offer.equity.initial = p.initial.equity;
-  if(p.initial && p.initial.vestYears!=null) state.offer.vestYears.initial = p.initial.vestYears;
-  if(p.initial && p.initial.clawbackMonths!=null) state.offer.clawback.initial = p.initial.clawbackMonths;
-  if(p.initial && p.initial.taxRate!=null) state.offer.taxRate.initial = p.initial.taxRate;
-})();
-
-recalcAll();
-renderOfferTable(); // re-render in case shared profile changed initial-offer values above
-
-/* ---------------- Rubric ---------------- */
-const RUBRIC = [
-  ['Opening & Rapport','Defensive, abrupt, or no enthusiasm.','Polite but generic.','Expresses genuine enthusiasm and frames the negotiation collaboratively.'],
-  ['Validated Market Evidence','No evidence or a personal-need anchor.','Mentions data without source or relevance.','Uses 2+ attested sources and explains role/location comparability.'],
-  ['Institutional Baseline','Ignores program outcomes.','References program data vaguely.','Uses the track/geography-specific baseline correctly.'],
-  ['Competency Premium','Claims value without evidence.','Lists experience but doesn\u2019t connect it to outcomes.','Connects differentiated experience to specific employer value without double-counting.'],
-  ['Clear Ask','No number, or multiple conflicting asks.','States a range but lacks prioritization.','States a precise, defensible primary ask tied to calculator outputs.'],
-  ['Collaborative Framing','Adversarial or entitled.','Mostly professional but transactional.','Uses mutual-value language and invites problem-solving.'],
-  ['Pushback Handling','Concedes, argues, or repeats.','Responds but loses structure.','Acknowledges the constraint, restates evidence, asks a calibrated question.'],
-  ['Pivot Strategy','No alternative.','Offers an unfocused list.','Trades intelligently among base, sign-on, equity, PTO, title, or review timing.'],
-  ['Deadline Management','Accepts artificial pressure or reacts emotionally.','Requests time without rationale.','Clarifies the deadline, requests reasonable review time, preserves rapport.'],
-  ['Close & Next Step','Ends ambiguously.','Confirms interest only.','Summarizes the ask, confirms commitment, sets a specific next step.'],
-];
-const rubricBody = document.querySelector('#rubricTable tbody');
-RUBRIC.forEach((row,i)=>{
-  const tr = document.createElement('tr');
-  tr.className='rubric-row';
-  tr.innerHTML = `<td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td>
-    <td><select class="score" data-i="${i}"><option value="">–</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>`;
-  rubricBody.appendChild(tr);
-});
-const scores = new Array(RUBRIC.length).fill(null);
-rubricBody.querySelectorAll('select').forEach(sel=>{
-  sel.addEventListener('change', e=>{
-    const i=+e.target.dataset.i;
-    scores[i] = e.target.value===''? null : +e.target.value;
-    updateRubric();
-  });
-});
-function updateRubric(){
-  const filled = scores.filter(s=>s!==null);
-  const total = filled.reduce((a,b)=>a+b,0);
-  document.getElementById('rubricTotal').textContent = `${total} / 50`;
-  let level='—';
-  if(filled.length===RUBRIC.length){
-    level = total>=45?'Strong':total>=38?'Proficient':total>=28?'Developing':'Needs Rework';
-  }
-  document.getElementById('rubricLevel').textContent = level;
-  // caps tied to Validated Market Evidence(1), Institutional Baseline(2), Clear Ask(4) — indices 1,2,4
-  const capTriggers = [1,2,4].some(i=>scores[i]!==null && scores[i]<=1);
-  document.getElementById('rubricCap').textContent = capTriggers ? 'Maximum final rating: Developing' : 'No cap';
-}
-updateRubric();
-
-/* ---------------- AI Practice (no API key — copy-paste prompts + heuristic scoring) ---------------- */
-const PROMPTS = [
-  {
-    id:'roleplay', label:'1 · Recruiter Roleplay',
-    desc:'Paste this into your own Claude/ChatGPT chat to rehearse against a resistant recruiter. Log your responses below as you go.',
-    system: () => `Act as a Senior Talent Acquisition Manager at a mid-sized tech or Fortune 500 firm. You have just extended an offer with base salary $${LAST.initial?.base ?? 120000}, signing bonus $${LAST.initial?.signing ?? 10000}, target annual bonus ${((LAST.initial?.bonusPct ?? 0.10)*100).toFixed(0)}%, and equity $${LAST.initial?.equity ?? 20000} over ${LAST.initial?.vestYears ?? 4} years.
-The candidate's calculator outputs are: target base $${LAST.target ?? '—'}, reference floor $${LAST.floor ?? '—'}, stretch base $${LAST.stretch ?? '—'}.
-Rules: (1) Stay in character, do not coach the candidate mid-roleplay. (2) Be professional but firm — cite realistic pay-band and internal-equity constraints. (3) Only move if the candidate uses market evidence, differentiated role-relevant value, or a reasonable trade (e.g., trading base for sign-on). (4) Use at least two pushbacks, including one deadline or "top of range" objection. (5) Do not invent company facts beyond this scenario. (6) When the candidate types END ROLEPLAY, break character and give feedback. Start now by delivering the offer and asking for their immediate reaction.`,
-    opener: 'Start the chat with the above, then log what you actually said back in the "Your practice response" box below.'
-  },
-  {
-    id:'modeler', label:'2 · Comp Modeler',
-    desc:'An executive compensation analyst who audits your numbers over a 3-year horizon — using only assumptions you supply.',
-    system: () => `Act as an executive compensation analyst. Use only the assumptions I provide — do not invent tax rates, bonus attainment, equity growth, or vesting terms.
-For reference, my calculator currently shows: target base $${LAST.target ?? '—'}, initial offer base $${LAST.initial?.base ?? '—'}, counter base $${LAST.counter?.base ?? '—'}, signing bonus $${LAST.initial?.signing ?? '—'} vs $${LAST.counter?.signing ?? '—'}, equity $${LAST.initial?.equity ?? '—'} over ${LAST.initial?.vestYears ?? '—'} years.
-Ask me for any offer parameters you still need (base, merit assumption, bonus target and expected attainment, signing bonus and clawback terms, equity/vesting/cliff, refresh grants, effective tax rate, location). Then output: (1) Year 1–3 gross compensation by component, (2) guaranteed cash vs. variable cash vs. deferred equity vs. estimated after-tax liquidity, (3) base/downside/upside equity scenarios, (4) three hidden variables to clarify with HR, (5) a clear label that any tax figure is educational, not tax advice.`,
-    opener: 'Paste this, answer its follow-up questions, then log any notable takeaways below.'
-  },
-  {
-    id:'critique', label:'3 · Counter-Offer Critique',
-    desc:'Paste your draft counter-offer email and get it rewritten with collaborative, evidence-backed language.',
-    system: () => `I am a Full-Time MBA student drafting a counter-offer email. My target base is $${LAST.target ?? '—'}, reference floor $${LAST.floor ?? '—'}. Please: (1) identify weak, personal-need-based, apologetic, or unsupported language in what I paste, (2) flag any market claim I make that isn't backed by evidence I supply — do not invent data on my behalf, (3) rewrite the email using concise, collaborative language connecting my ask to market evidence and role-relevant value, (4) include one clear base-salary ask, one pivot option, and a courteous next step, (5) keep the final email under 180 words. Ask me for my draft, role title, initial offer, leverage points, and preferred pivot if you don't already have them.`,
-    opener: 'Paste this along with your draft email, then log the rewritten version below.'
-  }
-];
-let activePrompt = PROMPTS[0];
-
-const promptTabsEl = document.getElementById('promptTabs');
-PROMPTS.forEach(p=>{
-  const b=document.createElement('button');
-  b.className='ptab'+(p.id===activePrompt.id?' active':'');
-  b.textContent=p.label;
-  b.onclick=()=>switchPrompt(p.id);
-  b.dataset.id=p.id;
-  promptTabsEl.appendChild(b);
-});
-function switchPrompt(id){
-  activePrompt = PROMPTS.find(p=>p.id===id);
-  document.querySelectorAll('.ptab').forEach(b=>b.classList.toggle('active', b.dataset.id===id));
-  document.getElementById('promptDescription').textContent = activePrompt.desc;
-  document.getElementById('promptText').value = activePrompt.system() + '\n\n' + activePrompt.opener;
-}
-switchPrompt(activePrompt.id);
-// Refresh prompt text whenever the calculator recalculates, so it always reflects live numbers
-const _origRecalcAll = recalcAll;
-recalcAll = function(){ _origRecalcAll(); if(document.getElementById('promptText')) document.getElementById('promptText').value = activePrompt.system() + '\n\n' + activePrompt.opener; };
-
-document.getElementById('copyPromptBtn').addEventListener('click', ()=>{
-  const t = document.getElementById('promptText').value;
-  const msg = document.getElementById('copyMsg');
-  const done = ()=>{ msg.textContent='Copied'; setTimeout(()=>msg.textContent='',2000); };
-  try{
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done, ()=>fallbackCopy(t,done)); }
-    else fallbackCopy(t,done);
-  }catch(e){ fallbackCopy(t,done); }
-});
-function fallbackCopy(t,done){
-  try{ const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
-  catch(e){ document.getElementById('copyMsg').textContent='Copy failed — select the text manually'; }
-}
-
-document.getElementById('clearResponseBtn').addEventListener('click', ()=>{
-  document.getElementById('responseLog').value='';
-});
-
-/* ---------------- Microphone (Web Speech API — Chrome desktop primarily) ---------------- */
-let recognition = null, recognizing = false;
-document.getElementById('micBtn').addEventListener('click', ()=>{
-  const btn = document.getElementById('micBtn');
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){
-    alert('Voice input isn\u2019t supported in this browser. Chrome on desktop works best — you can also just type your response.');
-    return;
-  }
-  if(!recognition){
-    recognition = new SR();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-    recognition.onresult = e=>{
-      let t='';
-      for(let i=e.resultIndex;i<e.results.length;i++){ t += e.results[i][0].transcript + ' '; }
-      const ta = document.getElementById('responseLog');
-      ta.value += (ta.value && !ta.value.endsWith(' ') ? ' ' : '') + t;
-    };
-    recognition.onend = ()=>{ recognizing=false; btn.textContent='🎤 Start speaking'; btn.classList.remove('active'); };
-    recognition.onerror = ()=>{ recognizing=false; btn.textContent='🎤 Start speaking'; };
-  }
-  if(recognizing){ recognition.stop(); recognizing=false; btn.textContent='🎤 Start speaking'; }
-  else{ recognition.start(); recognizing=true; btn.textContent='⏹ Stop'; }
-});
-
-/* ---------------- Heuristic scorer ---------------- */
-// Keyword patterns per rubric criterion (index-matched to RUBRIC below). This is a rough,
-// transparent keyword heuristic — not an AI judgment — so scores should be reviewed, not trusted blindly.
-const SCORE_PATTERNS = [
-  [/thank you|appreciate|excited|glad|pleasure/i],                                   // Opening & Rapport
-  [/data|report|survey|bls|oews|levels\.fyi|glassdoor|market|benchmark|research/i],   // Validated Market Evidence
-  [/eccles|program|track|school|mba (program|cohort)/i],                             // Institutional Baseline
-  [/years? of experience|my experience|managed|led|prior role|background in/i],      // Competency Premium
-  [/\$[\d,]+|ask for|my target|i(?:'d| would) like to (?:request|ask)/i],            // Clear Ask
-  [/we|together|mutual|understand|appreciate your|work with/i],                      // Collaborative Framing
-  [/i understand|that said|given that|i hear you|with that in mind/i],               // Pushback Handling
-  [/sign(?:ing)?[ -]?on|equity|pto|title|start date|review timing|vacation/i],       // Pivot Strategy
-  [/by (?:friday|monday|\w+day|the \d)|time to (?:consider|review)|deadline/i],       // Deadline Management
-  [/next step|follow up|confirm|looking forward|touch base/i],                        // Close & Next Step
-];
-function heuristicScore(text){
-  return SCORE_PATTERNS.map(patterns=>{
-    const hits = patterns.filter(p=>p.test(text)).length;
-    return Math.min(5, hits*3); // present → 3, matches stack up to 5
-  });
-}
-document.getElementById('scoreBtn').addEventListener('click', ()=>{
-  const text = (document.getElementById('responseLog').value||'') + '\n' + (document.getElementById('externalTranscript').value||'');
-  if(!text.trim()){
-    document.getElementById('scoreSummary').innerHTML = '<div class="flag">Nothing to score yet — type or dictate a response, or paste a transcript, above.</div>';
-    return;
-  }
-  const suggested = heuristicScore(text);
-  suggested.forEach((val,i)=>{
-    scores[i]=val;
-    const sel = document.querySelector(`#rubricTable select[data-i="${i}"]`);
-    if(sel) sel.value = String(val);
-  });
-  updateRubric();
-  document.getElementById('scoreSummary').innerHTML =
-    `<div class="flag"><strong>Heuristic estimate applied —</strong> ${suggested.reduce((a,b)=>a+b,0)} / 50. These are keyword-based suggestions now sitting in Step 5 — review and adjust every score, then use the Tracker tab to save this session.</div>`;
-});
-
-/* ---------------- Tracker (Tab 6) ---------------- */
-const TRACKER_KEY = 'mba-comp-tracker-v1';
-function loadTracker(){ try{ return JSON.parse(localStorage.getItem(TRACKER_KEY)||'[]'); }catch(e){ return []; } }
-function saveTracker(arr){ try{ localStorage.setItem(TRACKER_KEY, JSON.stringify(arr)); return true; }catch(e){ return false; } }
-function renderTracker(){
-  const entries = loadTracker();
-  const tbody = document.querySelector('#trackerTable tbody');
-  const empty = document.getElementById('trackerEmpty');
-  tbody.innerHTML = entries.slice().reverse().map((e,idx)=>{
-    const realIdx = entries.length-1-idx;
-    return `<tr><td>${new Date(e.ts).toLocaleString()}</td><td class="num">${fmt$(e.target)}</td><td class="num">${fmt$(e.counterBase)}</td>
-      <td class="num">${e.rubricTotal} / 50</td><td>${e.rubricLevel}</td>
-      <td><button class="ghost" data-idx="${realIdx}" data-action="del">Delete</button></td></tr>`;
-  }).join('');
-  empty.style.display = entries.length ? 'none' : 'block';
-  tbody.querySelectorAll('[data-action="del"]').forEach(btn=>{
-    btn.addEventListener('click', e=>{
-      const arr = loadTracker();
-      arr.splice(+e.target.dataset.idx,1);
-      saveTracker(arr); renderTracker();
-    });
-  });
-}
-document.getElementById('saveSessionBtn').addEventListener('click', ()=>{
-  const filled = scores.filter(s=>s!==null);
-  const rubricTotal = filled.reduce((a,b)=>a+b,0);
-  const rubricLevel = document.getElementById('rubricLevel').textContent;
-  const arr = loadTracker();
-  arr.push({ ts:Date.now(), target:LAST.target, counterBase:LAST.counter?.base, rubricTotal, rubricLevel });
-  if(saveTracker(arr)) renderTracker();
-  else alert('Saving isn\u2019t available in this browser (private/incognito mode may block it).');
-});
-document.getElementById('clearTrackerBtn').addEventListener('click', ()=>{
-  if(confirm('Clear all saved practice sessions? This can\u2019t be undone.')){ saveTracker([]); renderTracker(); }
-});
-renderTracker();
-</script>
 </body>
 </html>
