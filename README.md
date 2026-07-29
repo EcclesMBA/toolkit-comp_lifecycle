@@ -1,7 +1,7 @@
 # MBA Compensation & Negotiation Toolkit
 
 **Full-Time MBA Program · David Eccles School of Business**
-Version 1.7 · Web tool · Built from `MBA_Comp_Calculator.xlsx`
+Version 1.8 · Web tool · Built from `MBA_Comp_Calculator.xlsx`
 This document is both the **student user manual** and the **operational guide** for whoever maintains this tool going forward.
 
 ---
@@ -11,8 +11,8 @@ This document is both the **student user manual** and the **operational guide** 
 ---
 
 
-## 1. What is this toolkit
-
+## 1. What this tool is
+ 
 A single-file HTML tool (`mba_comp_negotiation_tool.html`) that walks a student through six stages of a compensation negotiation:
  
 1. **Sources** — optionally enter benchmark salary data (works with zero sources)
@@ -99,7 +99,7 @@ The mic button uses the browser's native `SpeechRecognition` / `webkitSpeechReco
  
 ### Matching the playbook family conventions
 - Footer text and copyright line match [[playbook-footer]] exactly — do not edit ad hoc; update the shared footer text in one place if the standard ever changes.
-- Version tag in the top-right of the masthead (`v1.7 · web`) should be bumped on any functional change, following the same versioning convention as the PE/PM/TMAY tools.
+- Version tag in the top-right of the masthead (`v1.8 · web`) should be bumped on any functional change, following the same versioning convention as the PE/PM/TMAY tools.
 - Utah red (`#CC0000`) and EB Garamond/DM Sans, matching the Offer Compensation Planner and CIF tools, since v1.1.
 ### Known open items (carried into the next revision)
 1. No cliff-length input separate from vesting years (Step 3 caveat above) — still open.
@@ -112,7 +112,10 @@ The mic button uses the browser's native `SpeechRecognition` / `webkitSpeechReco
 8. **New in v1.2:** no soft nudge exists yet for zero-source usage (see §3 above) — worth considering if data quality turns out to be a real problem in practice.
 9. ~~Remaining after v1.3: the Offer Compensation Planner's counter-offer model only supports base, bonus %, signing bonus, and equity~~ — resolved in v1.4: the counter-offer panel now has independent vesting years, clawback cash/trigger/basis, and tax rate, matching Tool 1's model. The one remaining asymmetry: Tool 1 has no distinct "clawback cash amount" input, so import into the Offer Compensation Planner assumes it equals the counter's signing bonus — surfaced in the import message, not hidden.
 10. **Remaining:** Compensation Intelligence Framework's advisory handoff (industry pick + TCV estimate) is still one-directional and unparsed by design — it isn't offer-shaped data, so there's nothing to build a reverse parser against without first deciding what a "CIF offer" would even mean.
+
 ---
+
+**v1.8 changes:** renamed the tool's display name from "MBA Compensation & Negotiation Tool" to "Comp Negotiation Tool" — updated in this tool's title/masthead, the Offer Compensation Planner's references to it, the hub page (index.html), and this document. The file itself is still named mba_comp_negotiation_tool.html — only the display name changed, so no links break.
 
 **v1.7 changes:** renamed confusing terminology across both this tool and the Offer Compensation Planner — "the Planner" shorthand is now always written out as "the Offer Compensation Planner," and "handoff block" is now "transfer text" everywhere (headings, buttons, hints, status messages). Section headings changed from jargon ("Handoff to X" / "Import from X") to plain action phrasing ("Send This Offer to the Offer Compensation Planner" / "Bring In an Offer from the Offer Compensation Planner"). No functional changes — text only.
  
