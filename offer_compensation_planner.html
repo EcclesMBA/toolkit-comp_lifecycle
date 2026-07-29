@@ -154,7 +154,7 @@
     <div class="grid-layout">
         <div class="panel">
             <div class="import-box" id="import-box-corp">
-                <label style="text-transform:none;font-weight:bold;font-size:13px;color:#1E3A8A;">Bring In an Offer from the MBA Compensation &amp; Negotiation Tool</label>
+                <label style="text-transform:none;font-weight:bold;font-size:13px;color:#1E3A8A;">Bring In an Offer from the Comp Negotiation Tool</label>
                 <p class="hint" style="margin-bottom:8px;">Paste the transfer text you copied from that tool's Offer Comparison tab (Corporate mode only — the field sets match). Fills base, signing, bonus %, equity, vesting, clawback trigger/basis, and tax rate for both the initial offer and counter.</p>
                 <textarea id="import-text" placeholder="Paste transfer text here…"></textarea>
                 <button class="btn-import" onclick="importHandoff()">Parse &amp; fill corporate fields</button>
@@ -163,7 +163,7 @@
             <!-- ================= STARTUP INPUTS ================= -->
             <div id="inputs-startup">
                 <div class="note" style="background:#FFF3F3;border-left:4px solid #CC0000;padding:10px 12px;border-radius:0 4px 4px 0;margin-bottom:15px;">
-                    <strong>Startup offers can't be exchanged with the MBA Compensation &amp; Negotiation Tool.</strong> That tool has no equivalent for SAR stake, phantom equity, or KPI-weighted bonuses — this mode isn't bridgeable in either direction. Use Corporate mode if you need to transfer an offer.
+                    <strong>Startup offers can't be exchanged with the Comp Negotiation Tool.</strong> That tool has no equivalent for SAR stake, phantom equity, or KPI-weighted bonuses — this mode isn't bridgeable in either direction. Use Corporate mode if you need to transfer an offer.
                 </div>
                 <h3>Base Salary</h3>
                 <div class="form-group row">
@@ -402,7 +402,7 @@
                 <div class="counter-panel hidden" id="corp-counter-panel"></div>
 
                 <div class="import-box" style="border-color:#93C5FD;margin-top:20px;">
-                    <label style="text-transform:none;font-weight:bold;font-size:13px;color:#1E3A8A;">Send This Offer to the MBA Compensation &amp; Negotiation Tool</label>
+                    <label style="text-transform:none;font-weight:bold;font-size:13px;color:#1E3A8A;">Send This Offer to the Comp Negotiation Tool</label>
                     <p class="hint" style="margin-bottom:8px;">Copy this transfer text and paste it into that tool's "Bring In an Offer from the Offer Compensation Planner" box (Step 3). Vesting years, clawback terms, and tax rate for the counter now reflect what you've set in the counter-offer panel below, independent of the initial offer.</p>
                     <textarea id="export-text" rows="10" readonly style="font-family:monospace;font-size:11.5px;"></textarea>
                     <button class="btn-import" onclick="copyExportBlock()">Copy transfer text</button>
@@ -962,7 +962,7 @@
         } catch (e) { flashExport('Download unavailable in this environment'); }
     }
 
-    // ---------- Import handoff from MBA Compensation & Negotiation Tool ----------
+    // ---------- Import handoff from Comp Negotiation Tool ----------
     function importHandoff() {
         const text = document.getElementById('import-text').value;
         const msg = document.getElementById('import-msg');
@@ -1032,7 +1032,7 @@
         recalc();
     }
 
-    // ---------- Export handoff to MBA Compensation & Negotiation Tool ----------
+    // ---------- Export handoff to Comp Negotiation Tool ----------
     function buildExportBlock(cur) {
         const trigLabel = { vol: 'Voluntary resignation only', any: 'Any separation, including layoff', cause: 'For-cause termination only' };
         const basisLabel = { gross: 'Gross (pre-tax amount)', net: 'Net (after-tax amount received)' };
