@@ -1,4 +1,4 @@
-# MBA Compensation & Negotiation Tool
+# MBA Compensation & Negotiation Toolkit
 
 **Full-Time MBA Program · David Eccles School of Business**
 Version 1.4 · Web tool · Built from `MBA_Comp_Calculator.xlsx`
@@ -6,12 +6,12 @@ This document is both the **student user manual** and the **operational guide** 
 
 ---
 
-**▶ Live tool:** **[Comp Negotiation](https://coryjburk.github.io/toolkit-comp_negotiation/)**
+**▶ Live toolkit:** **[Comp Negotiation](https://coryjburk.github.io/toolkit-comp_negotiation/)**
 
 ---
 
 
-## 1. What this tool is
+## 1. What is this toolkit
 
 A single-file HTML tool that walks a student through six stages of a compensation negotiation:
 
