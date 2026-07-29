@@ -1,11 +1,11 @@
 # Comp Lifecycle Toolkit
 
 **Full-Time MBA Program · David Eccles School of Business**
-Version 1.0 · Three-tool web toolkit
+Version 1.1 · Three-tool web toolkit
 
-Three standalone tools covering the full arc of a compensation decision: **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
+Three standalone tools covering the full arc of a compensation decision — **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
 
-This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions - this document doesn't repeat those in depth, it explains how the three fit together and how to maintain the toolkit as a whole.
+This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions — this document doesn't repeat those in depth, it explains how the three fit together and how to maintain the toolkit as a whole.
 
 ---
 
@@ -17,7 +17,7 @@ This document is the **toolkit-level overview and operational guide**. Each indi
 
 | Step | Tool | Answers | Doc |
 |---|---|---|---|
-| 1. ID | **Compensation Intelligence Framework** | Which industry/role fits my goals, and roughly what does it pay? | `README_compensation-intelligence-framework-vc.md` |
+| 1. ID | **Compensation Intelligence Framework** | Which industry/role fits my goals, and roughly what does it pay? | `README_compensation_intelligence_framework.md` |
 | 2. Negotiate | **Comp Negotiation Tool** | What should I ask for, and can I practice saying it? | `README_comp_negotiation_tool.md` |
 | 3. Offer | **Offer Compensation Planner** | What is this specific offer actually worth? | `README_offer_compensation_planner.md` |
 
@@ -79,10 +79,14 @@ These are separate files from the live toolkit tools and are **not** kept in ver
 3. The three tools' transfer-text handoff works regardless of deployment details; the optional shared-profile auto-fill only works if all three are hosted together as shown here.
 
 ### Known gaps
-1. **Compensation Intelligence Framework (Tool 1) has no dedicated README yet** — it's the least-reviewed of the three; a deeper pass was deferred pending testing feedback on the other two.
+1. ~~Compensation Intelligence Framework (Tool 1) has no dedicated README yet~~ — resolved: see `README_compensation_intelligence_framework.md`. **Important:** this toolkit's CIF copy is a fork of a separately-owned, separately-hosted standalone tool that CJ's team maintains independently (its own repo, its own versioning, its own data-refresh cadence). The toolkit copy has one addition — a handoff card to the Comp Negotiation Tool — and is not automatically updated when the standalone original changes. See §0 of its README before assuming the two are interchangeable or in sync.
 2. **Offer Compensation Planner's standalone/teaching edition has no dedicated README yet** — exists as an HTML file only (see §3).
 3. **No version-number tracking at the toolkit level until now** — each tool's own README tracks its own version independently; this document introduces v1.0 as the toolkit-level baseline going forward.
 4. This document doesn't duplicate any individual tool's step-by-step usage instructions — see each tool's own README for that.
+
+---
+
+**v1.1 changes:** filled the Compensation Intelligence Framework README gap flagged in v1.0 — added `README_compensation_intelligence_framework.md` and updated §4's known-gaps entry to explain that this toolkit's CIF copy is a fork of a separately-owned standalone tool, not a synced copy of it.
 
 ---
 
