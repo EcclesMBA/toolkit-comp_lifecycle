@@ -3,9 +3,9 @@
 **Full-Time MBA Program · David Eccles School of Business**
 Version 1.0 · Three-tool web toolkit
 
-Three standalone tools covering the full arc of a compensation decision — **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
+Three standalone tools covering the full arc of a compensation decision: **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
 
-This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions — this document doesn't repeat those in depth, it explains how the three fit together and how to maintain the toolkit as a whole.
+This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions - this document doesn't repeat those in depth, it explains how the three fit together and how to maintain the toolkit as a whole.
 
 ---
 
