@@ -1,11 +1,8 @@
 # MBA Compensation & Negotiation Tool
 
 **Full-Time MBA Program · David Eccles School of Business**
-Version 1.2 · Web tool 
-
-**v1.2 changes:** removed all live API calls (no API key is used or required) — AI Practice is now copy-paste prompts run in the student's own AI chat, plus a response log with microphone dictation and a heuristic (keyword-based) scorer; Rubric rescaled to 0–5 per criterion (0–50 total); added a Tracker tab (Step 6) to save practice sessions over time; reworked Step 1 to work with zero sources, removed the pass/fail verification gate, and added a preset institution dropdown.
-
-This document is both the ** user manual** and the **operational guide** for whoever maintains this tool going forward.
+Version 1.4 · Web tool · Built from `MBA_Comp_Calculator.xlsx`
+This document is both the **student user manual** and the **operational guide** for whoever maintains this tool going forward.
 
 ---
 
@@ -111,7 +108,7 @@ The mic button uses the browser's native `SpeechRecognition` / `webkitSpeechReco
 
 ### Matching the playbook family conventions
 - Footer text and copyright line match [[playbook-footer]] exactly — do not edit ad hoc; update the shared footer text in one place if the standard ever changes.
-- Version tag in the top-right of the masthead (`v1.2 · web`) should be bumped on any functional change, following the same versioning convention as the PE/PM/TMAY tools.
+- Version tag in the top-right of the masthead (`v1.4 · web`) should be bumped on any functional change, following the same versioning convention as the PE/PM/TMAY tools.
 - Utah red (`#CC0000`) and EB Garamond/DM Sans, matching the Planner and CIF tools, since v1.1.
 
 ### Known open items (carried into the next revision)
@@ -123,6 +120,18 @@ The mic button uses the browser's native `SpeechRecognition` / `webkitSpeechReco
 6. The clawback fields (trigger + repayment basis) are a lighter-weight port of the Planner's full tiered clawback schedule — still no leave-before-N-months tier editor here.
 7. **New in v1.2:** the heuristic scorer's `SCORE_PATTERNS` are a first-pass keyword list, not validated against real student transcripts — expect to revise after seeing actual usage.
 8. **New in v1.2:** no soft nudge exists yet for zero-source usage (see §3 above) — worth considering if data quality turns out to be a real problem in practice.
+9. ~~Remaining after v1.3: the Planner's counter-offer model only supports base, bonus %, signing bonus, and equity~~ — resolved in v1.4: the counter-offer panel now has independent vesting years, clawback cash/trigger/basis, and tax rate, matching Tool 1's model. The one remaining asymmetry: Tool 1 has no distinct "clawback cash amount" input, so import into the Planner assumes it equals the counter's signing bonus — surfaced in the import message, not hidden.
+10. **Remaining:** Compensation Intelligence Framework's advisory handoff (industry pick + TCV estimate) is still one-directional and unparsed by design — it isn't offer-shaped data, so there's nothing to build a reverse parser against without first deciding what a "CIF offer" would even mean.
+
+---
+
+**v1.4 changes:** the Offer Compensation Planner's Corporate mode counter-offer panel now has independent vesting schedule, clawback cash/trigger/basis, and tax rate — it no longer silently mirrors the initial offer's terms. Both tools' handoff blocks and parsers were updated to carry these counter-specific fields in both directions. Tool 1 has no distinct "clawback cash amount" field, so importing into the Planner assumes the counter's clawback cash equals its signing bonus — flagged in the import message, not applied silently.
+
+**v1.3 changes:** the handoff with the Offer Compensation Planner is now bidirectional and schema-tagged (`comp-handoff-v2`) — Step 3 has both an outbound block (now covering bonus %, clawback trigger/basis in addition to the original fields) and a new inbound import box that parses a block copied from the Planner, including counter-offer fields where the Planner's model actually supports them. Startup-mode offers are explicitly called out as permanently non-bridgeable in both tools, rather than silently failing to match.
+
+**v1.2 changes:** removed all live API calls (no API key is used or required) — AI Practice is now copy-paste prompts run in the student's own AI chat, plus a response log with microphone dictation and a heuristic (keyword-based) scorer; Rubric rescaled to 0–5 per criterion (0–50 total); added a Tracker tab (Step 6) to save practice sessions over time; reworked Step 1 to work with zero sources, removed the pass/fail verification gate, and added a preset institution dropdown.
+
+**v1.1 changes:** standardized on Utah red (`#CC0000`) and EB Garamond/DM Sans to match the Offer Compensation Planner and Compensation Intelligence Framework; added clawback trigger/repayment-basis fields to Step 3; wired into a shared cross-tool offer profile (see §4 below) so a student's numbers can carry over into the Offer Compensation Planner without re-typing.
 
 ---
 
