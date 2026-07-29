@@ -6,14 +6,14 @@ This document is both the **student user manual** and the **operational guide** 
 
 ---
 
-**▶ Live tool:** **[Comp Negotiation](https://coryjburk.github.io/comp_negotiation/)**
+**▶ Live tool:** **[Comp Negotiation](https://coryjburk.github.io/toolkit-comp_negotiation/)**
 
 ---
 
 
 ## 1. What this tool is
 
-A single-file HTML tool (`mba_comp_negotiation_tool.html`) that walks a student through six stages of a compensation negotiation:
+A single-file HTML tool that walks a student through six stages of a compensation negotiation:
 
 1. **Sources** — optionally enter benchmark salary data (works with zero sources)
 2. **Triangulation** — calculate a defensible base salary target, floor, and stretch
