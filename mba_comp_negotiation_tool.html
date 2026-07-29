@@ -123,7 +123,7 @@
       <h1>Compensation &amp; Negotiation Tool</h1>
       <p class="subtitle">Triangulate a defensible salary target, compare competing offers on a risk-adjusted basis, then practice the conversation before you're in it.</p>
     </div>
-    <span class="version-tag">v1.4 · web</span>
+    <span class="version-tag">v1.7 · web</span>
   </div>
 </div>
 
@@ -138,6 +138,7 @@
 
     <div class="card">
       <h3>Sources</h3>
+      <p class="hint">Each source carries a preset weight based on how verifiable it is — pick a source and its weight shows automatically underneath. Institutional and government data count more toward your baseline than crowdsourced or self-reported figures, because they're harder to game and easier to check.</p>
       <div id="attestRows"></div>
       <button class="ghost" id="addSourceBtn">+ Add a source</button>
     </div>
@@ -147,8 +148,9 @@
         <h3>Baseline</h3>
         <table>
           <tr><td>Sources entered</td><td class="num" id="sourceCount">0 of 3</td></tr>
-          <tr><td>Average of entered sources</td><td class="num" id="valWeighted">—</td></tr>
+          <tr><td>Weighted average of entered sources</td><td class="num" id="valWeighted">—</td></tr>
         </table>
+        <p class="hint" style="margin-top:8px;">This is where the weights actually matter: a source weighted 1.00 pulls the average toward its number twice as hard as one weighted 0.50. Two sources of equal dollar value but different weights don't count equally.</p>
         <div class="field-row" style="margin-top:14px;">
           <label class="field">Baseline market salary — used in Step 2 (editable)</label>
           <input type="number" id="manualBaseline" value="125000">
@@ -159,10 +161,15 @@
       <div class="card">
         <h3>Note</h3>
         <div class="flag">
-          <strong>Note —</strong> the 88% floor is a reference point, not an automatic walk-away number. Weigh total compensation, role quality, alternatives, and career capital alongside it.
+          <strong>Why 88% / 110%?</strong> These bands aren't a market statistic — they're a negotiation heuristic.
+          <ul style="margin:8px 0 8px 18px;padding:0;">
+            <li style="margin-bottom:6px;">The <strong>88% floor</strong> approximates a walk-away sanity check: a number meaningfully below target that should prompt you to pause and reassess, not an offer to reject automatically.</li>
+            <li>The <strong>110% stretch</strong> is a deliberately ambitious opening ask — high enough to leave room to move down to your actual target without looking unreasonable, a standard anchoring tactic in negotiation.</li>
+          </ul>
+          Treat both as reference points to reason from, not thresholds the tool is telling you to enforce.
         </div>
         <div class="flag" style="margin-top:10px;">
-          <strong>Accountability —</strong> this tool does not verify that a source, URL, or dollar figure you enter is accurate. That responsibility is yours — double-check anything you plan to cite in an actual negotiation.
+          <strong>Accountability:</strong> This tool does not verify that a source, URL, or dollar figure you enter is accurate. That responsibility is yours. Double-check anything you plan to cite in an actual negotiation.
         </div>
       </div>
     </div>
@@ -180,7 +187,6 @@
         <div class="field-row"><label class="field">Experience premium rate (per year)</label><input type="number" id="premRate" value="0.015" step="0.001"></div>
         <div class="field-row"><label class="field">Experience premium cap</label><input type="number" id="premCap" value="0.075" step="0.001"></div>
         <div class="field-row"><label class="field">Geographic differential</label><input type="number" id="geoDiff" value="0.05" step="0.001"></div>
-        <p class="hint">Use BEA Regional Price Parities or BLS OEWS wage data for the geographic differential — not a local CPI index.</p>
       </div>
       <div class="card">
         <h3>Intermediate calculation</h3>
@@ -189,8 +195,16 @@
           <tr><td>Uncapped experience premium</td><td class="num" id="tUncapped">—</td></tr>
           <tr><td>Applied experience premium (capped)</td><td class="num" id="tApplied">—</td></tr>
         </table>
-        <p class="hint" style="margin-top:12px;">The experience premium is a teaching assumption, not a labor-market rule. Apply it only to direct, differentiating experience above what the role already expects.</p>
       </div>
+    </div>
+
+    <div class="card">
+      <h3>What these inputs mean</h3>
+      <p class="hint" style="margin-bottom:6px;"><strong>Experience (years):</strong> years of direct, differentiating experience above what this role already expects — not your total years worked.</p>
+      <p class="hint" style="margin-bottom:6px;"><strong>Experience premium rate:</strong> how much each qualifying year adds to your baseline, before the cap is applied. Default 1.5%/year.</p>
+      <p class="hint" style="margin-bottom:6px;"><strong>Experience premium cap:</strong> the maximum total premium your experience can add, no matter how many years you claim. Default 7.5%.</p>
+      <p class="hint" style="margin-bottom:6px;"><strong>Geographic differential:</strong> adjusts your baseline for cost-of-labor differences in your target city. Default 5% — use BEA Regional Price Parities or BLS OEWS wage data, not a local CPI index.</p>
+      <p class="hint">The experience premium is a teaching assumption, not a labor-market rule. Apply it only to direct, differentiating experience above what the role already expects.</p>
     </div>
 
     <div class="card">
@@ -200,6 +214,12 @@
         <div class="out-cell target"><div class="lbl">Triangulated target base</div><div class="val" id="outTarget">—</div></div>
         <div class="out-cell stretch"><div class="lbl">Stretch base (110%)</div><div class="val" id="outStretch">—</div></div>
       </div>
+      <p class="hint" style="margin-top:12px;">
+        <strong>What this is:</strong> three reference points derived from one calculation, not three independent numbers.
+        <strong>How it's derived:</strong> Target = Baseline × (1 + capped experience premium) × (1 + geographic differential); Floor = Target × 0.88; Stretch = Target × 1.10.
+        <strong>Why it matters:</strong> Target is your primary ask, grounded in the baseline and adjustments above. Floor is a walk-away sanity check, not a number to volunteer. Stretch is your opening ask, leaving room to negotiate down to Target without looking unreasonable.
+        <strong>How to use it:</strong> open near Stretch, defend Target with the reasoning above, and treat Floor as a private signal to pause and reassess — never state it out loud to a recruiter.
+      </p>
     </div>
   </section>
 
@@ -210,6 +230,7 @@
 
     <div class="card">
       <h3>Terms</h3>
+      <p class="hint">Fill in the initial offer column with what's on your actual offer letter. The counter column's base salary auto-fills from your Step 2 target; everything else you set yourself for what you plan to ask for.</p>
       <table id="offerTable">
         <thead><tr><th>Metric</th><th class="num">Risk weight</th><th class="num">Initial offer</th><th class="num">Student counter</th><th class="num">Variance</th></tr></thead>
         <tbody></tbody>
@@ -241,17 +262,17 @@
     </div>
 
     <div class="card">
-      <h3>Handoff to Offer Compensation Planner</h3>
-      <p class="hint">Copy this block and paste it into the Planner's import box (Corporate mode) — it auto-fills the matching fields, initial <em>and</em> counter. Corporate mode only: the Planner's Startup mode (SAR stake, phantom equity, KPI-weighted bonus) has no equivalent here and can't be exchanged either direction.</p>
+      <h3>Send This Offer to the Offer Compensation Planner</h3>
+      <p class="hint"><strong>This sends data to the next step</strong> — a separate tool, not the box below on this page. Copy this transfer text, then open the Offer Compensation Planner and paste it into <em>its</em> "Import from the MBA Compensation &amp; Negotiation Tool" box (visible in that tool's Corporate mode) — it auto-fills the matching fields there, initial <em>and</em> counter. Corporate mode only: the Offer Compensation Planner's Startup mode (SAR stake, phantom equity, KPI-weighted bonus) has no equivalent here and can't be exchanged either direction.</p>
       <textarea id="handoffBlock" rows="12" readonly style="font-family:var(--mono);font-size:12.5px;"></textarea>
-      <button class="ghost" id="copyHandoffBtn" style="margin-top:10px;">Copy handoff block</button>
+      <button class="ghost" id="copyHandoffBtn" style="margin-top:10px;">Copy transfer text</button>
       <span id="handoffMsg" class="hint" style="margin-left:10px;"></span>
     </div>
 
     <div class="card">
-      <h3>Import from Offer Compensation Planner</h3>
-      <p class="hint">Paste a handoff block copied from the Planner's Corporate mode to fill the fields above.</p>
-      <textarea id="importFromPlanner" rows="6" placeholder="Paste handoff block here…" style="font-family:var(--mono);font-size:12.5px;"></textarea>
+      <h3>Bring In an Offer from the Offer Compensation Planner</h3>
+      <p class="hint"><strong>This receives data — the reverse direction from the box above.</strong> Paste here the transfer text copied from the Offer Compensation Planner's own export box (its Corporate mode). Parsing it fills the Terms and Clawback fields above, on this page, with whatever the Offer Compensation Planner sent.</p>
+      <textarea id="importFromPlanner" rows="6" placeholder="Paste transfer text here…" style="font-family:var(--mono);font-size:12.5px;"></textarea>
       <button class="ghost" id="importPlannerBtn" style="margin-top:10px;">Parse &amp; fill</button>
       <span id="importPlannerMsg" class="hint" style="margin-left:10px;"></span>
     </div>
@@ -277,21 +298,14 @@
   <!-- ============ TAB 4: AI PRACTICE ============ -->
   <section class="panel" id="tab-ai">
     <h2>Step 4 — Practice With AI</h2>
-    <p class="section-note">No API key is used by this tool. Copy the prompt below into Claude, ChatGPT, or any AI assistant you already have access to, then log your own responses here — by typing or by speaking — so they can be scored.</p>
+    <p class="section-note">No API key is used by this tool. Try your response cold first, then get AI feedback — that order matters: attempting it yourself before seeing coaching is what makes the improvement after feedback visible and real.</p>
 
     <div class="prompt-tabs" id="promptTabs"></div>
     <div id="promptDescription" class="hint" style="margin-bottom:10px;"></div>
 
     <div class="card">
-      <h3>Prompt to copy</h3>
-      <textarea id="promptText" rows="8" readonly style="font-family:var(--sans);"></textarea>
-      <button class="ghost" id="copyPromptBtn" style="margin-top:10px;">Copy prompt</button>
-      <span id="copyMsg" class="hint" style="margin-left:10px;"></span>
-    </div>
-
-    <div class="card">
-      <h3>Your practice response</h3>
-      <p class="hint">Type what you'd say, or use the microphone to dictate it (Chrome desktop works best — not all browsers support voice input).</p>
+      <h3>A. Practice your response</h3>
+      <p class="hint">Type what you'd say, or use the microphone to dictate it (Chrome desktop works best — not all browsers support voice input). Try this on your own first — before any AI coaching — so you have something honest to compare against once you get feedback below. If you'd rather have direction or assistance first, skip ahead to B and C, then come back here.</p>
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
         <button class="ghost" id="micBtn">🎤 Start speaking</button>
         <button class="ghost" id="clearResponseBtn">Clear</button>
@@ -300,12 +314,21 @@
     </div>
 
     <div class="card">
-      <h3>Optional — paste your external AI transcript</h3>
-      <textarea id="externalTranscript" rows="6" placeholder="Paste your full conversation from Claude/ChatGPT here (optional) — it will be scored alongside your response above."></textarea>
+      <h3>B. Copy this prompt</h3>
+      <textarea id="promptText" rows="8" readonly style="font-family:var(--sans);"></textarea>
+      <button class="ghost" id="copyPromptBtn" style="margin-top:10px;">Copy prompt</button>
+      <span id="copyMsg" class="hint" style="margin-left:10px;"></span>
+      <p class="hint" style="margin-top:8px;">Paste this into Claude, ChatGPT, or any AI assistant you already have — then come back here once the conversation's done.</p>
     </div>
 
     <div class="card">
-      <h3>Score this practice</h3>
+      <h3>C. Paste your AI conversation transcript</h3>
+      <p class="hint"><strong>Do this — it's where the scoring actually gets its signal.</strong> Paste your full conversation from Claude/ChatGPT here. Without it, the scorer in step D only has your own logged lines to work with, which is a much thinner basis for a score.</p>
+      <textarea id="externalTranscript" rows="6" placeholder="Paste your full conversation from Claude/ChatGPT here — this is the main input the scorer uses."></textarea>
+    </div>
+
+    <div class="card">
+      <h3>D. Score this practice</h3>
       <p class="hint">Heuristic keyword-based scoring — a starting estimate, not a substitute for your own or a coach's judgment. Every score lands in Step 5, where you can review and adjust it.</p>
       <button class="send" id="scoreBtn">Score my response →</button>
       <div id="scoreSummary" style="margin-top:14px;"></div>
@@ -316,6 +339,9 @@
   <section class="panel" id="tab-rubric">
     <h2>Roleplay Evaluation Rubric</h2>
     <p class="section-note">Score your own transcript (or have a peer/coach score it) before submitting. Scored 0–5 per criterion.</p>
+    <div class="flag" style="margin-bottom:16px;">
+      <strong>How scores get here — both ways work:</strong> click <strong>Score my response</strong> in Step 4 and these fill in automatically from a keyword scan of your transcript/response (a rough estimate, not a judgment call) — or skip that and fill in every row yourself, or have a coach/peer do it. Auto-filled scores are meant to be reviewed and changed, not accepted as-is.
+    </div>
     <div class="card">
       <table id="rubricTable">
         <thead><tr><th>Criterion</th><th>0 — Missing</th><th>2–3 — Developing</th><th>4–5 — Proficient</th><th class="num">Score (0–5)</th></tr></thead>
@@ -379,18 +405,21 @@ function selectTab(id){
 }
 selectTab('attestation');
 
+// Preset reliability weights: institutional/government sources count more toward the baseline
+// than crowdsourced or self-reported ones, because they're harder to game and easier to verify.
 const INSTITUTIONS = [
-  'Eccles MBA Employment Report',
-  'NACE Salary Survey',
-  'BLS Occupational Employment & Wage Statistics (OEWS)',
-  'U.S. DOL H-1B / LCA Database',
-  'Levels.fyi',
-  'Glassdoor',
-  'LinkedIn Salary',
-  'PayScale',
-  'Robert Half Salary Guide',
-  'Other (type below)'
+  { name: 'Eccles MBA Employment Report', weight: 1.00, tier: 'Institutional' },
+  { name: 'NACE Salary Survey', weight: 0.90, tier: 'Professional survey' },
+  { name: 'BLS Occupational Employment & Wage Statistics (OEWS)', weight: 0.90, tier: 'Government' },
+  { name: 'U.S. DOL H-1B / LCA Database', weight: 0.85, tier: 'Government' },
+  { name: 'Levels.fyi', weight: 0.70, tier: 'Crowdsourced, offer-verified' },
+  { name: 'Robert Half Salary Guide', weight: 0.65, tier: 'Staffing-firm published' },
+  { name: 'Glassdoor', weight: 0.60, tier: 'Crowdsourced, self-reported' },
+  { name: 'PayScale', weight: 0.60, tier: 'Survey-based aggregator' },
+  { name: 'LinkedIn Salary', weight: 0.55, tier: 'Self-reported estimate' },
+  { name: 'Other (type below)', weight: 0.50, tier: 'Unverified — lowest weight until you tell us otherwise' },
 ];
+function institutionByName(name){ return INSTITUTIONS.find(i=>i.name===name) || INSTITUTIONS[INSTITUTIONS.length-1]; }
 
 /* ---------------- State ---------------- */
 const state = {
@@ -415,12 +444,13 @@ function renderAttest(){
   const wrap = document.getElementById('attestRows');
   wrap.innerHTML='';
   state.attest.forEach((row,i)=>{
+    const inst = institutionByName(row.institution);
     const div = document.createElement('div');
-    div.style.cssText='display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:14px;';
+    div.style.cssText='display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:6px;';
     div.innerHTML = `
       <div>
         <label class="field">Source ${i+1}</label>
-        <select data-i="${i}" data-f="institution">${INSTITUTIONS.map(n=>`<option value="${n}"${row.institution===n?' selected':''}>${n}</option>`).join('')}</select>
+        <select data-i="${i}" data-f="institution">${INSTITUTIONS.map(n=>`<option value="${n.name}"${row.institution===n.name?' selected':''}>${n.name}</option>`).join('')}</select>
         ${row.institution==='Other (type below)' ? `<input type="text" data-i="${i}" data-f="customName" placeholder="Source name" value="${(row.customName||'').replace(/"/g,'&quot;')}" style="margin-top:6px;">` : ''}
       </div>
       <div><label class="field">Benchmark ($)</label><input type="number" data-i="${i}" data-f="value" value="${row.value||''}"></div>
@@ -428,6 +458,11 @@ function renderAttest(){
       <div><button class="ghost" data-i="${i}" data-action="remove">Remove</button></div>
     `;
     wrap.appendChild(div);
+    const badge = document.createElement('p');
+    badge.className = 'hint';
+    badge.style.cssText = 'margin:2px 0 14px;';
+    badge.innerHTML = `<strong>Weight: ${inst.weight.toFixed(2)}×</strong> — ${inst.tier}. Higher-weighted sources count for more in the average below.`;
+    wrap.appendChild(badge);
   });
   wrap.querySelectorAll('select,input').forEach(el=>{
     el.addEventListener(el.tagName==='SELECT'?'change':'input', e=>{
@@ -454,7 +489,8 @@ document.getElementById('addSourceBtn').addEventListener('click', ()=>{
 document.getElementById('useAverageBtn').addEventListener('click', ()=>{
   const entered = state.attest.filter(r=>r.value && parseFloat(r.value)>0);
   if(entered.length){
-    const avg = entered.reduce((s,r)=>s+parseFloat(r.value),0)/entered.length;
+    const totalW = entered.reduce((s,r)=>s+institutionByName(r.institution).weight,0);
+    const avg = entered.reduce((s,r)=>s+parseFloat(r.value)*institutionByName(r.institution).weight,0)/(totalW||1);
     document.getElementById('manualBaseline').value = Math.round(avg);
     recalcAll();
   }
@@ -527,9 +563,10 @@ const round100 = n => Math.round(n/100)*100;
 let LAST = {}; // holds latest computed outputs, used to seed AI prompts
 
 function recalcAll(){
-  // Sources (optional) — compute average of whatever's entered, no gating
+  // Sources (optional) — weighted average of whatever's entered, no gating
   const entered = state.attest.filter(r=>r.value && parseFloat(r.value)>0);
-  const avg = entered.length ? entered.reduce((s,r)=>s+parseFloat(r.value),0)/entered.length : null;
+  const totalW = entered.reduce((s,r)=>s+institutionByName(r.institution).weight,0);
+  const avg = entered.length ? entered.reduce((s,r)=>s+parseFloat(r.value)*institutionByName(r.institution).weight,0)/(totalW||1) : null;
   document.getElementById('sourceCount').textContent = entered.length + ' of 3';
   document.getElementById('valWeighted').textContent = avg!=null ? fmt$(avg) : '—';
 
@@ -707,7 +744,7 @@ function grabText(text, label){
 document.getElementById('importPlannerBtn').addEventListener('click', ()=>{
   const text = document.getElementById('importFromPlanner').value;
   const msg = document.getElementById('importPlannerMsg');
-  if(!text.trim()){ msg.textContent = 'Paste a handoff block first.'; return; }
+  if(!text.trim()){ msg.textContent = 'Paste transfer text first.'; return; }
   if(!/Schema\s*:\s*comp-handoff-v2/i.test(text)){
     msg.textContent = 'No matching schema tag found — attempting a best-effort parse anyway.';
   }
@@ -729,9 +766,9 @@ document.getElementById('importPlannerBtn').addEventListener('click', ()=>{
   const ccb = grabText(text, 'Clawback basis \\(counter\\)'); if(ccb){ state.offer.clawbackBasis.counter = /gross/i.test(ccb)?'gross':'net'; filled++; }
   const ctx = grabField(text, 'Tax rate \\(counter\\)'); if(ctx!=null){ state.offer.taxRate.counter=ctx/100; filled++; }
   if(filled===0){
-    msg.textContent = 'Couldn\u2019t find matching fields — check the block matches the expected format.';
+    msg.textContent = 'Couldn\u2019t find matching fields — check the transfer text matches the expected format.';
   } else {
-    msg.textContent = `Filled ${filled} field(s) — review before relying on them. Counter base still auto-derives from your Step 2 target, not from the pasted block.`;
+    msg.textContent = `Filled ${filled} field(s) — review before relying on them. Counter base still auto-derives from your Step 2 target, not from the pasted transfer text.`;
     renderOfferTable();
     recalcAll();
   }
