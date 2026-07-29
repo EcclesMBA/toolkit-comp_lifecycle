@@ -17,7 +17,7 @@ This document is the **toolkit-level overview and operational guide**. Each indi
 
 | Step | Tool | Answers | Doc |
 |---|---|---|---|
-| 1. ID | **Compensation Intelligence Framework** | Which industry/role fits my goals, and roughly what does it pay? | *(dedicated README not yet built — see §5)* |
+| 1. ID | **Compensation Intelligence Framework** | Which industry/role fits my goals, and roughly what does it pay? | `README_compensation-intelligence-framework-vc.md` |
 | 2. Negotiate | **Comp Negotiation Tool** | What should I ask for, and can I practice saying it? | `README_comp_negotiation_tool.md` |
 | 3. Offer | **Offer Compensation Planner** | What is this specific offer actually worth? | `README_offer_compensation_planner.md` |
 
