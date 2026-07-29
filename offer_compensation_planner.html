@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Compensation Planner · Eccles Full-Time MBA</title>
+    <style>
+        :root {
+            --primary: #CC0000; --primary-hover: #A30000; --dark: #222222;
+            --gray: #E0E0E0; --border: #CCCCCC; --accent-bg: #FFF3F3;
+            --cash: #1E3A8A; --benefit: #047857; --equity: #92400E;
+        }
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #F4F4F5; color: var(--dark); line-height: 1.5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 20px; margin-bottom: 20px; }
+        header h1 { margin: 0; color: var(--dark); font-size: 28px; }
+        header p { margin: 5px 0 0 0; color: #666; font-size: 16px; }
+        .eyebrow { font-size: 13px; font-weight: bold; color: var(--primary); letter-spacing: 0.4px; margin-bottom: 6px; }
+        .disclaimer { background: #FFFBEB; border: 1px solid #FCD34D; color: #78350F; padding: 12px 16px; border-radius: 6px; font-size: 13px; margin-bottom: 25px; }
+        .disclaimer strong { display: block; margin-bottom: 3px; }
+        .mode-selector { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .btn-mode { background: white; border: 2px solid var(--border); padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .btn-mode.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media (max-width: 900px) { .grid-layout { grid-template-columns: 1fr; } }
+        .panel { border: 1px solid var(--border); padding: 20px; border-radius: 6px; background: white; }
+        .panel h3 { margin-top: 20px; margin-bottom: 8px; border-bottom: 1px solid var(--gray); padding-bottom: 8px; color: #111; font-size: 16px; }
+        .panel h3:first-child { margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        .form-group.row { display: flex; gap: 10px; }
+        .form-group.row > div { flex: 1; }
+        label { display: block; font-weight: 600; font-size: 13px; color: #444; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .hint { font-size: 11px; color: #888; text-transform: none; letter-spacing: 0; font-weight: 400; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px; font-size: 15px; transition: border 0.2s; background-color: #FFFDF7; font-family: inherit; }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; background-color: #fff; }
+        .info-blockquote { background-color: var(--accent-bg); border-left: 4px solid var(--primary); padding: 12px; font-size: 13px; color: #555; border-radius: 0 4px 4px 0; margin-top: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 14px; }
+        th, td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--gray); }
+        th:first-child, td:first-child { text-align: left; }
+        th { background-color: #EEEEEE; color: #333; font-weight: bold; }
+        tr.section-head td { background: #F1F5F9; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; color: #475569; border-top: 2px solid #CBD5E1; }
+        tr.section-head.cash td { color: var(--cash); }
+        tr.section-head.benefit td { color: var(--benefit); }
+        tr.section-head.equity td { color: var(--equity); }
+        tr.section-head.claw td { color: #7C3AED; }
+        tr.section-head.retain td { color: #B45309; }
+        tr.subtotal-row { font-weight: bold; background-color: #F8FAFC; }
+        tr.aftertax-row td { color: #059669; font-style: italic; }
+        .equity-callout { background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 6px; padding: 14px; margin-top: 15px; font-size: 13px; color: #78350F; }
+        .equity-callout .big { font-size: 22px; font-weight: bold; color: var(--equity); display: block; margin: 4px 0; }
+        .hidden { display: none !important; }
+        .note { font-size: 12px; color: #666; margin-top: 15px; line-height: 1.5; }
+        .tier-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 13px; color: #444; }
+        .tier-row input { width: 70px; padding: 6px 8px; text-align: center; }
+        .tier-row .btn-x { flex: 0 0 auto; width: auto; background: #FEE2E2; color: #B91C1C; border: 1px solid #FCA5A5; border-radius: 4px; padding: 4px 9px; cursor: pointer; font-weight: bold; }
+        .btn-add { border-radius: 4px; padding: 8px 14px; font-size: 13px; font-weight: bold; cursor: pointer; margin-top: 4px; }
+        .btn-add.claw { background: #EDE9FE; color: #5B21B6; border: 1px solid #C4B5FD; }
+        .btn-add.retain { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+        .btn-add.benefit { background: #DCFCE7; color: #166534; border: 1px solid #86EFAC; }
+        .empty-msg { font-size: 12px; color: #999; }
+        /* Counter-offer */
+        .btn-counter { background: var(--cash); color: #fff; border: none; border-radius: 6px; padding: 11px 16px; font-size: 14px; font-weight: bold; cursor: pointer; width: 100%; }
+        .counter-panel { margin-top: 12px; padding: 14px; border: 1px dashed #93C5FD; border-radius: 6px; background: #F8FAFF; }
+        .counter-panel .reset { background: #E0E7FF; color: #3730A3; border: 1px solid #C7D2FE; border-radius: 4px; padding: 7px 12px; font-size: 12px; cursor: pointer; font-weight: bold; width: auto; }
+        .summary-block { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 6px; padding: 12px 14px; margin-bottom: 16px; font-size: 13px; color: #1E3A8A; }
+        .counter-wrap { border: 2px solid #C7D2FE; border-radius: 6px; padding: 14px; margin: 16px 0; background: #F8FAFF; }
+        .counter-wrap h4 { margin: 0 0 6px; color: #3730A3; font-size: 15px; }
+        td.dpos { color: #059669; font-weight: bold; }
+        td.dneg { color: #DC2626; font-weight: bold; }
+        tr.headline-row { font-weight: bold; background: #EEF2FF; border-top: 2px solid #6366F1; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        .export-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+        .btn-export { background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1; border-radius: 5px; padding: 7px 12px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .btn-export:hover { background: #E2E8F0; }
+        .export-msg { font-size: 12px; color: #059669; font-weight: bold; }
+        .chk-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .chk-row .chk-label { flex: 1; font-size: 13px; color: #444; }
+        .chk-row select { width: auto; flex: 0 0 128px; padding: 6px; }
+        .chk-row input { flex: 1; padding: 6px 8px; }
+        tr.section-head.chk td { color: #0F766E; }
+        .print-only { display: none; }
+        .totals-big { font-size: 15px; }
+        .totals-big strong { font-size: 20px; }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .mode-selector, .toolbar, .saves-drawer, .export-bar, .btn-counter, .btn-add, .btn-x { display: none !important; }
+            .grid-layout { grid-template-columns: 1fr; }
+            .grid-layout .panel:first-child { display: none; }
+            .container { box-shadow: none; padding: 0; max-width: none; }
+            .print-only { display: block; }
+            .panel { border: none; padding: 0; }
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; }
+            .equity-callout, .info-blockquote, .summary-block, .counter-wrap { page-break-inside: avoid; }
+        }
+        .toolbar { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+        .save-indicator { font-size: 12px; font-weight: bold; }
+        .save-indicator.ok { color: #059669; }
+        .save-indicator.warn { color: #B45309; }
+        .btn-toolbar { background: #EFF6FF; color: #1E3A8A; border: 1px solid #BFDBFE; border-radius: 6px; padding: 8px 14px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .btn-toolbar:hover { background: #DBEAFE; }
+        .saves-drawer { max-width: 1200px; margin: 0 auto 20px; border: 1px solid #BFDBFE; border-radius: 8px; padding: 14px; background: #F8FAFF; }
+        .saves-save-row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+        .saves-save-row input { flex: 1; min-width: 200px; padding: 9px; border: 1px solid #CBD5E1; border-radius: 5px; }
+        .btn-save-current { background: #1E3A8A; color: #fff; border: none; border-radius: 5px; padding: 9px 14px; font-weight: bold; font-size: 13px; cursor: pointer; }
+        #saves-msg { font-size: 12px; color: #059669; font-weight: bold; }
+        .save-item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 10px; border: 1px solid #E2E8F0; border-radius: 6px; background: #fff; margin-bottom: 8px; }
+        .save-meta { display: flex; flex-direction: column; }
+        .save-name { font-weight: bold; font-size: 14px; color: #1E293B; }
+        .save-date { font-size: 11px; color: #64748B; }
+        .save-actions button { background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 4px; padding: 6px 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-left: 6px; }
+        .save-actions button.del { background: #FEE2E2; color: #B91C1C; border-color: #FCA5A5; }
+        .btn-reset { background: #fff; color: #B91C1C; border: 1px solid #FCA5A5; border-radius: 6px; padding: 8px 16px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .btn-reset:hover { background: #FEF2F2; }
+        .import-box { border: 2px dashed #93C5FD; border-radius: 6px; padding: 14px; background: #F8FAFF; margin-bottom: 20px; }
+        .import-box textarea { min-height: 90px; font-family: monospace; font-size: 12px; }
+        .btn-import { background: #1E3A8A; color: #fff; border: none; border-radius: 5px; padding: 9px 14px; font-weight: bold; font-size: 13px; cursor: pointer; margin-top: 8px; }
+        #import-msg { font-size: 12px; font-weight: bold; margin-left: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="eyebrow">Full-Time MBA Program &middot; David Eccles School of Business</div>
+        <h1>Offer Compensation Planner</h1>
+        <p>Model an offer, plan a counter-offer, and see the numbers to negotiate from</p>
+    </header>
+
+    <div class="disclaimer">
+        <strong>Read before you rely on these numbers</strong>
+        All figures are estimates for discussion only and are <strong>pre-tax unless a tax rate is entered</strong>. Equity figures are illustrative and contingent — they are not guaranteed cash. This tool is not financial, tax, or legal advice. Always verify specifics against your written offer letter.
+    </div>
+
+    <div class="mode-selector">
+        <button class="btn-mode active" id="btn-startup" aria-pressed="true" onclick="switchMode('startup')">Startup / Early-Stage Offer</button>
+        <button class="btn-mode" id="btn-corporate" aria-pressed="false" onclick="switchMode('corporate')">Traditional Corporate Offer</button>
+    </div>
+    <div class="toolbar">
+        <span id="save-indicator" class="save-indicator"></span>
+        <button class="btn-toolbar" id="saves-btn" aria-expanded="false" aria-controls="saves-drawer" onclick="toggleSavesDrawer()">Saved negotiations (<span id="saves-count">0</span>)</button>
+        <button class="btn-reset" onclick="resetAll()" title="Clear the current form (saved negotiations are kept)">Reset current form</button>
+    </div>
+    <div id="saves-drawer" class="saves-drawer hidden">
+        <div class="saves-save-row">
+            <input type="text" id="save-name" placeholder="Name this negotiation (e.g. Acme — round 2)" aria-label="Name this negotiation">
+            <button class="btn-save-current" onclick="saveNegotiation()">Save current</button>
+            <span id="saves-msg" aria-live="polite"></span>
+        </div>
+        <div id="saves-list"></div>
+    </div>
+
+    <div class="grid-layout">
+        <div class="panel">
+            <div class="import-box" id="import-box-corp">
+                <label style="text-transform:none;font-weight:bold;font-size:13px;color:#1E3A8A;">Import from the MBA Compensation &amp; Negotiation Tool</label>
+                <p class="hint" style="margin-bottom:8px;">Paste the handoff block you copied from that tool's Offer Comparison tab (Corporate mode only — the field sets match). Fills base, signing, bonus %, equity, vesting, clawback trigger/basis, and tax rate for both the initial offer and counter.</p>
+                <textarea id="import-text" placeholder="Paste handoff block here…"></textarea>
+                <button class="btn-import" onclick="importHandoff()">Parse &amp; fill corporate fields</button>
+                <span id="import-msg"></span>
+            </div>
+            <!-- ================= STARTUP INPUTS ================= -->
+            <div id="inputs-startup">
+                <div class="note" style="background:#FFF3F3;border-left:4px solid #CC0000;padding:10px 12px;border-radius:0 4px 4px 0;margin-bottom:15px;">
+                    <strong>Startup offers can't be exchanged with the MBA Compensation &amp; Negotiation Tool.</strong> That tool has no equivalent for SAR stake, phantom equity, or KPI-weighted bonuses — this mode isn't bridgeable in either direction. Use Corporate mode if you need the handoff.
+                </div>
+                <h3>Base Salary</h3>
+                <div class="form-group row">
+                    <div><label>Base Salary Year 1 ($)</label><input type="number" id="st-base" value="" oninput="calculateStartup()"></div>
+                    <div><label>Annual Base Growth (%)</label><input type="number" id="st-base-growth" value="" step="0.5" oninput="calculateStartup()"></div>
+                </div>
+
+                <h3>Performance Bonus (KPI-weighted)</h3>
+                <p style="font-size: 12px; color: #666; margin-top: -4px;">Select the target interval you expect the business to reach:</p>
+                <div class="form-group">
+                    <label>Revenue Growth (50% weight)</label>
+                    <select id="st-kpi-growth" onchange="calculateStartup()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                        <option value="0.05">&lt;8% growth (+5% bonus)</option>
+                        <option value="0.10">8&ndash;12% growth (+10% bonus)</option>
+                        <option value="0.15">12&ndash;15% growth (+15% bonus)</option>
+                        <option value="0.20">15%+ growth (+20% bonus)</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <div>
+                        <label>Expense Controls (25% weight)</label>
+                        <select id="st-kpi-expenses" onchange="calculateStartup()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="0.05">&lt;8% optimization (+5%)</option>
+                            <option value="0.10">8&ndash;12% optimization (+10%)</option>
+                            <option value="0.15">12&ndash;15% optimization (+15%)</option>
+                            <option value="0.20">15%+ optimization (+20%)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Gross Margin (25% weight)</label>
+                        <select id="st-kpi-margin" onchange="calculateStartup()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="0.05">&lt;8% gain (+5%)</option>
+                            <option value="0.10">8&ndash;12% gain (+10%)</option>
+                            <option value="0.15">12&ndash;15% gain (+15%)</option>
+                            <option value="0.20">15%+ gain (+20%)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3>Benefits &amp; Reimbursements</h3>
+                <div class="form-group row">
+                    <div><label>QSEHRA Health Allowance ($/yr) <span class="hint">tax-free</span></label><input type="number" id="st-qsehra" value="" oninput="calculateStartup()"></div>
+                    <div><label>Phone / Comms ($/yr)</label><input type="number" id="st-phone" value="" oninput="calculateStartup()"></div>
+                </div>
+
+                <h3>Phantom Equity / SARs</h3>
+                <div class="form-group row">
+                    <div><label>Current Valuation ($)</label><input type="number" id="st-val-current" value="" oninput="calculateStartup()"></div>
+                    <div><label>Expected / Target Valuation ($)</label><input type="number" id="st-val-future" value="" oninput="calculateStartup()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Downside Valuation ($) <span class="hint">e.g. flat / no growth</span></label><input type="number" id="st-val-low" value="" oninput="calculateStartup()"></div>
+                    <div><label>Upside Valuation ($)</label><input type="number" id="st-val-high" value="" oninput="calculateStartup()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Granted Growth Stake (%)</label><input type="number" id="st-sar-stake" value="" step="0.1" oninput="calculateStartup()"></div>
+                    <div>
+                        <label>Vesting Framework</label>
+                        <select id="st-vest-type" onchange="calculateStartup()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="custom">Graduated (10% / 10% / 30% / 50%)</option>
+                            <option value="equal">Equal Annual (25% / year)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label style="margin-top:10px;">Vesting Forfeiture / Retention Schedule <span class="hint">of your EQUITY: leave before N months &rarr; % retained</span></label>
+                <div id="st-vest-tiers"></div>
+                <button class="btn-add retain" onclick="addTier('st','vest')">+ Add retention tier</button>
+
+                <h3>Departure &amp; Clawback Terms <span class="hint">recovery of PAID CASH</span></h3>
+                <div class="form-group">
+                    <label>Cash Subject to Clawback ($) <span class="hint">e.g. signing / relocation bonus</span></label>
+                    <input type="number" id="st-claw-cash" value="" oninput="calculateStartup()">
+                </div>
+                <div class="form-group row">
+                    <div>
+                        <label>Applies To</label>
+                        <select id="st-claw-applies" onchange="calculateStartup()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="signing">Signing bonus</option>
+                            <option value="relocation">Relocation</option>
+                            <option value="other">Other cash</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Trigger</label>
+                        <select id="st-claw-trigger" onchange="calculateStartup()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="vol">Voluntary resignation only</option>
+                            <option value="any">Any reason (incl. layoff)</option>
+                            <option value="cause">For-cause termination only</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Repayment Basis</label>
+                    <select id="st-claw-basis" onchange="calculateStartup()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                        <option value="gross">Gross (pre-tax amount)</option>
+                        <option value="net">Net (after-tax amount received)</option>
+                    </select>
+                </div>
+                <label>Tiers <span class="hint">leave before N months &rarr; % repaid</span></label>
+                <div id="st-claw-tiers"></div>
+                <button class="btn-add claw" onclick="addTier('st','claw')">+ Add clawback tier</button>
+                <div class="form-group" style="margin-top:15px;">
+                    <label>Other Clawback Triggers <span class="hint">optional notes</span></label>
+                    <textarea id="st-claw-notes" rows="2" placeholder="e.g., misconduct, non-solicit breach, financial restatement" oninput="calculateStartup()"></textarea>
+                </div>
+
+                <h3>Optional: After-Tax Estimate</h3>
+                <div class="form-group">
+                    <label>Est. Effective Tax Rate on Cash (%) <span class="hint">rough blended estimate &middot; leave 0 for pre-tax only</span></label>
+                    <input type="number" id="st-taxrate" value="" step="1" oninput="calculateStartup()">
+                </div>
+
+                <h3>Non-Cash Negotiables <span class="hint">the easy wins &mdash; no dollar value</span></h3>
+                <div id="st-checklist"></div>
+
+                <h3>Counter-Offer <span class="hint">optional &mdash; model your ask</span></h3>
+                <button class="btn-counter" id="st-counter-btn" aria-expanded="false" onclick="toggleCounter('st')">&#9656; Model a counter-offer</button>
+                <div class="counter-panel hidden" id="st-counter-panel"></div>
+            </div>
+
+            <!-- ================= CORPORATE INPUTS ================= -->
+            <div id="inputs-corporate" class="hidden">
+                <h3>Base Salary &amp; Cash Bonus</h3>
+                <div class="form-group row">
+                    <div><label>Base Salary Year 1 ($)</label><input type="number" id="corp-base" value="" oninput="calculateCorporate()"></div>
+                    <div><label>Annual Base Escalator (%)</label><input type="number" id="corp-escalator" value="" step="0.1" oninput="calculateCorporate()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Target Bonus (% of base)</label><input type="number" id="corp-bonus-pct" value="" oninput="calculateCorporate()"></div>
+                    <div><label>Signing Bonus ($, Year 1)</label><input type="number" id="corp-signing" value="" oninput="calculateCorporate()"></div>
+                </div>
+
+                <h3>Equity (RSUs)</h3>
+                <div class="form-group row">
+                    <div><label>Initial RSU Grant Value ($)</label><input type="number" id="corp-rsu-grant" value="" oninput="calculateCorporate()"></div>
+                    <div>
+                        <label>RSU Vesting Schedule</label>
+                        <select id="corp-rsu-vest" onchange="calculateCorporate()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="4">4-year (25% / year)</option>
+                            <option value="3">3-year (33.3% / year)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Annual Refresh Grant ($)</label><input type="number" id="corp-refresh" value="" oninput="calculateCorporate()"></div>
+                    <div>
+                        <label>Refresh Vesting Schedule</label>
+                        <select id="corp-refresh-vest" onchange="calculateCorporate()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="4">4-year equal</option>
+                            <option value="3">3-year equal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label style="margin-top:10px;">Vesting Forfeiture / Retention Schedule <span class="hint">of your EQUITY: leave before N months &rarr; % retained</span></label>
+                <div id="corp-vest-tiers"></div>
+                <button class="btn-add retain" onclick="addTier('corp','vest')">+ Add retention tier</button>
+
+                <h3>Departure &amp; Clawback Terms <span class="hint">recovery of PAID CASH</span></h3>
+                <div class="form-group">
+                    <label>Cash Subject to Clawback ($) <span class="hint">often equals your signing / relocation bonus</span></label>
+                    <input type="number" id="corp-claw-cash" value="" oninput="calculateCorporate()">
+                </div>
+                <div class="form-group row">
+                    <div>
+                        <label>Applies To</label>
+                        <select id="corp-claw-applies" onchange="calculateCorporate()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="signing">Signing bonus</option>
+                            <option value="relocation">Relocation</option>
+                            <option value="other">Other cash</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Trigger</label>
+                        <select id="corp-claw-trigger" onchange="calculateCorporate()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                            <option value="vol">Voluntary resignation only</option>
+                            <option value="any">Any reason (incl. layoff)</option>
+                            <option value="cause">For-cause termination only</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Repayment Basis</label>
+                    <select id="corp-claw-basis" onchange="calculateCorporate()">
+                        <option value="" selected>&mdash; select &mdash;</option>
+                        <option value="gross">Gross (pre-tax amount)</option>
+                        <option value="net">Net (after-tax amount received)</option>
+                    </select>
+                </div>
+                <label>Tiers <span class="hint">leave before N months &rarr; % repaid</span></label>
+                <div id="corp-claw-tiers"></div>
+                <button class="btn-add claw" onclick="addTier('corp','claw')">+ Add clawback tier</button>
+                <div class="form-group" style="margin-top:15px;">
+                    <label>Other Clawback Triggers <span class="hint">optional notes</span></label>
+                    <textarea id="corp-claw-notes" rows="2" placeholder="e.g., misconduct, financial restatement, non-compete breach" oninput="calculateCorporate()"></textarea>
+                </div>
+
+                <h3>Optional: Benefits (modeled)</h3>
+                <div class="form-group">
+                    <label>401(k) Match (% of base) <span class="hint">counts toward the benefits total</span></label>
+                    <input type="number" id="corp-match" value="" step="0.5" oninput="calculateCorporate()">
+                </div>
+                <label>Other Benefits <span class="hint">your estimate of annual cash value &mdash; counts toward benefits total</span></label>
+                <div id="corp-otherben"></div>
+                <button class="btn-add benefit" onclick="addOtherBenefit()">+ Add benefit</button>
+
+                <h3>For Reference (not in totals)</h3>
+                <div class="form-group">
+                    <label>Employer Health ($/yr) <span class="hint">recorded &amp; saved, but excluded from the model</span></label>
+                    <input type="number" id="corp-health" value="" oninput="calculateCorporate()">
+                </div>
+
+                <h3>Optional: After-Tax Estimate</h3>
+                <div class="form-group">
+                    <label>Est. Effective Tax Rate on Cash (%) <span class="hint">rough blended estimate &middot; leave 0 for pre-tax only</span></label>
+                    <input type="number" id="corp-taxrate" value="" step="1" oninput="calculateCorporate()">
+                </div>
+
+                <h3>Non-Cash Negotiables <span class="hint">the easy wins &mdash; no dollar value</span></h3>
+                <div id="corp-checklist"></div>
+
+                <h3>Counter-Offer <span class="hint">optional &mdash; model your ask</span></h3>
+                <button class="btn-counter" id="corp-counter-btn" aria-expanded="false" onclick="toggleCounter('corp')">&#9656; Model a counter-offer</button>
+                <div class="counter-panel hidden" id="corp-counter-panel"></div>
+
+                <div class="import-box" style="border-color:#93C5FD;margin-top:20px;">
+                    <label style="text-transform:none;font-weight:bold;font-size:13px;color:#1E3A8A;">Handoff to the MBA Compensation &amp; Negotiation Tool</label>
+                    <p class="hint" style="margin-bottom:8px;">Copy this block and paste it into that tool's "Import from Offer Compensation Planner" box (Step 3). Vesting years, clawback terms, and tax rate for the counter now reflect what you've set in the counter-offer panel below, independent of the initial offer.</p>
+                    <textarea id="export-text" rows="10" readonly style="font-family:monospace;font-size:11.5px;"></textarea>
+                    <button class="btn-import" onclick="copyExportBlock()">Copy handoff block</button>
+                    <span id="export-handoff-msg"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div id="print-header" class="print-only"></div>
+            <h3 style="margin-top:0;">4-Year Compensation Model</h3>
+            <div class="export-bar">
+                <button class="btn-export" onclick="copySummary()">Copy summary</button>
+                <button class="btn-export" onclick="downloadCsv()">Download CSV</button>
+                <button class="btn-export" onclick="window.print()">Print / PDF</button>
+                <span id="export-msg" class="export-msg" aria-live="polite"></span>
+            </div>
+            <div id="sr-status" class="sr-only" aria-live="polite"></div>
+            <div id="output-table-container" role="region" aria-label="Compensation results"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let activeMode = 'startup';
+    const counterOn = { startup: false, corporate: false };
+    const tierState = { st: { claw: [], vest: [] }, corp: { claw: [], vest: [] } };
+    const NEGOTIABLES = ['Extra PTO / vacation', 'Remote / flexible schedule', 'Title / level', 'Start date', 'Relocation support', 'Professional development budget', 'Sign-on / equity refresh timing', 'Earlier performance review', 'Severance protection'];
+    let checklist = NEGOTIABLES.map(l => ({ label: l, status: 'skip', note: '' }));
+    let otherBenefits = [];
+    function otherBenefitsList() { return otherBenefits.map(b => ({ title: (b.title || '').trim(), amount: Math.max(0, parseFloat(b.amount) || 0) })); }
+    function renderOtherBenefits() {
+        const el = document.getElementById('corp-otherben'); if (!el) return;
+        el.innerHTML = otherBenefits.map((b, i) => `
+            <div class="tier-row">
+                <input type="text" aria-label="Benefit name" placeholder="Benefit (e.g. HSA seed, tuition)" value="${(b.title || '').replace(/"/g, '&quot;')}" oninput="updateOtherBenefit(${i}, 'title', this.value)" style="flex:1;text-align:left;width:auto;">
+                <input type="number" aria-label="Annual value" placeholder="$/yr" value="${(b.amount === '' || b.amount == null) ? '' : b.amount}" oninput="updateOtherBenefit(${i}, 'amount', this.value)" style="width:100px;">
+                <button class="btn-x" aria-label="Remove benefit" onclick="removeOtherBenefit(${i})">&times;</button>
+            </div>`).join('');
+    }
+    function addOtherBenefit() { otherBenefits.push({ title: '', amount: '' }); renderOtherBenefits(); recalc(); }
+    function removeOtherBenefit(i) { otherBenefits.splice(i, 1); renderOtherBenefits(); recalc(); }
+    function updateOtherBenefit(i, field, val) { if (otherBenefits[i]) { otherBenefits[i][field] = val; recalc(); } }
+    function renderChecklistInputs(prefix) {
+        const el = document.getElementById(prefix + '-checklist');
+        if (!el) return;
+        el.innerHTML = checklist.map((it, i) => `
+            <div class="chk-row">
+                <span class="chk-label">${it.label}</span>
+                <select aria-label="${it.label} status" onchange="updateChecklist(${i}, 'status', this.value)">
+                    <option value="skip"${it.status === 'skip' ? ' selected' : ''}>Not raising</option>
+                    <option value="ask"${it.status === 'ask' ? ' selected' : ''}>Want to ask</option>
+                    <option value="have"${it.status === 'have' ? ' selected' : ''}>Have it</option>
+                </select>
+                <input type="text" aria-label="${it.label} note" placeholder="note" value="${(it.note || '').replace(/"/g, '&quot;')}" oninput="updateChecklist(${i}, 'note', this.value)">
+            </div>`).join('');
+    }
+    function updateChecklist(i, field, val) {
+        checklist[i][field] = val;
+        if (field === 'status') { renderChecklistInputs('st'); renderChecklistInputs('corp'); }
+        recalc();
+    }
+    function renderChecklist() {
+        const active = checklist.filter(it => it.status !== 'skip');
+        if (active.length === 0) return `<div class="note"><strong>Non-cash negotiables:</strong> none flagged. These are often the easiest wins &mdash; PTO, remote, title, start date, relocation, development budget.</div>`;
+        let out = `<div style="margin-top:20px;"><table><thead><tr><th>Non-cash item</th><th>Status</th><th>Note</th></tr></thead><tbody><tr class="section-head chk"><td colspan="3">Non-Cash Negotiables</td></tr>`;
+        active.forEach(it => { out += `<tr><td>${it.label}</td><td>${it.status === 'ask' ? 'Want to ask' : 'Have it'}</td><td>${(it.note || '').replace(/</g, '&lt;')}</td></tr>`; });
+        return out + `</tbody></table></div>`;
+    }
+
+    function switchMode(mode) {
+        activeMode = mode;
+        document.getElementById('btn-startup').classList.toggle('active', mode === 'startup');
+        document.getElementById('btn-corporate').classList.toggle('active', mode === 'corporate');
+        document.getElementById('inputs-startup').classList.toggle('hidden', mode !== 'startup');
+        document.getElementById('inputs-corporate').classList.toggle('hidden', mode !== 'corporate');
+        document.getElementById('btn-startup').setAttribute('aria-pressed', mode === 'startup');
+        document.getElementById('btn-corporate').setAttribute('aria-pressed', mode === 'corporate');
+        renderChecklistInputs('st'); renderChecklistInputs('corp');
+        recalc();
+    }
+    function recalc() { if (activeMode === 'startup') calculateStartup(); else calculateCorporate(); }
+    function fmt(v) { return '$' + Math.round(v).toLocaleString(); }
+    function num(id, min = 0, max = Infinity) {
+        let v = parseFloat(document.getElementById(id).value);
+        if (isNaN(v)) v = 0;
+        return Math.min(max, Math.max(min, v));
+    }
+    function curVal(id) { const el = document.getElementById(id); return el ? el.value : 0; }
+
+    // ---------- Tier editors ----------
+    function renderTierInputs(prefix, kind) {
+        const arr = tierState[prefix][kind];
+        const rows = arr.map((t, i) => `
+            <div class="tier-row">
+                <span>Leave before</span>
+                <input type="number" min="0" value="${t.months}" onchange="updateTier('${prefix}','${kind}',${i},'months',this.value)">
+                <span>mo &rarr;</span>
+                <input type="number" min="0" max="100" value="${t.pct}" onchange="updateTier('${prefix}','${kind}',${i},'pct',this.value)">
+                <span>%</span>
+                <button class="btn-x" onclick="removeTier('${prefix}','${kind}',${i})" title="Remove">&times;</button>
+            </div>`).join('');
+        const emptyMsg = kind === 'claw'
+            ? 'No clawback tiers — add one, or this offer has no cash clawback.'
+            : 'No custom retention tiers — standard vesting assumption applies (keep what has vested, forfeit the rest).';
+        document.getElementById(`${prefix}-${kind}-tiers`).innerHTML = rows || `<div class="empty-msg">${emptyMsg}</div>`;
+    }
+    function addTier(prefix, kind) { tierState[prefix][kind].push({ months: 12, pct: 100 }); renderTierInputs(prefix, kind); recalc(); }
+    function removeTier(prefix, kind, i) { tierState[prefix][kind].splice(i, 1); renderTierInputs(prefix, kind); recalc(); }
+    function updateTier(prefix, kind, i, field, val) {
+        let v = parseFloat(val); if (isNaN(v)) v = 0;
+        v = field === 'pct' ? Math.min(100, Math.max(0, v)) : Math.max(0, v);
+        tierState[prefix][kind][i][field] = v; recalc();
+    }
+
+    const TRIGGER_LABEL = { vol: 'Voluntary resignation only', any: 'Any separation, including layoff', cause: 'For-cause termination only' };
+
+    // ---------- Counter-offer ----------
+    function toggleCounter(prefix) {
+        const mode = prefix === 'st' ? 'startup' : 'corporate';
+        counterOn[mode] = !counterOn[mode];
+        const panel = document.getElementById(prefix + '-counter-panel');
+        const btn = document.getElementById(prefix + '-counter-btn');
+        if (counterOn[mode]) {
+            if (!panel.dataset.init) { buildCounterFields(prefix); panel.dataset.init = '1'; associateLabels(); }
+            panel.classList.remove('hidden');
+            btn.innerHTML = '&#9662; Hide counter-offer';
+            btn.setAttribute('aria-expanded', 'true');
+        } else {
+            panel.classList.add('hidden');
+            btn.innerHTML = '&#9656; Model a counter-offer';
+            btn.setAttribute('aria-expanded', 'false');
+        }
+        recalc();
+    }
+    function buildCounterFields(prefix) {
+        let html = '';
+        if (prefix === 'st') {
+            html = `
+                <div class="form-group row">
+                    <div><label>Base Salary Y1 ($)</label><input type="number" id="st-ctr-base" value="${curVal('st-base')}" oninput="recalc()"></div>
+                    <div><label>Base Growth (%)</label><input type="number" id="st-ctr-growth" step="0.5" value="${curVal('st-base-growth')}" oninput="recalc()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Granted Stake (%)</label><input type="number" id="st-ctr-stake" step="0.1" value="${curVal('st-sar-stake')}" oninput="recalc()"></div>
+                    <div><label>Projected Target Value ($)</label><input type="number" id="st-ctr-valfuture" value="${curVal('st-val-future')}" oninput="recalc()"></div>
+                </div>`;
+        } else {
+            html = `
+                <div class="form-group row">
+                    <div><label>Base Salary Y1 ($)</label><input type="number" id="corp-ctr-base" value="${curVal('corp-base')}" oninput="recalc()"></div>
+                    <div><label>Base Escalator (%)</label><input type="number" id="corp-ctr-esc" step="0.1" value="${curVal('corp-escalator')}" oninput="recalc()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Target Bonus (%)</label><input type="number" id="corp-ctr-bonus" value="${curVal('corp-bonus-pct')}" oninput="recalc()"></div>
+                    <div><label>Signing Bonus ($)</label><input type="number" id="corp-ctr-signing" value="${curVal('corp-signing')}" oninput="recalc()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Initial RSU Grant ($)</label><input type="number" id="corp-ctr-rsu" value="${curVal('corp-rsu-grant')}" oninput="recalc()"></div>
+                    <div><label>Annual Refresh ($)</label><input type="number" id="corp-ctr-refresh" value="${curVal('corp-refresh')}" oninput="recalc()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>RSU Vesting Schedule (counter)</label>
+                        <select id="corp-ctr-rsu-vest" onchange="recalc()">
+                            <option value="">&mdash; same as initial &mdash;</option>
+                            <option value="4">4-year (25% / year)</option>
+                            <option value="3">3-year (33.3% / year)</option>
+                        </select>
+                    </div>
+                    <div><label>Refresh Vesting Schedule (counter)</label>
+                        <select id="corp-ctr-refresh-vest" onchange="recalc()">
+                            <option value="">&mdash; same as initial &mdash;</option>
+                            <option value="4">4-year equal</option>
+                            <option value="3">3-year equal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Clawback Cash (counter, $)</label><input type="number" id="corp-ctr-claw-cash" value="${curVal('corp-claw-cash')}" oninput="recalc()"></div>
+                    <div><label>Est. Effective Tax Rate (counter, %)</label><input type="number" id="corp-ctr-taxrate" step="1" value="${curVal('corp-taxrate')}" oninput="recalc()"></div>
+                </div>
+                <div class="form-group row">
+                    <div><label>Clawback Trigger (counter)</label>
+                        <select id="corp-ctr-claw-trigger" onchange="recalc()">
+                            <option value="vol">Voluntary resignation only</option>
+                            <option value="any">Any reason (incl. layoff)</option>
+                            <option value="cause">For-cause termination only</option>
+                        </select>
+                    </div>
+                    <div><label>Repayment Basis (counter)</label>
+                        <select id="corp-ctr-claw-basis" onchange="recalc()">
+                            <option value="gross">Gross (pre-tax amount)</option>
+                            <option value="net">Net (after-tax amount received)</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="hint">Vesting retention tiers and clawback trigger notes above are shared with the initial offer (they describe company policy, not your ask) — only the schedule length, cash amount, trigger, basis, and tax rate are independently set here.</p>`;
+        }
+        html += `<button class="reset" onclick="resetCounter('${prefix}')">Reset to current offer</button>`;
+        document.getElementById(prefix + '-counter-panel').innerHTML = html;
+        if (prefix === 'corp') {
+            const trigEl = document.getElementById('corp-ctr-claw-trigger'); if (trigEl) trigEl.value = document.getElementById('corp-claw-trigger').value || 'vol';
+            const basisEl = document.getElementById('corp-ctr-claw-basis'); if (basisEl) basisEl.value = document.getElementById('corp-claw-basis').value || 'gross';
+        }
+    }
+    function resetCounter(prefix) {
+        if (prefix === 'st') {
+            document.getElementById('st-ctr-base').value = curVal('st-base');
+            document.getElementById('st-ctr-growth').value = curVal('st-base-growth');
+            document.getElementById('st-ctr-stake').value = curVal('st-sar-stake');
+            document.getElementById('st-ctr-valfuture').value = curVal('st-val-future');
+        } else {
+            document.getElementById('corp-ctr-base').value = curVal('corp-base');
+            document.getElementById('corp-ctr-esc').value = curVal('corp-escalator');
+            document.getElementById('corp-ctr-bonus').value = curVal('corp-bonus-pct');
+            document.getElementById('corp-ctr-signing').value = curVal('corp-signing');
+            document.getElementById('corp-ctr-rsu').value = curVal('corp-rsu-grant');
+            document.getElementById('corp-ctr-refresh').value = curVal('corp-refresh');
+            document.getElementById('corp-ctr-rsu-vest').value = '';
+            document.getElementById('corp-ctr-refresh-vest').value = '';
+            document.getElementById('corp-ctr-claw-cash').value = curVal('corp-claw-cash');
+            document.getElementById('corp-ctr-taxrate').value = curVal('corp-taxrate');
+            document.getElementById('corp-ctr-claw-trigger').value = document.getElementById('corp-claw-trigger').value || 'vol';
+            document.getElementById('corp-ctr-claw-basis').value = document.getElementById('corp-claw-basis').value || 'gross';
+        }
+        recalc();
+    }
+
+    // ---------- Pure compute functions ----------
+    function computeStartup(p) {
+        let sal = [], bon = [], cash = [];
+        for (let y = 0; y < 4; y++) { sal[y] = p.base * Math.pow(1 + p.growth, y); bon[y] = sal[y] * p.composite; cash[y] = sal[y] + bon[y]; }
+        const benefitsPerYear = p.qsehra + p.phone;
+        const equityPool = Math.max(0, p.valFuture - p.valCurrent) * p.stake;
+        let cumVest = null;
+        if (p.vest) { cumVest = []; let run = 0; for (let y = 0; y < 4; y++) { run += p.vest[y]; cumVest[y] = run; } }
+        return { sal, bon, cash, benefitsPerYear, benefits: [benefitsPerYear, benefitsPerYear, benefitsPerYear, benefitsPerYear], equityPool, cumVest, cash4: cash.reduce((a, b) => a + b, 0), ben4: benefitsPerYear * 4 };
+    }
+    function readStartupParams() {
+        return {
+            base: num('st-base'), growth: num('st-base-growth') / 100,
+            composite: num('st-kpi-growth') * 0.5 + num('st-kpi-expenses') * 0.25 + num('st-kpi-margin') * 0.25,
+            qsehra: num('st-qsehra'), phone: num('st-phone'),
+            valCurrent: num('st-val-current'), valFuture: num('st-val-future'), stake: num('st-sar-stake') / 100,
+            vest: (function (v) { return v === 'custom' ? [0.10, 0.10, 0.30, 0.50] : (v === 'equal' ? [0.25, 0.25, 0.25, 0.25] : null); })(document.getElementById('st-vest-type').value)
+        };
+    }
+    function startupCounterParams(cur) {
+        return Object.assign({}, cur, {
+            base: num('st-ctr-base'), growth: num('st-ctr-growth') / 100,
+            stake: num('st-ctr-stake') / 100, valFuture: num('st-ctr-valfuture')
+        });
+    }
+
+    function computeCorporate(p) {
+        let sal = [], bon = [], cash = [];
+        for (let y = 0; y < 4; y++) { sal[y] = p.base * Math.pow(1 + p.esc, y); bon[y] = sal[y] * p.bonusPct; cash[y] = sal[y] + bon[y] + (y === 0 ? p.signing : 0); }
+        const otherTotal = (p.other || []).reduce((a, b) => a + b.amount, 0);
+        let match = sal.map(s => s * p.matchPct), benefits = match.map(m => m + otherTotal);
+        let rsu = [0, 0, 0, 0];
+        if (p.rsuYears) { let rsuPer = p.initRsu / p.rsuYears; for (let y = 0; y < 4; y++) if (y < p.rsuYears) rsu[y] += rsuPer; }
+        let ref = [0, 0, 0, 0];
+        if (p.refreshYears) { let refPer = p.refresh / p.refreshYears; for (let g = 1; g <= 3; g++) for (let st = 0; st < p.refreshYears; st++) { let vy = g + st; if (vy < 4) ref[vy] += refPer; } }
+        let equityTot = rsu.map((r, i) => r + ref[i]);
+        return { sal, bon, cash, match, benefits, rsu, ref, equityTot, cash4: cash.reduce((a, b) => a + b, 0), ben4: benefits.reduce((a, b) => a + b, 0), eq4: equityTot.reduce((a, b) => a + b, 0) };
+    }
+    function readCorporateParams() {
+        return {
+            base: num('corp-base'), esc: num('corp-escalator') / 100, bonusPct: num('corp-bonus-pct') / 100,
+            signing: num('corp-signing'), matchPct: num('corp-match') / 100, other: otherBenefitsList(),
+            initRsu: num('corp-rsu-grant'), rsuYears: (document.getElementById('corp-rsu-vest').value ? parseInt(document.getElementById('corp-rsu-vest').value) : null),
+            refresh: num('corp-refresh'), refreshYears: (document.getElementById('corp-refresh-vest').value ? parseInt(document.getElementById('corp-refresh-vest').value) : null)
+        };
+    }
+    function corporateCounterParams(cur) {
+        const ctrRsuYears = document.getElementById('corp-ctr-rsu-vest') ? document.getElementById('corp-ctr-rsu-vest').value : '';
+        const ctrRefreshYears = document.getElementById('corp-ctr-refresh-vest') ? document.getElementById('corp-ctr-refresh-vest').value : '';
+        return Object.assign({}, cur, {
+            base: num('corp-ctr-base'), esc: num('corp-ctr-esc') / 100, bonusPct: num('corp-ctr-bonus') / 100,
+            signing: num('corp-ctr-signing'), initRsu: num('corp-ctr-rsu'), refresh: num('corp-ctr-refresh'),
+            rsuYears: ctrRsuYears ? parseInt(ctrRsuYears) : cur.rsuYears,
+            refreshYears: ctrRefreshYears ? parseInt(ctrRefreshYears) : cur.refreshYears,
+        });
+    }
+
+    // ---------- Shared render helpers ----------
+    function dcell(cur, ctr) {
+        const d = ctr - cur;
+        if (Math.round(d) === 0) return `<td>$0</td>`;
+        const cls = d > 0 ? 'dpos' : 'dneg';
+        return `<td class="${cls}">${d > 0 ? '+' : '\u2212'}${fmt(Math.abs(d))}</td>`;
+    }
+    function summaryBlock(cash4, ben4, equityLabel, equityVal, mode) {
+        const strongest = mode === 'startup'
+            ? 'base salary (it compounds) and your equity stake (the real upside at an early-stage company)'
+            : 'base salary (it compounds into every raise and %-of-base bonus)';
+        return `<div class="summary-block">
+            <strong>At a glance &mdash; current offer (pre-tax):</strong>
+            4-yr cash ${fmt(cash4)} &middot; benefits ${fmt(ben4)} &middot; ${equityLabel} ${fmt(equityVal)}.<br>
+            <strong>Strongest asks:</strong> ${strongest}.
+        </div>`;
+    }
+    function askPriority(mode) {
+        const mid = mode === 'startup'
+            ? '<strong>2. Equity stake / valuation.</strong> At an early-stage company this is where the upside lives and is often the most movable lever &mdash; but it is contingent, so weigh it against cash you can count on.'
+            : '<strong>2. Target bonus % and RSU grant.</strong> Recurring, compounding value &mdash; worth more over four years than a one-time payment.';
+        return `<div class="note" style="background:#EEF2FF;border-left:4px solid #6366F1;padding:10px 12px;border-radius:0 4px 4px 0;">
+            <strong>Where to push, in order:</strong><br>
+            <strong>1. Base salary.</strong> It compounds &mdash; every future raise and every %-of-base bonus scales from it, permanently.<br>
+            ${mid}<br>
+            <strong>3. Signing bonus last.</strong> One-time, and often carries a clawback (see below). Concede here to signal flexibility while holding firm on base.
+        </div>`;
+    }
+
+    // ---------- Equity retention & clawback (unchanged logic) ----------
+    function renderRetention(prefix, equityBase, baseLabel, sideLabel) {
+        const tiers = tierState[prefix].vest.slice().sort((a, b) => a.months - b.months);
+        const headerText = 'Vesting Forfeiture / Retention (equity)' + (sideLabel ? ' \u2014 ' + sideLabel : '');
+        if (tiers.length === 0) return `<div class="note"><strong>Vesting forfeiture / retention${sideLabel ? ' (' + sideLabel + ')' : ''}:</strong> no custom schedule entered. Standard assumption &mdash; you keep the equity that has vested (see vested % above) and forfeit the unvested portion.</div>`;
+        const q = equityBase && equityBase > 0;
+        let out = `<div style="margin-top:20px;"><table><thead><tr><th>If you leave before&hellip;</th><th>% of equity retained</th><th>${q ? 'Est. retained value' : ''}</th></tr></thead><tbody><tr class="section-head retain"><td colspan="3">${headerText}</td></tr>`;
+        tiers.forEach(t => { out += `<tr><td>${t.months} months</td><td>${t.pct}%</td><td>${q ? fmt(equityBase * (t.pct / 100)) : '&mdash;'}</td></tr>`; });
+        out += `</tbody></table><div class="note">Percentages are the reliable part; retained value is applied to ${baseLabel} and is an estimate. This models equity you <em>keep</em> on departure &mdash; separate from cash clawback below.</div></div>`;
+        return out;
+    }
+    function renderClawback(prefix, taxRate) {
+        const tiers = tierState[prefix].claw.slice().sort((a, b) => a.months - b.months);
+        const cashBase = num(prefix + '-claw-cash');
+        const trigger = document.getElementById(prefix + '-claw-trigger').value;
+        const basis = document.getElementById(prefix + '-claw-basis').value;
+        const appliesLabel = { signing: 'signing bonus', relocation: 'relocation', other: 'other cash' }[document.getElementById(prefix + '-claw-applies').value] || 'cash';
+        const notes = document.getElementById(prefix + '-claw-notes').value.trim();
+        if (tiers.length === 0 && !notes) return `<div class="note"><strong>Cash clawback:</strong> none entered.</div>`;
+        let effBase = cashBase; if (basis === 'net' && taxRate > 0) effBase *= (1 - taxRate);
+        const q = cashBase > 0;
+        let out = '<div style="margin-top:20px;">';
+        if (tiers.length > 0) {
+            out += `<table><thead><tr><th>If you leave before&hellip;</th><th>% repaid</th><th>${q ? 'Est. exposure' : ''}</th></tr></thead><tbody><tr class="section-head claw"><td colspan="3">Cash Clawback (${appliesLabel})</td></tr>`;
+            tiers.forEach(t => { out += `<tr><td>${t.months} months</td><td>${t.pct}%</td><td>${q ? fmt(effBase * (t.pct / 100)) : '&mdash;'}</td></tr>`; });
+            out += `</tbody></table><div class="note"><strong>Trigger:</strong> ${TRIGGER_LABEL[trigger] || 'select a trigger (voluntary / any / for-cause)'}.${trigger === 'any' ? ' &#9888; You would owe this even if the company lays you off &mdash; the most important term to push back on.' : ''}${trigger === 'vol' ? ' You are not liable if terminated without cause. Confirm the letter says exactly this.' : ''}<br><strong>Basis:</strong> ${basis === 'gross' ? 'Gross &mdash; you repay the full pre-tax amount even though you received only the after-tax portion. Ask for "net" or a tax gross-up.' : (basis === 'net' ? 'Net &mdash; you repay only what you actually received after tax (the more favorable version).' : 'select gross or net repayment basis.')}${q ? '' : '<br><span style="color:#888;">Enter a cash amount above to see dollar exposure.</span>'}</div>`;
+        }
+        if (notes) out += `<div class="note"><strong>Other clawback triggers noted:</strong> ${notes.replace(/</g, '&lt;')}</div>`;
+        out += `<div class="note" style="background:#F5F3FF;border-left:4px solid #7C3AED;padding:10px 12px;border-radius:0 4px 4px 0;"><strong>General negotiation levers (not your offer's terms):</strong> push for prorated over cliff; 12 months is standard, 18&ndash;24 is aggressive; ask for net repayment; add "unless terminated without cause" to the trigger. Enforceability of repayment clauses varies by state, and some states now restrict them &mdash; confirm locally.</div></div>`;
+        return out;
+    }
+    function renderClawbackCounter(taxRate) {
+        const tiers = tierState['corp'].claw.slice().sort((a, b) => a.months - b.months); // tiers describe company policy; shared with the initial offer
+        const cashBase = num('corp-ctr-claw-cash');
+        const trigger = document.getElementById('corp-ctr-claw-trigger').value;
+        const basis = document.getElementById('corp-ctr-claw-basis').value;
+        const appliesLabel = { signing: 'signing bonus', relocation: 'relocation', other: 'other cash' }[document.getElementById('corp-claw-applies').value] || 'cash';
+        if (tiers.length === 0) return `<div class="note"><strong>Cash clawback (counter offer):</strong> none entered.</div>`;
+        let effBase = cashBase; if (basis === 'net' && taxRate > 0) effBase *= (1 - taxRate);
+        const q = cashBase > 0;
+        let out = '<div style="margin-top:20px;">';
+        out += `<table><thead><tr><th>If you leave before&hellip;</th><th>% repaid</th><th>${q ? 'Est. exposure' : ''}</th></tr></thead><tbody><tr class="section-head claw"><td colspan="3">Cash Clawback (${appliesLabel}) &mdash; Counter Offer</td></tr>`;
+        tiers.forEach(t => { out += `<tr><td>${t.months} months</td><td>${t.pct}%</td><td>${q ? fmt(effBase * (t.pct / 100)) : '&mdash;'}</td></tr>`; });
+        out += `</tbody></table><div class="note"><strong>Trigger:</strong> ${TRIGGER_LABEL[trigger] || 'select a trigger (voluntary / any / for-cause)'}.${trigger === 'any' ? ' &#9888; You would owe this even if the company lays you off &mdash; the most important term to push back on.' : ''}${trigger === 'vol' ? ' You are not liable if terminated without cause. Confirm the letter says exactly this.' : ''}<br><strong>Basis:</strong> ${basis === 'gross' ? 'Gross &mdash; you repay the full pre-tax amount even though you received only the after-tax portion. Ask for "net" or a tax gross-up.' : (basis === 'net' ? 'Net &mdash; you repay only what you actually received after tax (the more favorable version).' : 'select gross or net repayment basis.')}${q ? '' : '<br><span style="color:#888;">Enter a cash amount above to see dollar exposure.</span>'}</div></div>`;
+        return out;
+    }
+
+    function row(label, vals, raw = false) { return `<tr><td>${label}</td>${vals.map(v => `<td>${raw ? v : fmt(v)}</td>`).join('')}</tr>`; }
+    function rowClass(cls, label, vals) { return `<tr class="${cls}"><td>${label}</td>${vals.map(v => `<td>${fmt(v)}</td>`).join('')}</tr>`; }
+
+    // ---------- Startup output ----------
+    function calculateStartup() {
+        const cur = readStartupParams();
+        const C = computeStartup(cur);
+        const taxRate = num('st-taxrate', 0, 60) / 100;
+
+        let h = summaryBlock(C.cash4, C.ben4, 'equity (expected, contingent)', C.equityPool, 'startup');
+
+        if (counterOn.startup) {
+            const K = computeStartup(startupCounterParams(cur));
+            h += `<div class="counter-wrap"><h4>Counter-Offer Comparison (4-year, pre-tax)</h4>
+                <table><thead><tr><th>Metric</th><th>Current</th><th>Counter</th><th>&Delta;</th></tr></thead><tbody>
+                <tr><td>Cash</td><td>${fmt(C.cash4)}</td><td>${fmt(K.cash4)}</td>${dcell(C.cash4, K.cash4)}</tr>
+                <tr><td>Benefits</td><td>${fmt(C.ben4)}</td><td>${fmt(K.ben4)}</td>${dcell(C.ben4, K.ben4)}</tr>
+                <tr class="headline-row"><td>Cash + Benefits</td><td>${fmt(C.cash4 + C.ben4)}</td><td>${fmt(K.cash4 + K.ben4)}</td>${dcell(C.cash4 + C.ben4, K.cash4 + K.ben4)}</tr>
+                <tr><td>Equity (contingent)</td><td>${fmt(C.equityPool)}</td><td>${fmt(K.equityPool)}</td>${dcell(C.equityPool, K.equityPool)}</tr>
+                </tbody></table></div>`;
+            h += askPriority('startup');
+        }
+
+        h += `<table><thead><tr><th>Element</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th></tr></thead><tbody>`;
+        h += `<tr class="section-head cash"><td colspan="5">Cash Compensation (pre-tax)</td></tr>`;
+        h += row('Base Salary', C.sal);
+        h += row(`Performance Bonus (${(cur.composite * 100).toFixed(1)}%)`, C.bon);
+        h += rowClass('subtotal-row', 'Total Cash', C.cash);
+        if (taxRate > 0) h += rowClass('aftertax-row', `Est. Cash After Tax (${(taxRate * 100).toFixed(0)}%)`, C.cash.map(c => c * (1 - taxRate)));
+        h += `<tr class="section-head benefit"><td colspan="5">Benefits &amp; Reimbursements (est. value)</td></tr>`;
+        h += row('QSEHRA (tax-free)', [cur.qsehra, cur.qsehra, cur.qsehra, cur.qsehra]);
+        h += row('Phone / Comms', [cur.phone, cur.phone, cur.phone, cur.phone]);
+        h += rowClass('subtotal-row', 'Total Benefits', C.benefits);
+        h += `<tr class="section-head equity"><td colspan="5">Equity &mdash; Vested %, Retained If You Leave</td></tr>`;
+        if (C.cumVest) h += row('Cumulative equity vested', C.cumVest.map(p => `${(p * 100).toFixed(0)}% &middot; ${fmt(C.equityPool * p)}`), true);
+        else h += `<tr><td>Cumulative equity vested</td><td colspan="4" style="text-align:left;color:#B45309;font-weight:bold;">Select a vesting framework to model this</td></tr>`;
+        h += `</tbody></table>`;
+
+        if (taxRate > 0) h += `<div class="note" style="background:#ECFDF5;border-left:4px solid #059669;padding:10px 12px;border-radius:0 4px 4px 0;"><strong>About the after-tax figure:</strong> a single flat, blended rate on cash &mdash; a rough budgeting estimate only. It ignores brackets, state tax, and higher supplemental withholding on bonuses and equity. <strong>Not a number to negotiate on</strong> &mdash; negotiate on the pre-tax figures.</div>`;
+        h += `<div class="info-blockquote totals-big" style="background:#F8FAFC;border-left-color:#64748B;"><strong>4-Year Cash + Benefits (pre-tax): ${fmt(C.cash4 + C.ben4)}</strong><br>Cash ${fmt(C.cash4)} &middot; Benefits ${fmt(C.ben4)}. Equity is excluded because it is contingent (see below).</div>`;
+        let eqLow = Math.max(0, num('st-val-low') - cur.valCurrent) * cur.stake;
+        let eqHigh = Math.max(0, num('st-val-high') - cur.valCurrent) * cur.stake;
+        const ordViolation = (num('st-val-low') > cur.valFuture) || (num('st-val-high') < cur.valFuture);
+        const eqLowShown = Math.min(eqLow, C.equityPool);
+        const eqHighShown = Math.max(eqHigh, C.equityPool);
+        h += `<div class="equity-callout">
+            <strong>Illustrative equity upside &mdash; a RANGE, contingent on outcome (paid only at a liquidity event, pre-tax):</strong>
+            ${ordViolation ? '<div style="color:#B91C1C;font-weight:bold;margin:6px 0;">&#9888; Check your valuations: downside should be &le; expected &le; upside. The range below is ordered so it stays consistent.</div>' : ''}
+            <table style="margin-top:8px;background:#fff;"><tbody>
+                <tr><td>No liquidity event / flat or down</td><td style="text-align:right;font-weight:bold;">$0</td></tr>
+                <tr><td>Downside case</td><td style="text-align:right;">${fmt(eqLowShown)}</td></tr>
+                <tr><td><strong>Expected / target case</strong></td><td style="text-align:right;font-weight:bold;color:var(--equity);">${fmt(C.equityPool)}</td></tr>
+                <tr><td>Upside case</td><td style="text-align:right;">${fmt(eqHighShown)}</td></tr>
+            </tbody></table>
+            <div style="margin-top:8px;">This is <strong>not annual cash</strong> and <strong>not guaranteed</strong>. Startups commonly return $0 here. Treat the expected case as one possibility among several, not a promise, and weigh it against cash you can count on. Taxed as ordinary income when paid.</div>
+        </div>`;
+        h += renderRetention('st', C.equityPool, 'the illustrative equity upside above');
+        h += renderClawback('st', taxRate);
+        h += renderChecklist();
+        setExportStartup(cur, C, eqLowShown, eqHighShown);
+        commit(h);
+    }
+
+    // ---------- Corporate output ----------
+    function calculateCorporate() {
+        const cur = readCorporateParams();
+        const C = computeCorporate(cur);
+        const taxRate = num('corp-taxrate', 0, 60) / 100;
+
+        let h = summaryBlock(C.cash4, C.ben4, 'equity vesting (grant price)', C.eq4, 'corporate');
+
+        if (counterOn.corporate) {
+            const K = computeCorporate(corporateCounterParams(cur));
+            const ctrTaxRate = num('corp-ctr-taxrate', 0, 60) / 100;
+            const cAfterTax4 = C.cash.reduce((a, c) => a + c * (1 - taxRate), 0);
+            const kAfterTax4 = K.cash.reduce((a, c) => a + c * (1 - ctrTaxRate), 0);
+            h += `<div class="counter-wrap"><h4>Counter-Offer Comparison (4-year, pre-tax)</h4>
+                <table><thead><tr><th>Metric</th><th>Current</th><th>Counter</th><th>&Delta;</th></tr></thead><tbody>
+                <tr><td>Cash</td><td>${fmt(C.cash4)}</td><td>${fmt(K.cash4)}</td>${dcell(C.cash4, K.cash4)}</tr>
+                <tr><td>Benefits</td><td>${fmt(C.ben4)}</td><td>${fmt(K.ben4)}</td>${dcell(C.ben4, K.ben4)}</tr>
+                <tr><td>Equity vesting</td><td>${fmt(C.eq4)}</td><td>${fmt(K.eq4)}</td>${dcell(C.eq4, K.eq4)}</tr>
+                <tr class="headline-row"><td>Total (cash+ben+equity)</td><td>${fmt(C.cash4 + C.ben4 + C.eq4)}</td><td>${fmt(K.cash4 + K.ben4 + K.eq4)}</td>${dcell(C.cash4 + C.ben4 + C.eq4, K.cash4 + K.ben4 + K.eq4)}</tr>
+                ${(taxRate > 0 || ctrTaxRate > 0) ? `<tr class="aftertax-row"><td>Cash after tax (${(taxRate*100).toFixed(0)}% vs ${(ctrTaxRate*100).toFixed(0)}%)</td><td>${fmt(cAfterTax4)}</td><td>${fmt(kAfterTax4)}</td>${dcell(cAfterTax4, kAfterTax4)}</tr>` : ''}
+                </tbody></table></div>`;
+            h += askPriority('corporate');
+        }
+
+        h += `<table><thead><tr><th>Element</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th></tr></thead><tbody>`;
+        h += `<tr class="section-head cash"><td colspan="5">Cash Compensation (pre-tax)</td></tr>`;
+        h += row('Base Salary', C.sal);
+        h += row(`Target Bonus (${(cur.bonusPct * 100).toFixed(0)}%)`, C.bon);
+        h += row('Signing Bonus', [cur.signing, 0, 0, 0]);
+        h += rowClass('subtotal-row', 'Total Cash', C.cash);
+        if (taxRate > 0) h += rowClass('aftertax-row', `Est. Cash After Tax (${(taxRate * 100).toFixed(0)}%)`, C.cash.map(c => c * (1 - taxRate)));
+        h += `<tr class="section-head benefit"><td colspan="5">Benefits (est. value)</td></tr>`;
+        h += row(`401(k) Match (${(cur.matchPct * 100).toFixed(1)}%)`, C.match);
+        (cur.other || []).forEach(b => { if (b.title || b.amount > 0) h += row('&#8226; ' + (b.title ? b.title.replace(/</g, '&lt;') : '(unnamed benefit)'), [b.amount, b.amount, b.amount, b.amount]); });
+        h += rowClass('subtotal-row', 'Total Benefits', C.benefits);
+        h += `<tr class="section-head equity"><td colspan="5">Equity &mdash; RSU Vesting (value at grant price)</td></tr>`;
+        h += cur.rsuYears ? row('Initial RSU Vesting', C.rsu) : `<tr><td>Initial RSU Vesting</td><td colspan="4" style="text-align:left;color:#B45309;font-weight:bold;">Select an RSU vesting schedule</td></tr>`;
+        h += cur.refreshYears ? row('Stacked Refresh Vesting', C.ref) : `<tr><td>Stacked Refresh Vesting</td><td colspan="4" style="text-align:left;color:#B45309;font-weight:bold;">Select a refresh vesting schedule</td></tr>`;
+        h += rowClass('subtotal-row', 'Total Equity Vesting', C.equityTot);
+        h += `</tbody></table>`;
+
+        if (taxRate > 0) h += `<div class="note" style="background:#ECFDF5;border-left:4px solid #059669;padding:10px 12px;border-radius:0 4px 4px 0;"><strong>About the after-tax figure:</strong> a single flat, blended rate on cash &mdash; a rough budgeting estimate only. It ignores brackets, state tax, and higher supplemental withholding on bonuses and equity. <strong>Not a number to negotiate on</strong> &mdash; negotiate on the pre-tax figures.</div>`;
+        h += `<div class="info-blockquote totals-big" style="background:#F8FAFC;border-left-color:#64748B;"><strong>4-Year Totals (pre-tax):</strong><br>Cash ${fmt(C.cash4)} &middot; Benefits ${fmt(C.ben4)} &middot; Equity (at grant price) ${fmt(C.eq4)}</div>`;
+        h += `<div class="note">RSU value is modeled <strong>flat at the grant price</strong> &mdash; actual value depends on the share price at vest. RSUs are taxed as ordinary income at vest. Publicly-traded RSUs can usually be sold once vested; privately-held RSUs may not be.</div>`;
+        h += renderRetention('corp', cur.initRsu, 'the initial RSU grant value');
+        h += renderClawback('corp', taxRate);
+        if (counterOn.corporate) {
+            const ctrEquity = num('corp-ctr-rsu');
+            const ctrTaxRate = num('corp-ctr-taxrate', 0, 60) / 100;
+            h += renderRetention('corp', ctrEquity, 'the counter-offer RSU grant value', 'Counter Offer');
+            h += renderClawbackCounter(ctrTaxRate);
+        }
+        h += renderChecklist();
+        setExportCorporate(cur, C);
+        buildExportBlock(cur);
+        commit(h);
+    }
+
+    // ---------- Export / save ----------
+    let lastExport = { text: '', rows: [] };
+    function signed(d) { return (d >= 0 ? '+' : '\u2212') + fmt(Math.abs(d)); }
+    function appendTierRows(rows, prefix) {
+        const vt = tierState[prefix].vest.slice().sort((a, b) => a.months - b.months);
+        if (vt.length) { rows.push([]); rows.push(['VESTING RETENTION', 'Months', '% retained']); vt.forEach(t => rows.push(['', t.months, t.pct + '%'])); }
+        const ct = tierState[prefix].claw.slice().sort((a, b) => a.months - b.months);
+        if (ct.length) { rows.push([]); rows.push(['CASH CLAWBACK', 'Months', '% repaid']); ct.forEach(t => rows.push(['', t.months, t.pct + '%'])); }
+    }
+    function appendChecklistRows(rows) {
+        const cl = checklist.filter(i => i.status !== 'skip');
+        if (cl.length) { rows.push([]); rows.push(['NON-CASH NEGOTIABLES', 'Status', 'Note']); cl.forEach(i => rows.push([i.label, i.status === 'ask' ? 'Want to ask' : 'Have it', i.note || ''])); }
+    }
+    function checklistText() {
+        const cl = checklist.filter(i => i.status !== 'skip');
+        if (!cl.length) return '';
+        return '\nNon-cash asks: ' + cl.map(i => i.label + ' (' + (i.status === 'ask' ? 'ask' : 'have') + (i.note ? ': ' + i.note : '') + ')').join('; ') + '\n';
+    }
+    function setExportStartup(cur, C, eqLow, eqHigh) {
+        const rows = [
+            ['Element', 'Year 1', 'Year 2', 'Year 3', 'Year 4'],
+            ['Base Salary'].concat(C.sal.map(Math.round)),
+            ['Performance Bonus'].concat(C.bon.map(Math.round)),
+            ['Total Cash'].concat(C.cash.map(Math.round)),
+            ['Benefits per year'].concat(C.benefits.map(Math.round))
+        ];
+        rows.push([], ['4-yr Cash', Math.round(C.cash4)], ['4-yr Benefits', Math.round(C.ben4)], ['4-yr Cash + Benefits', Math.round(C.cash4 + C.ben4)]);
+        rows.push([], ['EQUITY (contingent, at liquidity only)'], ['No liquidity event', 0], ['Downside', Math.round(eqLow)], ['Expected', Math.round(C.equityPool)], ['Upside', Math.round(eqHigh)]);
+        appendTierRows(rows, 'st'); appendChecklistRows(rows);
+        let text = 'OFFER COMPENSATION SUMMARY (Startup) \u2014 pre-tax\n';
+        text += '4-yr Cash: ' + fmt(C.cash4) + '\n4-yr Benefits: ' + fmt(C.ben4) + '\n4-yr Cash+Benefits: ' + fmt(C.cash4 + C.ben4) + '\n';
+        text += 'Equity (contingent, at liquidity event): $0 floor / Downside ' + fmt(eqLow) + ' / Expected ' + fmt(C.equityPool) + ' / Upside ' + fmt(eqHigh) + '\n';
+        if (counterOn.startup) { const K = computeStartup(startupCounterParams(cur)); text += '\nCOUNTER-OFFER (4-yr): Cash+Benefits ' + fmt(K.cash4 + K.ben4) + ' (' + signed(K.cash4 + K.ben4 - (C.cash4 + C.ben4)) + '); Expected equity ' + fmt(K.equityPool) + ' (' + signed(K.equityPool - C.equityPool) + ')\n'; }
+        text += checklistText();
+        lastExport = { text, rows };
+    }
+    function setExportCorporate(cur, C) {
+        const rows = [
+            ['Element', 'Year 1', 'Year 2', 'Year 3', 'Year 4'],
+            ['Base Salary'].concat(C.sal.map(Math.round)),
+            ['Target Bonus'].concat(C.bon.map(Math.round)),
+            ['Signing Bonus', Math.round(cur.signing), 0, 0, 0],
+            ['Total Cash'].concat(C.cash.map(Math.round)),
+            ['401k Match'].concat(C.match.map(Math.round)),
+            ...(cur.other || []).filter(b => b.title || b.amount > 0).map(b => [b.title || '(unnamed benefit)', b.amount, b.amount, b.amount, b.amount]),
+            ['Total Benefits'].concat(C.benefits.map(Math.round)),
+            ['Initial RSU Vesting'].concat(C.rsu.map(Math.round)),
+            ['Refresh Vesting'].concat(C.ref.map(Math.round)),
+            ['Total Equity Vesting'].concat(C.equityTot.map(Math.round))
+        ];
+        rows.push([], ['4-yr Cash', Math.round(C.cash4)], ['4-yr Benefits', Math.round(C.ben4)], ['4-yr Equity (grant price)', Math.round(C.eq4)], ['4-yr Total', Math.round(C.cash4 + C.ben4 + C.eq4)]);
+        appendTierRows(rows, 'corp'); appendChecklistRows(rows);
+        let text = 'OFFER COMPENSATION SUMMARY (Corporate) \u2014 pre-tax\n';
+        text += '4-yr Cash: ' + fmt(C.cash4) + '\n4-yr Benefits: ' + fmt(C.ben4) + '\n4-yr Equity (grant price): ' + fmt(C.eq4) + '\n4-yr Total: ' + fmt(C.cash4 + C.ben4 + C.eq4) + '\n';
+        if (counterOn.corporate) { const K = computeCorporate(corporateCounterParams(cur)); text += '\nCOUNTER-OFFER (4-yr total): ' + fmt(K.cash4 + K.ben4 + K.eq4) + ' (' + signed(K.cash4 + K.ben4 + K.eq4 - (C.cash4 + C.ben4 + C.eq4)) + ')\n'; }
+        text += checklistText();
+        lastExport = { text, rows };
+    }
+    function flashExport(msg) { const el = document.getElementById('export-msg'); if (el) { el.textContent = msg; setTimeout(() => { el.textContent = ''; }, 2500); } }
+    function fallbackCopy(t, done) {
+        try { const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.focus(); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
+        catch (e) { flashExport('Copy failed \u2014 select the results manually'); }
+    }
+    function copySummary() {
+        const t = lastExport.text || ''; const done = () => flashExport('Copied to clipboard');
+        try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(done, () => fallbackCopy(t, done)); } else { fallbackCopy(t, done); } }
+        catch (e) { fallbackCopy(t, done); }
+    }
+    function downloadCsv() {
+        try {
+            const csv = (lastExport.rows || []).map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' }); const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = (activeMode === 'startup' ? 'startup' : 'corporate') + '-offer.csv';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); flashExport('CSV downloaded');
+        } catch (e) { flashExport('Download unavailable in this environment'); }
+    }
+
+    // ---------- Import handoff from MBA Compensation & Negotiation Tool ----------
+    function importHandoff() {
+        const text = document.getElementById('import-text').value;
+        const msg = document.getElementById('import-msg');
+        if (!text.trim()) { msg.textContent = 'Paste a handoff block first.'; msg.style.color = '#B91C1C'; return; }
+        function grab(label) {
+            const re = new RegExp(label + '\\s*:\\s*\\$?([\\d,\\.]+)', 'i');
+            const m = text.match(re);
+            return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+        }
+        function grabPct(label) {
+            const re = new RegExp(label + '\\s*:\\s*([\\d\\.]+)\\s*%', 'i');
+            const m = text.match(re);
+            return m ? parseFloat(m[1]) : null;
+        }
+        function grabText(label) {
+            const re = new RegExp(label + '\\s*:\\s*(.+)', 'i');
+            const m = text.match(re);
+            return m ? m[1].trim() : null;
+        }
+        const schemaOk = /Schema\s*:\s*comp-handoff-v2/i.test(text);
+        switchMode('corporate');
+        let filled = 0;
+        // Initial fields
+        const b = grab('Initial base'); if (b != null) { document.getElementById('corp-base').value = b; filled++; }
+        const s = grab('Signing bonus \\(initial\\)'); if (s != null) { document.getElementById('corp-signing').value = s; filled++; }
+        const bp = grabPct('Annual bonus % \\(initial\\)'); if (bp != null) { document.getElementById('corp-bonus-pct').value = bp; filled++; }
+        const e = grab('Equity grant \\(initial\\)'); if (e != null) { document.getElementById('corp-rsu-grant').value = e; filled++; }
+        const vy = grab('Vesting years \\(initial\\)'); if (vy != null) { document.getElementById('corp-rsu-vest').value = vy; filled++; }
+        const tr = grabText('Clawback trigger \\(initial\\)'); if (tr) { const rev = { 'Voluntary resignation only': 'vol', 'Any separation, including layoff': 'any', 'For-cause termination only': 'cause' }; if (rev[tr]) { document.getElementById('corp-claw-trigger').value = rev[tr]; filled++; } }
+        const cb = grabText('Clawback basis \\(initial\\)'); if (cb) { document.getElementById('corp-claw-basis').value = /gross/i.test(cb) ? 'gross' : 'net'; filled++; }
+        const tx = grabPct('Tax rate \\(initial\\)'); if (tx != null) { document.getElementById('corp-taxrate').value = tx; filled++; }
+        // Counter fields — only what this tool's counter model actually supports (base, bonus%, signing, equity, vesting, clawback, tax)
+        const cBase = grab('Counter base');
+        const cSign = grab('Signing bonus \\(counter\\)');
+        const cBp = grabPct('Annual bonus % \\(counter\\)');
+        const cEq = grab('Equity grant \\(counter\\)');
+        const cVy = grab('Vesting years \\(counter\\)');
+        const cTrig = grabText('Clawback trigger \\(counter\\)');
+        const cBasis = grabText('Clawback basis \\(counter\\)');
+        const cTax = grabPct('Tax rate \\(counter\\)');
+        let counterFilled = 0;
+        if (cBase != null || cSign != null || cBp != null || cEq != null) {
+            if (!counterOn.corporate) toggleCounter('corp');
+            if (cBase != null) { document.getElementById('corp-ctr-base').value = cBase; counterFilled++; }
+            if (cSign != null) { document.getElementById('corp-ctr-signing').value = cSign; counterFilled++; }
+            if (cBp != null) { document.getElementById('corp-ctr-bonus').value = cBp; counterFilled++; }
+            if (cEq != null) { document.getElementById('corp-ctr-rsu').value = cEq; counterFilled++; }
+            if (cVy != null) { document.getElementById('corp-ctr-rsu-vest').value = String(cVy); counterFilled++; }
+            const revTrig = { 'Voluntary resignation only': 'vol', 'Any separation, including layoff': 'any', 'For-cause termination only': 'cause' };
+            if (cTrig && revTrig[cTrig]) { document.getElementById('corp-ctr-claw-trigger').value = revTrig[cTrig]; counterFilled++; }
+            if (cBasis) { document.getElementById('corp-ctr-claw-basis').value = /gross/i.test(cBasis) ? 'gross' : 'net'; counterFilled++; }
+            if (cTax != null) { document.getElementById('corp-ctr-taxrate').value = cTax; counterFilled++; }
+            // Tool 1 doesn't have a distinct "clawback cash amount" field — default it to the counter's signing bonus, the common case
+            if (cSign != null) { document.getElementById('corp-ctr-claw-cash').value = cSign; }
+        }
+        filled += counterFilled;
+        if (filled === 0) {
+            msg.textContent = 'Couldn\u2019t find matching fields — check the block matches the expected format, or fill in manually below.';
+            msg.style.color = '#B45309';
+        } else {
+            let note = `Filled ${filled} field(s) — review before relying on them.`;
+            if (!schemaOk) note += ' No matching schema tag found; parsed on a best-effort basis.';
+            if (counterFilled > 0) note += ' Clawback cash for the counter was assumed to equal its signing bonus (Tool 1 has no separate clawback-cash field) — adjust if that\u2019s wrong.';
+            msg.textContent = note;
+            msg.style.color = '#059669';
+        }
+        recalc();
+    }
+
+    // ---------- Export handoff to MBA Compensation & Negotiation Tool ----------
+    function buildExportBlock(cur) {
+        const trigLabel = { vol: 'Voluntary resignation only', any: 'Any separation, including layoff', cause: 'For-cause termination only' };
+        const basisLabel = { gross: 'Gross (pre-tax amount)', net: 'Net (after-tax amount received)' };
+        const trig = document.getElementById('corp-claw-trigger').value || 'vol';
+        const basis = document.getElementById('corp-claw-basis').value || 'gross';
+        const vestYears = document.getElementById('corp-rsu-vest').value || '4';
+        const taxRate = num('corp-taxrate', 0, 60);
+        const lines = [
+            'Schema: comp-handoff-v2',
+            `Initial base: $${Math.round(cur.base).toLocaleString()}`,
+            `Signing bonus (initial): $${Math.round(cur.signing).toLocaleString()}`,
+            `Annual bonus % (initial): ${Math.round(cur.bonusPct * 100)}%`,
+            `Equity grant (initial): $${Math.round(cur.initRsu).toLocaleString()}`,
+            `Vesting years (initial): ${vestYears}`,
+            `Clawback trigger (initial): ${trigLabel[trig]}`,
+            `Clawback basis (initial): ${basisLabel[basis]}`,
+            `Tax rate (initial): ${taxRate}%`,
+            '',
+        ];
+        if (counterOn.corporate) {
+            const ctrVestYears = document.getElementById('corp-ctr-rsu-vest').value || vestYears;
+            const ctrTrig = document.getElementById('corp-ctr-claw-trigger').value || 'vol';
+            const ctrBasis = document.getElementById('corp-ctr-claw-basis').value || 'gross';
+            const ctrTax = num('corp-ctr-taxrate', 0, 60);
+            lines.push(`Counter base: $${Math.round(num('corp-ctr-base')).toLocaleString()}`);
+            lines.push(`Signing bonus (counter): $${Math.round(num('corp-ctr-signing')).toLocaleString()}`);
+            lines.push(`Annual bonus % (counter): ${Math.round(num('corp-ctr-bonus'))}%`);
+            lines.push(`Equity grant (counter): $${Math.round(num('corp-ctr-rsu')).toLocaleString()}`);
+            lines.push(`Vesting years (counter): ${ctrVestYears}`);
+            lines.push(`Clawback trigger (counter): ${trigLabel[ctrTrig]}`);
+            lines.push(`Clawback basis (counter): ${basisLabel[ctrBasis]}`);
+            lines.push(`Tax rate (counter): ${ctrTax}%`);
+        } else {
+            lines.push('Counter base: — (no counter-offer modeled yet in this tool)');
+        }
+        const el = document.getElementById('export-text');
+        if (el) el.value = lines.join('\n');
+    }
+    function copyExportBlock() {
+        const t = document.getElementById('export-text').value;
+        const msg = document.getElementById('export-handoff-msg');
+        const done = () => { msg.textContent = 'Copied'; msg.style.color = '#059669'; setTimeout(() => msg.textContent = '', 2000); };
+        try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(done, () => fallbackCopy(t, done)); } else { fallbackCopy(t, done); } }
+        catch (e) { msg.textContent = 'Copy failed — select the text manually'; }
+    }
+
+    // ---------- Output commit: render + persist + announce ----------
+    let annTimer;
+    function commit(h) {
+        document.getElementById('output-table-container').innerHTML = h;
+        const ph = document.getElementById('print-header');
+        if (ph) ph.innerHTML = '<div style="font-size:12px;color:#CC0000;font-weight:bold;">Full-Time MBA Program \u00b7 David Eccles School of Business</div><h2 style="margin:2px 0 4px;">Compensation Summary \u2014 ' + (activeMode === 'startup' ? 'Startup Offer' : 'Corporate Offer') + '</h2><div style="font-size:12px;color:#555;">Generated ' + new Date().toLocaleDateString() + ' \u00b7 estimates only, pre-tax unless noted</div>';
+        saveState();
+        const sum = document.querySelector('.summary-block');
+        const txt = sum ? sum.textContent.replace(/\s+/g, ' ').trim() : 'Results updated.';
+        clearTimeout(annTimer);
+        annTimer = setTimeout(() => { const s = document.getElementById('sr-status'); if (s) s.textContent = txt; }, 600);
+    }
+
+    // ---------- Accessibility: associate each label with its input ----------
+    function associateLabels() {
+        document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+            let lab = el.previousElementSibling;
+            while (lab && lab.tagName !== 'LABEL') lab = lab.previousElementSibling;
+            if (lab && lab.tagName === 'LABEL' && !lab.htmlFor) lab.htmlFor = el.id;
+        });
+    }
+
+    // ---------- Persistence (localStorage; fails safe if unavailable) ----------
+    const STORE_KEY = 'comp-planner-v1';
+    let DEFAULTS = {};
+    const store = {
+        get() { try { return localStorage.getItem(STORE_KEY); } catch (e) { return null; } },
+        set(v) { try { localStorage.setItem(STORE_KEY, v); } catch (e) {} },
+        clear() { try { localStorage.removeItem(STORE_KEY); } catch (e) {} }
+    };
+    function collectFields() {
+        const o = {};
+        document.querySelectorAll('#inputs-startup input[id], #inputs-startup select[id], #inputs-startup textarea[id], #inputs-corporate input[id], #inputs-corporate select[id], #inputs-corporate textarea[id]').forEach(el => { o[el.id] = el.value; });
+        return o;
+    }
+    function snapshotState() {
+        return {
+            mode: activeMode,
+            counterOn: Object.assign({}, counterOn),
+            tiers: JSON.parse(JSON.stringify(tierState)),
+            checklist: JSON.parse(JSON.stringify(checklist)),
+            otherBenefits: JSON.parse(JSON.stringify(otherBenefits)),
+            fields: collectFields()
+        };
+    }
+    function applyState(data) {
+        if (!data) return;
+        if (data.tiers) ['st', 'corp'].forEach(p => ['claw', 'vest'].forEach(k => {
+            const arr = data.tiers[p] && data.tiers[p][k];
+            tierState[p][k] = Array.isArray(arr) ? arr.map(t => ({ months: +t.months || 0, pct: +t.pct || 0 })) : [];
+        }));
+        if (Array.isArray(data.otherBenefits)) otherBenefits = data.otherBenefits.map(b => ({ title: typeof b.title === 'string' ? b.title : '', amount: (b.amount === '' || b.amount == null) ? '' : (parseFloat(b.amount) || 0) }));
+        if (Array.isArray(data.checklist)) checklist = NEGOTIABLES.map((l, i) => {
+            const sv = data.checklist.find(x => x && x.label === l) || data.checklist[i];
+            return { label: l, status: (sv && ['skip', 'ask', 'have'].indexOf(sv.status) >= 0) ? sv.status : 'skip', note: (sv && typeof sv.note === 'string') ? sv.note : '' };
+        });
+        if (data.mode) activeMode = data.mode;
+        ['startup', 'corporate'].forEach(m => {
+            const prefix = m === 'startup' ? 'st' : 'corp';
+            const panel = document.getElementById(prefix + '-counter-panel');
+            const btn = document.getElementById(prefix + '-counter-btn');
+            const want = !!(data.counterOn && data.counterOn[m]);
+            if (want) {
+                if (!panel.dataset.init) { buildCounterFields(prefix); panel.dataset.init = '1'; }
+                panel.classList.remove('hidden'); counterOn[m] = true;
+                btn.innerHTML = '&#9662; Hide counter-offer'; btn.setAttribute('aria-expanded', 'true');
+            } else {
+                panel.classList.add('hidden'); counterOn[m] = false;
+                btn.innerHTML = '&#9656; Model a counter-offer'; btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+        if (data.fields) Object.keys(data.fields).forEach(id => { const el = document.getElementById(id); if (el) el.value = data.fields[id]; });
+    }
+    function refreshAllUI() {
+        ['st', 'corp'].forEach(p => ['claw', 'vest'].forEach(k => renderTierInputs(p, k)));
+        renderChecklistInputs('st'); renderChecklistInputs('corp');
+        renderOtherBenefits();
+        document.getElementById('inputs-startup').classList.toggle('hidden', activeMode !== 'startup');
+        document.getElementById('inputs-corporate').classList.toggle('hidden', activeMode !== 'corporate');
+        document.getElementById('btn-startup').classList.toggle('active', activeMode === 'startup');
+        document.getElementById('btn-corporate').classList.toggle('active', activeMode === 'corporate');
+        document.getElementById('btn-startup').setAttribute('aria-pressed', activeMode === 'startup');
+        document.getElementById('btn-corporate').setAttribute('aria-pressed', activeMode === 'corporate');
+        associateLabels();
+        recalc();
+    }
+    function saveState() { try { store.set(JSON.stringify(snapshotState())); } catch (e) {} }
+    function loadState() {
+        const raw = store.get(); if (!raw) return false;
+        let data; try { data = JSON.parse(raw); } catch (e) { return false; }
+        applyState(data); return true;
+    }
+
+    // ---------- Saved-negotiations repository ----------
+    const SAVES_KEY = 'comp-planner-saves';
+    function storageAvailable() { try { localStorage.setItem('__t', '1'); localStorage.removeItem('__t'); return true; } catch (e) { return false; } }
+    const STORAGE_OK = storageAvailable();
+    const savesStore = {
+        get() { try { const r = localStorage.getItem(SAVES_KEY); return r ? JSON.parse(r) : []; } catch (e) { return []; } },
+        set(a) { try { localStorage.setItem(SAVES_KEY, JSON.stringify(a)); } catch (e) {} }
+    };
+    function escapeHtml(x) { return String(x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+    function updateSavedIndicator() {
+        const el = document.getElementById('save-indicator'); if (!el) return;
+        el.textContent = STORAGE_OK ? '\u2713 Autosaved' : 'Preview \u2014 changes not saved';
+        el.className = 'save-indicator ' + (STORAGE_OK ? 'ok' : 'warn');
+    }
+    function flashSaved(msg) { const el = document.getElementById('saves-msg'); if (el) { el.textContent = msg; setTimeout(() => { el.textContent = ''; }, 2600); } }
+    function toggleSavesDrawer() {
+        const d = document.getElementById('saves-drawer'), b = document.getElementById('saves-btn');
+        const open = d.classList.toggle('hidden') === false;
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) renderSavesList();
+    }
+    function renderSavesList() {
+        const saves = savesStore.get();
+        const cnt = document.getElementById('saves-count'); if (cnt) cnt.textContent = saves.length;
+        const list = document.getElementById('saves-list'); if (!list) return;
+        if (!saves.length) { list.innerHTML = '<div class="empty-msg">No saved negotiations yet. Fill in an offer, name it, then Save current.</div>'; return; }
+        list.innerHTML = saves.slice().reverse().map(e => {
+            const d = new Date(e.savedAt); const ds = isNaN(d.getTime()) ? '' : d.toLocaleString();
+            const mode = (e.state && e.state.mode === 'corporate') ? 'Corporate' : 'Startup';
+            return `<div class="save-item">
+                <div class="save-meta"><span class="save-name">${escapeHtml(e.name)}</span><span class="save-date">${mode} &middot; ${ds}</span></div>
+                <div class="save-actions"><button onclick="loadNegotiation('${e.id}')">Load</button><button class="del" onclick="deleteNegotiation('${e.id}')">Delete</button></div>
+            </div>`;
+        }).join('');
+    }
+    function saveNegotiation() {
+        if (!STORAGE_OK) { flashSaved('Saving is unavailable in this preview \u2014 works on the deployed page'); return; }
+        const nameEl = document.getElementById('save-name');
+        let name = (nameEl.value || '').trim();
+        if (!name) name = (activeMode === 'startup' ? 'Startup' : 'Corporate') + ' offer ' + new Date().toLocaleDateString();
+        const saves = savesStore.get();
+        saves.push({ id: 's' + Date.now(), name: name, savedAt: new Date().toISOString(), state: snapshotState() });
+        savesStore.set(saves); nameEl.value = ''; renderSavesList(); flashSaved('Saved \u201c' + name + '\u201d');
+    }
+    function loadNegotiation(id) {
+        const e = savesStore.get().find(x => x.id === id); if (!e) return;
+        applyState(e.state); refreshAllUI(); flashSaved('Loaded \u201c' + e.name + '\u201d');
+    }
+    function deleteNegotiation(id) {
+        const all = savesStore.get(); const e = all.find(x => x.id === id);
+        savesStore.set(all.filter(x => x.id !== id)); renderSavesList();
+        flashSaved(e ? ('Deleted \u201c' + e.name + '\u201d') : 'Deleted');
+    }
+    function resetAll() {
+        store.clear();
+        ['st', 'corp'].forEach(p => {
+            tierState[p].claw = []; tierState[p].vest = [];
+            const panel = document.getElementById(p + '-counter-panel');
+            panel.classList.add('hidden'); panel.dataset.init = ''; panel.innerHTML = '';
+            const btn = document.getElementById(p + '-counter-btn');
+            btn.innerHTML = '&#9656; Model a counter-offer'; btn.setAttribute('aria-expanded', 'false');
+        });
+        counterOn.startup = false; counterOn.corporate = false;
+        Object.keys(DEFAULTS).forEach(id => { const el = document.getElementById(id); if (el) el.value = DEFAULTS[id]; });
+        ['st', 'corp'].forEach(p => ['claw', 'vest'].forEach(k => renderTierInputs(p, k)));
+        checklist = NEGOTIABLES.map(l => ({ label: l, status: 'skip', note: '' }));
+        otherBenefits = [];
+        renderChecklistInputs('st'); renderChecklistInputs('corp');
+        renderOtherBenefits();
+        associateLabels();
+        switchMode('startup');
+    }
+
+    window.onload = function() {
+        DEFAULTS = collectFields();
+        renderChecklistInputs('st'); renderChecklistInputs('corp');
+        renderOtherBenefits();
+        ['st', 'corp'].forEach(p => ['claw', 'vest'].forEach(k => renderTierInputs(p, k)));
+        loadState();
+        renderSavesList();
+        updateSavedIndicator();
+        refreshAllUI();
+    };
+</script>
+
+    <footer style="margin-top:26px;font-size:12px;color:#6B6B6B;border-top:1px solid #E2E6E6;padding-top:14px">Developed by Cory Burk, Senior Manager, Program Management · Full-Time MBA Program · David Eccles School of Business.<br>© 2026 University of Utah, David Eccles School of Business. All rights reserved.</footer>    
+</body>
+</html>

@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compensation Intelligence Framework — Eccles MBA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --u-red: #CC0000;
+    --u-red-dark: #990000;
+    --u-red-light: #F9EDED;
+    --u-red-mid: #E8A0A0;
+    --u-charcoal: #1A1A1A;
+    --u-slate: #3D3D3D;
+    --u-muted: #6B6B6B;
+    --u-border: #E2E2E2;
+    --u-border-light: #F0F0F0;
+    --u-surface: #F7F6F4;
+    --u-surface-alt: #FAFAF9;
+    --u-white: #FFFFFF;
+    --u-blue: #1A4F8A;
+    --u-blue-light: #EBF1F8;
+    --u-green: #1E6B3C;
+    --u-green-light: #EBF5EF;
+    --u-amber: #8A5A00;
+    --u-amber-light: #FBF3E3;
+    --font-display: 'EB Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --radius: 8px;
+    --radius-lg: 14px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    color: var(--u-charcoal);
+    background: var(--u-surface);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+
+  /* ── SITE HEADER ── */
+  .site-header {
+    background: var(--u-charcoal);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .site-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .u-logo-mark {
+    width: 34px;
+    height: 34px;
+    background: var(--u-red);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: #fff;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+  .u-logo-text { color: #fff; min-width: 0; }
+  .u-logo-text .school { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; }
+  .u-logo-text .program { font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 300; }
+  @media (max-width: 620px) {
+    .site-header { padding: 0 1rem; }
+    .u-logo-text .school { font-size: 11.5px; letter-spacing: 0; }
+    .version-badge { display: none; }
+  }
+  .site-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .version-badge {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+  }
+  .print-btn {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 5px 12px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.15s;
+  }
+  .print-btn:hover { background: rgba(255,255,255,0.14); }
+
+  /* ── PAGE HERO ── */
+  .hero {
+    background: var(--u-white);
+    border-bottom: 1px solid var(--u-border);
+    padding: 2rem 2rem 1.5rem;
+  }
+  .hero-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--u-charcoal);
+    margin-bottom: 6px;
+  }
+  .hero-title em { color: var(--u-red); font-style: italic; }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--u-muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 520px;
+  }
+  .hero-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .hero-pill {
+    font-size: 11px;
+    background: var(--u-surface);
+    border: 1px solid var(--u-border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    color: var(--u-muted);
+    font-weight: 400;
+  }
+  .hero-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .hero-meta .label { font-size: 11px; color: var(--u-muted); margin-bottom: 2px; }
+  .hero-meta .value { font-size: 13px; font-weight: 500; color: var(--u-charcoal); }
+
+  /* ── MAIN LAYOUT ── */
+  .main-wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .main-wrap { grid-template-columns: 1fr; }
+    .sidebar { order: -1; }
+  }
+
+  /* ── TOOL PANEL ── */
+  .tool-panel {
+    background: var(--u-white);
+    border: 1px solid var(--u-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--u-border);
+    background: var(--u-surface-alt);
+    padding: 8px 12px 0;
+    gap: 2px;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    font-size: 12.5px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--u-muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: var(--radius) var(--radius) 0 0;
+    transition: color 0.12s, background 0.12s;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--u-charcoal); background: var(--u-border-light); }
+  .tab-btn.active { color: var(--u-red-dark); border-bottom-color: var(--u-red); font-weight: 500; background: var(--u-white); }
+  .tab-btn i { font-size: 14px; }
+
+  /* ── TAB CONTENT ── */
+  .sec { display: none; padding: 1.5rem; }
+  .sec.active { display: block; }
+  .sec-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; margin-bottom: 4px; }
+  .sec-sub { font-size: 12px; color: var(--u-muted); margin-bottom: 1.25rem; line-height: 1.6; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--u-white);
+    border: 1px solid var(--u-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .card-title { font-size: 12px; font-weight: 500; color: var(--u-slate); margin-bottom: .7rem; }
+  .surface { background: var(--u-surface); border-radius: var(--radius); padding: .85rem 1rem; margin-bottom: 1rem; }
+
+  /* ── METRIC GRID ── */
+  .mg { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 1rem; }
+  .mc { background: var(--u-surface); border-radius: var(--radius); padding: .75rem .9rem; }
+  .ml { font-size: 11px; color: var(--u-muted); margin-bottom: 3px; font-weight: 400; }
+  .mv { font-size: 20px; font-weight: 500; color: var(--u-charcoal); }
+  .mv.hi { color: var(--u-red-dark); }
+  .mv.good { color: var(--u-green); }
+
+  /* ── FORM ── */
+  .ir { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  @media (max-width: 540px) { .ir { grid-template-columns: 1fr; } }
+  .ig { display: flex; flex-direction: column; gap: 3px; }
+  .ig label { font-size: 11px; color: var(--u-muted); font-weight: 400; }
+  .ig input, .ig select {
+    border: 1px solid var(--u-border);
+    border-radius: var(--radius);
+    padding: 7px 9px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    background: var(--u-white);
+    color: var(--u-charcoal);
+    width: 100%;
+    transition: border-color 0.12s;
+  }
+  .ig input:focus, .ig select:focus { outline: none; border-color: var(--u-red-mid); }
+
+  /* ── BARS ── */
+  .br-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+  .bl { width: 140px; min-width: 90px; color: var(--u-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bt { flex: 1; height: 6px; background: var(--u-border-light); border-radius: 3px; overflow: hidden; }
+  .bf { height: 100%; border-radius: 3px; transition: width .4s ease; }
+  .bv { width: 60px; text-align: right; font-weight: 500; font-size: 12px; }
+
+  /* ── PILLS ── */
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .pg { background: var(--u-green-light); color: var(--u-green); }
+  .pa { background: var(--u-amber-light); color: var(--u-amber); }
+  .pr { background: var(--u-red-light); color: var(--u-red-dark); }
+  .pb { background: var(--u-blue-light); color: var(--u-blue); }
+
+  /* ── HEATMAP ── */
+  .hm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 6px; margin-bottom: 1rem; }
+  .hm-cell {
+    border-radius: var(--radius);
+    padding: .65rem .8rem;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: border-color .12s, transform .1s;
+  }
+  .hm-cell:hover { transform: translateY(-1px); }
+  .hm-cell.selected { border-color: var(--u-charcoal); }
+  .hm-name { font-size: 11px; font-weight: 500; margin-bottom: 3px; }
+  .hm-val { font-size: 17px; font-weight: 500; margin-bottom: 1px; }
+  .hm-sub { font-size: 10px; }
+  .legend { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--u-muted); flex-wrap: wrap; margin-bottom: .7rem; }
+  .lsq { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
+  .hm-filter { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: .7rem; }
+  .hm-btn {
+    font-size: 12px; background: var(--u-white); border: 1px solid var(--u-border);
+    border-radius: 20px; padding: 4px 12px; cursor: pointer; color: var(--u-muted);
+    font-family: var(--font-body); transition: all .12s;
+  }
+  .hm-btn:hover { border-color: var(--u-red-mid); color: var(--u-charcoal); }
+  .hm-btn.active { background: var(--u-red); border-color: var(--u-red); color: #fff; }
+
+  .detail-panel { border: 1px solid var(--u-border); border-radius: var(--radius); padding: 1rem 1.1rem; margin-bottom: 1rem; }
+  .dp-head { display: flex; align-items: center; gap: 10px; margin-bottom: .75rem; }
+  .dp-icon { width: 34px; height: 34px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .role-row { display: flex; align-items: baseline; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--u-border-light); font-size: 12px; }
+  .role-row:last-child { border-bottom: none; }
+
+  /* ── SCORECARD ── */
+  .sr-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--u-border-light); }
+  .sr-row:last-child { border-bottom: none; }
+  .srl { font-size: 12.5px; }
+  .srw { font-size: 10px; color: var(--u-muted); margin-top: 1px; }
+  .star {
+    width: 22px; height: 22px; border: 1px solid var(--u-border);
+    border-radius: 4px; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; font-size: 11px; background: var(--u-white);
+    color: var(--u-muted); transition: all .1s; font-family: var(--font-body);
+  }
+  .star.sel { background: var(--u-red-light); border-color: var(--u-red-mid); color: var(--u-red-dark); font-weight: 500; }
+  .tsd { text-align: center; padding: 1.25rem 1rem; background: var(--u-surface); border-radius: var(--radius); }
+  .bs { font-size: 46px; font-weight: 500; }
+
+  /* ── SKILL GRID ── */
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(172px, 1fr)); gap: 7px; }
+  .skc { border: 1px solid var(--u-border); border-radius: var(--radius); padding: .65rem .8rem; background: var(--u-white); }
+  .skn { font-size: 12px; font-weight: 500; margin-bottom: 5px; }
+  .skt { height: 5px; background: var(--u-border-light); border-radius: 3px; overflow: hidden; }
+  .skb { height: 100%; border-radius: 3px; }
+  .skm { font-size: 10px; color: var(--u-muted); margin-top: 4px; }
+  .sk-filter { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: .75rem; }
+  .sk-btn {
+    font-size: 12px; background: var(--u-white); border: 1px solid var(--u-border);
+    border-radius: 20px; padding: 4px 12px; cursor: pointer; color: var(--u-muted);
+    font-family: var(--font-body); transition: all .12s;
+  }
+  .sk-btn:hover { border-color: var(--u-red-mid); color: var(--u-charcoal); }
+  .sk-btn.active { background: var(--u-charcoal); border-color: var(--u-charcoal); color: #fff; }
+
+  .src-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: .6rem; }
+  .src-tag { font-size: 11px; background: var(--u-surface); border: 1px solid var(--u-border); border-radius: 20px; padding: 3px 9px; color: var(--u-muted); }
+
+  /* ── DEFINITION BANNERS ── */
+  .defn {
+    display: flex;
+    gap: 12px;
+    background: var(--u-surface);
+    border-left: 3px solid var(--u-red);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: .85rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .defn-icon { font-size: 18px; color: var(--u-red); flex-shrink: 0; margin-top: 1px; }
+  .defn-body { flex: 1; }
+  .defn-title { font-size: 12px; font-weight: 500; color: var(--u-charcoal); margin-bottom: 4px; }
+  .defn-text { font-size: 12px; color: var(--u-slate); line-height: 1.65; }
+  .defn-text strong { font-weight: 500; color: var(--u-charcoal); }
+  .defn-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .defn-pill {
+    font-size: 10.5px; background: var(--u-white); border: 1px solid var(--u-border);
+    border-radius: 20px; padding: 2px 9px; color: var(--u-muted);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .defn-pill i { font-size: 11px; color: var(--u-red); }
+
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 1rem; }
+  .side-card {
+    background: var(--u-white);
+    border: 1px solid var(--u-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .side-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: .85rem 1rem;
+    border-bottom: 1px solid var(--u-border);
+    background: var(--u-surface-alt);
+  }
+  .side-card-header .title { font-size: 13px; font-weight: 500; }
+  .side-card-header .icon { font-size: 15px; color: var(--u-red); }
+  .side-card-body { padding: 1rem; }
+
+  /* ── COACH NOTES ── */
+  .coach-note {
+    margin-bottom: .85rem;
+    padding-bottom: .85rem;
+    border-bottom: 1px solid var(--u-border-light);
+  }
+  .coach-note:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .coach-note-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--u-red);
+    margin-bottom: 4px;
+  }
+  .coach-note-text {
+    font-size: 12px;
+    color: var(--u-slate);
+    line-height: 1.6;
+  }
+  .coach-note-text strong { font-weight: 500; color: var(--u-charcoal); }
+
+  .notes-textarea {
+    width: 100%;
+    min-height: 90px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--u-charcoal);
+    border: 1px solid var(--u-border);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    resize: vertical;
+    background: var(--u-white);
+    line-height: 1.6;
+    transition: border-color .12s;
+  }
+  .notes-textarea:focus { outline: none; border-color: var(--u-red-mid); }
+  .notes-textarea::placeholder { color: var(--u-muted); }
+
+  .save-btn {
+    margin-top: 7px;
+    width: 100%;
+    padding: 7px;
+    background: var(--u-charcoal);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 12px;
+    font-family: var(--font-body);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: background .12s;
+  }
+  .save-btn:hover { background: var(--u-red-dark); }
+  .save-confirm { font-size: 11px; color: var(--u-green); margin-top: 5px; text-align: center; display: none; }
+
+  /* ── FRAMEWORK QUICK REF ── */
+  .qr-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+  .qr-icon { font-size: 14px; color: var(--u-red); margin-top: 1px; flex-shrink: 0; }
+  .qr-text { font-size: 12px; color: var(--u-slate); line-height: 1.5; }
+  .qr-text strong { color: var(--u-charcoal); font-weight: 500; }
+
+  /* ── HANDOFF ── */
+  .handoff-box { border: 2px dashed #93C5FD; border-radius: var(--radius); padding: .85rem 1rem; background: #F8FAFF; margin-top: 1rem; }
+  .handoff-box textarea { width: 100%; min-height: 70px; font-family: monospace; font-size: 11.5px; border: 1px solid var(--u-border); border-radius: var(--radius); padding: 8px; margin-top: 6px; }
+  .handoff-btn { background: var(--u-blue); color: #fff; border: none; border-radius: var(--radius); padding: 7px 12px; font-size: 12px; font-weight: 500; cursor: pointer; margin-top: 6px; }
+
+  /* ── PRINT ── */
+  @media print {
+    .site-header { position: static; background: var(--u-charcoal) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tab-nav { overflow: visible; }
+    .sec { display: block !important; break-inside: avoid; }
+    .print-btn { display: none; }
+    body { background: #fff; }
+    .main-wrap { grid-template-columns: 1fr; }
+    .sidebar { order: 1; }
+  }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    max-width: 1060px;
+    margin: 1.5rem auto 0;
+    padding: 0 2rem 2rem;
+    font-size: 11px;
+    color: var(--u-muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<header class="site-header" role="banner">
+  <div class="site-header-logo">
+    <div class="u-logo-mark" aria-hidden="true">U</div>
+    <div class="u-logo-text">
+      <div class="school">Full-Time MBA Program · David Eccles School of Business</div>
+      <div class="program">University of Utah · MBA Career Services</div>
+    </div>
+  </div>
+  <div class="site-header-right">
+    <span class="version-badge">CIF v3.1 · 2025–2026</span>
+    <button class="print-btn" onclick="window.print()" aria-label="Print this framework">
+      <i class="ti ti-printer" aria-hidden="true"></i> Print / Save PDF
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" aria-label="Framework overview">
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-title">MBA <em>Compensation</em> Intelligence Framework</h1>
+      <p class="hero-sub">A strategic labor-market intelligence system for Eccles MBA students and coaches. Model total compensation, benchmark industries, evaluate offers, and calculate career ROI — all in one place.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">Total comp calculator</span>
+        <span class="hero-pill">COL normalizer</span>
+        <span class="hero-pill">Industry heatmap</span>
+        <span class="hero-pill">Offer scorecard</span>
+        <span class="hero-pill">Skill premium index</span>
+      </div>
+    </div>
+    <div class="hero-meta" aria-label="Framework details">
+      <div class="label">Designed for</div>
+      <div class="value">Career Coaches &amp; MBA Students</div>
+      <div style="margin-top:8px" class="label">Data period</div>
+      <div class="value">2025 – 2026</div>
+      <div style="margin-top:8px" class="label">Maintained by</div>
+      <div class="value">Eccles MBA Career Services</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main>
+<div class="main-wrap">
+
+  <!-- TOOL PANEL -->
+  <div>
+  <div class="tool-panel" role="main">
+    <nav class="tab-nav" role="tablist" aria-label="Framework tools">
+      <button class="tab-btn active" role="tab" aria-selected="true" onclick="showTab('tcv',this)">
+        <i class="ti ti-calculator" aria-hidden="true"></i> Total comp
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="showTab('col',this)">
+        <i class="ti ti-map-pin" aria-hidden="true"></i> COL normalizer
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="showTab('heatmap',this)">
+        <i class="ti ti-layout-grid" aria-hidden="true"></i> Industry heatmap
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="showTab('score',this)">
+        <i class="ti ti-checklist" aria-hidden="true"></i> Offer scorecard
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="showTab('skills',this)">
+        <i class="ti ti-award" aria-hidden="true"></i> Skill premiums
+      </button>
+    </nav>
+
+    <!-- TCV -->
+    <div id="tab-tcv" class="sec active" role="tabpanel" aria-labelledby="tab-tcv">
+      <h2 class="sec-title">Total compensation calculator</h2>
+      <p class="sec-sub">Base salary alone is misleading. Model the full True Compensation Value (TCV) — including equity, benefits, brand premium, and lifestyle economics.</p>
+      <div class="defn">
+        <i class="ti ti-info-circle defn-icon" aria-hidden="true"></i>
+        <div class="defn-body">
+          <div class="defn-title">How this works</div>
+          <div class="defn-text">
+            Enter the details of any job offer and this tool calculates your <strong>True Compensation Value (TCV)</strong> — the full economic picture beyond base salary. It sums base, bonus, equity (RSUs), sign-on (amortized over 3 years), retirement match, and benefits, then applies a brand multiplier based on the employer tier. Remote days are converted to commute savings at ~$5,200/day/year. The breakdown bars let you see at a glance which components are actually driving total comp.
+          </div>
+          <div class="defn-pills">
+            <span class="defn-pill"><i class="ti ti-alert-triangle" aria-hidden="true"></i> A $180K base with no equity may be worth less than $145K with strong RSUs</span>
+            <span class="defn-pill"><i class="ti ti-check" aria-hidden="true"></i> Use alongside the COL Normalizer for geographic context</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Offer details</div>
+        <div class="ir">
+          <div class="ig"><label for="t-base">Base salary ($)</label><input type="number" id="t-base" value="145000" oninput="calcTCV()"></div>
+          <div class="ig"><label for="t-bonus">Annual bonus ($)</label><input type="number" id="t-bonus" value="20000" oninput="calcTCV()"></div>
+        </div>
+        <div class="ir">
+          <div class="ig"><label for="t-rsu">Annual RSU / equity grant ($)</label><input type="number" id="t-rsu" value="30000" oninput="calcTCV()"></div>
+          <div class="ig"><label for="t-sign">Sign-on bonus ($)</label><input type="number" id="t-sign" value="15000" oninput="calcTCV()"></div>
+        </div>
+        <div class="ir">
+          <div class="ig"><label for="t-ret">Retirement match (% of base)</label><input type="number" id="t-ret" value="4" oninput="calcTCV()"></div>
+          <div class="ig"><label for="t-ben">Benefits value ($/yr estimated)</label><input type="number" id="t-ben" value="8000" oninput="calcTCV()"></div>
+        </div>
+        <div class="ir">
+          <div class="ig"><label for="t-remote">Remote days / week</label>
+            <select id="t-remote" onchange="calcTCV()">
+              <option value="0">0 — fully in-office</option>
+              <option value="1">1 day remote</option>
+              <option value="2" selected>2 days — hybrid</option>
+              <option value="3">3 days remote</option>
+              <option value="5">5 — fully remote</option>
+            </select>
+          </div>
+          <div class="ig"><label for="t-hrs">Expected weekly hours</label><input type="number" id="t-hrs" value="50" oninput="calcTCV()"></div>
+        </div>
+        <div class="ir">
+          <div class="ig"><label for="t-promo">Promotion velocity</label>
+            <select id="t-promo" onchange="calcTCV()">
+              <option value="1">~1 year — fast track</option>
+              <option value="2" selected>~2 years — standard</option>
+              <option value="3">3+ years — slower</option>
+            </select>
+          </div>
+          <div class="ig"><label for="t-brand">Brand tier</label>
+            <select id="t-brand" onchange="calcTCV()">
+              <option value="1.15">Tier 1 — FAANG / MBB / bulge bracket</option>
+              <option value="1.08" selected>Tier 2 — strong regional / mid-market</option>
+              <option value="1.0">Tier 3 — emerging / smaller firm</option>
+              <option value="1.05">Startup with equity upside</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="mg" id="tcv-metrics"></div>
+      <div class="card" id="tcv-bars"></div>
+      <p style="font-size:11px;color:var(--u-muted)">TCV = Base + Bonus + Equity (RSUs) + Sign-On (amortized over 3 yrs) + Retirement Match + Benefits, adjusted for brand multiplier. Remote savings estimated at $5,200/remote day/yr.</p>
+
+      <div class="handoff-box">
+        <div class="card-title" style="color:var(--u-blue);margin-bottom:2px;">Continue to the MBA Compensation &amp; Negotiation Tool</div>
+        <p style="font-size:11.5px;color:var(--u-muted);">This is advisory context, not structured offer data — there's no "offer" yet at this stage, just a ballpark. Paste this note into that tool's Step 1 as a reference when you set your baseline market salary manually.</p>
+        <textarea id="handoffNote" readonly></textarea>
+        <button class="handoff-btn" onclick="copyHandoffNote()">Copy note</button>
+        <span id="handoffMsg" style="font-size:11px;color:var(--u-green);margin-left:8px;"></span>
+      </div>
+    </div>
+
+    <!-- COL -->
+    <div id="tab-col" class="sec" role="tabpanel">
+      <h2 class="sec-title">Cost-of-living normalizer</h2>
+      <p class="sec-sub">$145K in Salt Lake City often outperforms $210K in San Francisco in real purchasing power. Compare two offers on adjusted terms.</p>
+      <div class="defn">
+        <i class="ti ti-info-circle defn-icon" aria-hidden="true"></i>
+        <div class="defn-body">
+          <div class="defn-title">How this works</div>
+          <div class="defn-text">
+            This tool adjusts each offer's nominal salary using a <strong>Cost of Living (COL) index</strong> — a measure of how far a dollar goes in each city relative to the US average (100). For example, San Francisco has a COL index of ~197, meaning things cost roughly twice as much there. Each offer is also adjusted for <strong>top marginal state income tax</strong> to show after-tax take-home. The result: a side-by-side purchasing-power comparison so you're evaluating real economic value, not just the number on the offer letter.
+          </div>
+          <div class="defn-pills">
+            <span class="defn-pill"><i class="ti ti-map-pin" aria-hidden="true"></i> SLC index: 94 — below US average, strong purchasing power</span>
+            <span class="defn-pill"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Seattle and Austin have no state income tax — a significant hidden advantage</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="card">
+          <div class="card-title">Offer A</div>
+          <div class="ig" style="margin-bottom:8px"><label for="col-a-city">City</label>
+            <select id="col-a-city" onchange="calcCOL()">
+              <option value="slc" selected>Salt Lake City, UT</option>
+              <option value="sf">San Francisco, CA</option>
+              <option value="nyc">New York, NY</option>
+              <option value="sea">Seattle, WA</option>
+              <option value="aus">Austin, TX</option>
+              <option value="den">Denver, CO</option>
+              <option value="chi">Chicago, IL</option>
+              <option value="dal">Dallas, TX</option>
+              <option value="remote">Remote / flexible</option>
+            </select>
+          </div>
+          <div class="ig"><label for="col-a-comp">Total annual comp ($)</label><input type="number" id="col-a-comp" value="145000" oninput="calcCOL()"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Offer B</div>
+          <div class="ig" style="margin-bottom:8px"><label for="col-b-city">City</label>
+            <select id="col-b-city" onchange="calcCOL()">
+              <option value="slc">Salt Lake City, UT</option>
+              <option value="sf" selected>San Francisco, CA</option>
+              <option value="nyc">New York, NY</option>
+              <option value="sea">Seattle, WA</option>
+              <option value="aus">Austin, TX</option>
+              <option value="den">Denver, CO</option>
+              <option value="chi">Chicago, IL</option>
+              <option value="dal">Dallas, TX</option>
+              <option value="remote">Remote / flexible</option>
+            </select>
+          </div>
+          <div class="ig"><label for="col-b-comp">Total annual comp ($)</label><input type="number" id="col-b-comp" value="210000" oninput="calcCOL()"></div>
+        </div>
+      </div>
+      <div class="mg" id="col-metrics"></div>
+      <div class="card" id="col-detail"></div>
+    </div>
+
+    <!-- HEATMAP -->
+    <div id="tab-heatmap" class="sec" role="tabpanel">
+      <h2 class="sec-title">Industry compensation heatmap</h2>
+      <p class="sec-sub">Compare 10 industries across five strategic dimensions. Darker = higher score. Click any cell for roles, salary ranges, and market signals.</p>
+      <div class="defn">
+        <i class="ti ti-info-circle defn-icon" aria-hidden="true"></i>
+        <div class="defn-body">
+          <div class="defn-title">How this works</div>
+          <div class="defn-text">
+            Each industry is scored 0–100 across five dimensions based on 2025–2026 market data. <strong>Color intensity</strong> encodes the score — darker blue means a higher score for the selected dimension. Use the filter buttons to switch dimensions and re-rank industries instantly. <strong>Click any cell</strong> to open a detail panel showing MBA entry-level roles, realistic salary ranges, and a strategic market signal from current hiring data. Scores are editorial assessments synthesized from Levels.fyi, Glassdoor, H1B data, and industry reports — not algorithmic outputs.
+          </div>
+          <div class="defn-pills">
+            <span class="defn-pill"><i class="ti ti-layout-grid" aria-hidden="true"></i> Total comp (TCV) — full package value including equity</span>
+            <span class="defn-pill"><i class="ti ti-trending-up" aria-hidden="true"></i> Growth trajectory — 3–5 year comp acceleration potential</span>
+            <span class="defn-pill"><i class="ti ti-brain" aria-hidden="true"></i> AI resilience — robustness of the career path to AI disruption</span>
+            <span class="defn-pill"><i class="ti ti-coins" aria-hidden="true"></i> Equity upside — meaningful equity / carry / long-term incentive potential</span>
+            <span class="defn-pill"><i class="ti ti-heart" aria-hidden="true"></i> Work-life fit — typical hours, intensity, and flexibility</span>
+          </div>
+        </div>
+      </div>
+      <div class="hm-filter" id="hm-filter-btns">
+        <button class="hm-btn active" onclick="setHMDim('tcv',this)">Total comp (TCV)</button>
+        <button class="hm-btn" onclick="setHMDim('growth',this)">Growth trajectory</button>
+        <button class="hm-btn" onclick="setHMDim('ai',this)">AI resilience</button>
+        <button class="hm-btn" onclick="setHMDim('equity',this)">Equity upside</button>
+        <button class="hm-btn" onclick="setHMDim('wl',this)">Work-life fit</button>
+      </div>
+      <div class="legend">
+        <span>Low</span>
+        <span class="lsq" style="background:#BFCFE8"></span>
+        <span class="lsq" style="background:#7FA3CC"></span>
+        <span class="lsq" style="background:#3D72A4"></span>
+        <span class="lsq" style="background:#1A4F8A"></span>
+        <span class="lsq" style="background:#0D2D55"></span>
+        <span>High</span>
+        <span style="margin-left:8px;font-size:10px;color:var(--u-muted)">— click any cell for details</span>
+      </div>
+      <div class="hm-grid" id="hm-grid"></div>
+      <div class="detail-panel" id="hm-detail" style="display:none"></div>
+    </div>
+
+    <!-- SCORECARD -->
+    <div id="tab-score" class="sec" role="tabpanel">
+      <h2 class="sec-title">Offer evaluation scorecard</h2>
+      <p class="sec-sub">Rate two offers 1–5 across 8 weighted dimensions. The weighted total reveals the stronger long-term strategic choice — not just the higher number.</p>
+      <div class="defn">
+        <i class="ti ti-info-circle defn-icon" aria-hidden="true"></i>
+        <div class="defn-body">
+          <div class="defn-title">How this works</div>
+          <div class="defn-text">
+            Label your two offers, then rate each on a 1–5 scale across eight career dimensions. Each dimension carries a <strong>preset weight</strong> reflecting its long-term impact on career outcomes — Compensation (25%), Growth (20%), Brand (15%), and Leadership Exposure (15%) carry the most weight. Your ratings are multiplied by the weights and summed to produce a score out of 100. This forces a structured tradeoff conversation: a $200K offer that scores 54 may be a worse strategic choice than a $145K offer that scores 81.
+          </div>
+          <div class="defn-pills">
+            <span class="defn-pill"><i class="ti ti-check" aria-hidden="true"></i> 80–100: Strong accept</span>
+            <span class="defn-pill"><i class="ti ti-check" aria-hidden="true"></i> 65–79: Accept with negotiation</span>
+            <span class="defn-pill"><i class="ti ti-alert-triangle" aria-hidden="true"></i> 50–64: Proceed with caution</span>
+            <span class="defn-pill"><i class="ti ti-x" aria-hidden="true"></i> Below 50: Decline or renegotiate</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+        <div class="ig"><label for="sc-a-name">Offer A label</label><input type="text" id="sc-a-name" value="Adobe — Senior PM" oninput="renderScorecard()"></div>
+        <div class="ig"><label for="sc-b-name">Offer B label</label><input type="text" id="sc-b-name" value="Consulting — Associate" oninput="renderScorecard()"></div>
+      </div>
+      <div class="card" id="scorecard-body"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:.85rem" id="score-results"></div>
+    </div>
+
+    <!-- SKILLS -->
+    <div id="tab-skills" class="sec" role="tabpanel">
+      <h2 class="sec-title">Skill premium index</h2>
+      <p class="sec-sub">Skills are market assets. Compensation is their market price. Use this to prioritize upskilling for maximum compensation ROI.</p>
+      <div class="defn">
+        <i class="ti ti-info-circle defn-icon" aria-hidden="true"></i>
+        <div class="defn-body">
+          <div class="defn-title">How this works</div>
+          <div class="defn-text">
+            Each skill is assigned a <strong>premium score from 0–100</strong> representing how much compensation lift that skill currently commands in the MBA-level job market, relative to peers without it. Scores are synthesized from 2025–2026 job posting data, Levels.fyi compensation reports, LinkedIn salary insights, and recruiter-reported hiring trends. Filter by category to focus your upskilling plan. A score of 90+ means the skill is actively commanding premium offers and is frequently listed as a differentiator in MBA-level hiring decisions.
+          </div>
+          <div class="defn-pills">
+            <span class="defn-pill"><i class="ti ti-brain" aria-hidden="true"></i> AI & data — fastest-growing premium category</span>
+            <span class="defn-pill"><i class="ti ti-code" aria-hidden="true"></i> Technical — analytical tools and applied coding</span>
+            <span class="defn-pill"><i class="ti ti-briefcase" aria-hidden="true"></i> Business — strategy, communication, and leadership skills</span>
+          </div>
+        </div>
+      </div>
+      <div class="sk-filter" id="sk-filter">
+        <button class="sk-btn active" onclick="filterSkills('all',this)">All skills</button>
+        <button class="sk-btn" onclick="filterSkills('ai',this)">AI &amp; data</button>
+        <button class="sk-btn" onclick="filterSkills('tech',this)">Technical</button>
+        <button class="sk-btn" onclick="filterSkills('biz',this)">Business</button>
+      </div>
+      <div class="skill-grid" id="skills-grid"></div>
+      <div class="card" style="margin-top:.85rem">
+        <div class="card-title">Recommended live data sources</div>
+        <div class="src-row">
+          <span class="src-tag">Levels.fyi — tech &amp; PM</span>
+          <span class="src-tag">Glassdoor — broad benchmarking</span>
+          <span class="src-tag">H1B Salary DB — employer data</span>
+          <span class="src-tag">Blind — negotiation intel</span>
+          <span class="src-tag">RepVue — SaaS sales</span>
+          <span class="src-tag">LinkedIn Jobs — live transparency</span>
+          <span class="src-tag">Salary.com — corporate bands</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tool-panel -->
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" aria-label="Coach resources">
+
+    <!-- STRATEGIC FRAMEWORK QUICK REF -->
+    <div class="side-card">
+      <div class="side-card-header">
+        <i class="ti ti-book icon" aria-hidden="true"></i>
+        <span class="title">Strategic framework</span>
+      </div>
+      <div class="side-card-body">
+        <div class="qr-item">
+          <i class="ti ti-currency-dollar qr-icon" aria-hidden="true"></i>
+          <div class="qr-text"><strong>Compensation ≠ Career Value.</strong> Trajectory + skills + brand = full picture.</div>
+        </div>
+        <div class="qr-item">
+          <i class="ti ti-chart-line qr-icon" aria-hidden="true"></i>
+          <div class="qr-text"><strong>Equity matters more than ever.</strong> RSUs, refresh grants, and carry are where real wealth is built.</div>
+        </div>
+        <div class="qr-item">
+          <i class="ti ti-map-pin qr-icon" aria-hidden="true"></i>
+          <div class="qr-text"><strong>SLC has strong purchasing power.</strong> $145K here often beats $210K in SF after COL + taxes.</div>
+        </div>
+        <div class="qr-item">
+          <i class="ti ti-brain qr-icon" aria-hidden="true"></i>
+          <div class="qr-text"><strong>AI fluency is the top premium skill.</strong> Technical + business hybrid talent commands highest comp growth.</div>
+        </div>
+        <div class="qr-item">
+          <i class="ti ti-rocket qr-icon" aria-hidden="true"></i>
+          <div class="qr-text"><strong>AI/Data and SaaS lead growth.</strong> Consulting and CPG face AI-driven headwinds on junior hiring.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COACHING SESSION NOTES -->
+    <div class="side-card">
+      <div class="side-card-header">
+        <i class="ti ti-notes icon" aria-hidden="true"></i>
+        <span class="title">Coaching session notes</span>
+      </div>
+      <div class="side-card-body">
+        <div class="coach-note">
+          <div class="coach-note-label">Student context</div>
+          <textarea class="notes-textarea" id="note-student" placeholder="Student name, background, pre-MBA role, target industry..." rows="3"></textarea>
+        </div>
+        <div class="coach-note">
+          <div class="coach-note-label">Offer(s) under review</div>
+          <textarea class="notes-textarea" id="note-offers" placeholder="Company, role, base, bonus, equity, location, deadline..." rows="3"></textarea>
+        </div>
+        <div class="coach-note">
+          <div class="coach-note-label">Key negotiation levers</div>
+          <textarea class="notes-textarea" id="note-nego" placeholder="Competing offer, equity ask, sign-on, remote flexibility, promotion timeline..." rows="3"></textarea>
+        </div>
+        <div class="coach-note">
+          <div class="coach-note-label">Recommended next steps</div>
+          <textarea class="notes-textarea" id="note-next" placeholder="Action items, follow-up research, resources to share..." rows="3"></textarea>
+        </div>
+        <button class="save-btn" onclick="saveNotes()">
+          <i class="ti ti-device-floppy" aria-hidden="true"></i> Save session notes
+        </button>
+        <div class="save-confirm" id="save-confirm">
+          <i class="ti ti-check" aria-hidden="true"></i> Saved to this browser
+        </div>
+      </div>
+    </div>
+
+    <!-- ECCLES RESOURCES -->
+    <div class="side-card">
+      <div class="side-card-header">
+        <i class="ti ti-school icon" aria-hidden="true"></i>
+        <span class="title">Eccles resources</span>
+      </div>
+      <div class="side-card-body">
+        <div class="coach-note">
+          <div class="coach-note-label">Quick links</div>
+          <div class="coach-note-text" style="display:flex;flex-direction:column;gap:5px">
+            <a href="https://eccles.utah.edu/programs/mba/career-management/" target="_blank" rel="noopener" style="color:var(--u-red-dark);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link" style="font-size:12px" aria-hidden="true"></i> MBA Career Management</a>
+            <a href="https://www.levels.fyi" target="_blank" rel="noopener" style="color:var(--u-red-dark);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link" style="font-size:12px" aria-hidden="true"></i> Levels.fyi</a>
+            <a href="https://h1bdata.info" target="_blank" rel="noopener" style="color:var(--u-red-dark);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link" style="font-size:12px" aria-hidden="true"></i> H1B Salary Database</a>
+            <a href="https://www.glassdoor.com" target="_blank" rel="noopener" style="color:var(--u-red-dark);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link" style="font-size:12px" aria-hidden="true"></i> Glassdoor</a>
+            <a href="https://www.blind.com" target="_blank" rel="noopener" style="color:var(--u-red-dark);font-size:12px;text-decoration:none;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link" style="font-size:12px" aria-hidden="true"></i> Blind</a>
+          </div>
+        </div>
+        <div class="coach-note" style="margin-top:.5rem">
+          <div class="coach-note-label">TCV Formula</div>
+          <div class="coach-note-text" style="font-family:monospace;font-size:11px;background:var(--u-surface);padding:7px 9px;border-radius:var(--radius);line-height:1.8;border:1px solid var(--u-border)">
+            TCV = Base<br>+ Bonus<br>+ Equity (RSUs)<br>+ Sign-On (÷ 3)<br>+ Retirement Match<br>+ Benefits<br>× Brand Multiplier
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+</div><!-- /main-wrap -->
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <span>Eccles MBA Compensation Intelligence Framework · CIF v3.1 · 2025–2026</span>
+  <span>Full-Time MBA Program · David Eccles School of Business · University of Utah</span>
+  <br><br>Developed by Cory Burk, Senior Manager, Program Management · Full-Time MBA Program · David Eccles School of Business.<br>© 2026 University of Utah, David Eccles School of Business. All rights reserved.
+</footer>
+
+<script>
+var hmDim = 'tcv';
+var hmSelected = null;
+
+var colData = {
+  slc: { name: 'Salt Lake City, UT', idx: 94, tax: 4.95, note: 'Moderate cost, low tax — strong purchasing power' },
+  sf:  { name: 'San Francisco, CA', idx: 197, tax: 13.3, note: 'Extremely high cost & tax — significant headwinds' },
+  nyc: { name: 'New York, NY', idx: 187, tax: 10.9, note: 'Extremely high cost — combined city + state tax' },
+  sea: { name: 'Seattle, WA', idx: 158, tax: 0, note: 'High cost, but no state income tax' },
+  aus: { name: 'Austin, TX', idx: 115, tax: 0, note: 'Moderate cost, no state income tax — growing tech hub' },
+  den: { name: 'Denver, CO', idx: 133, tax: 4.4, note: 'High cost, moderate tax' },
+  chi: { name: 'Chicago, IL', idx: 117, tax: 4.95, note: 'Moderate cost relative to salary levels' },
+  dal: { name: 'Dallas, TX', idx: 106, tax: 0, note: 'Low cost, no state income tax' },
+  remote: { name: 'Remote / flexible', idx: 100, tax: 4.5, note: 'Variable — modeled at US average COL' }
+};
+
+var industries = [
+  { id: 'tech', name: 'Big tech / FAANG', icon: 'ti-cpu', tcv: 95, growth: 88, ai: 72, equity: 98, wl: 42,
+    roles: [{ r: 'Senior PM', range: '$220K–$500K+', note: 'Equity-heavy; very high ceiling' }, { r: 'Data scientist', range: '$180K–$350K', note: 'Python + ML fluency critical' }, { r: 'Strategy / BizOps', range: '$150K–$280K', note: 'Strong exit optionality' }],
+    signal: 'Equity + refresh grants dominate TCV. Levels.fyi is essential for benchmarking.', bar: '#1A4F8A' },
+  { id: 'consulting', name: 'Strategy consulting', icon: 'ti-briefcase', tcv: 72, growth: 80, ai: 50, equity: 22, wl: 30,
+    roles: [{ r: 'Associate (MBA)', range: '$175K–$220K', note: 'Base + bonus; limited equity' }, { r: 'Engagement manager', range: '$220K–$280K', note: '~3 yrs post-MBA' }, { r: 'Principal', range: '$300K–$450K', note: 'High bonus variability' }],
+    signal: 'Prestige and exit optionality remain high. Junior hiring tightening due to AI.', bar: '#8A5A00' },
+  { id: 'finance', name: 'Investment banking', icon: 'ti-building-bank', tcv: 90, growth: 70, ai: 45, equity: 30, wl: 18,
+    roles: [{ r: 'Associate (MBA)', range: '$200K–$350K', note: 'Base + large bonus' }, { r: 'VP', range: '$350K–$600K', note: 'Bonus-heavy; hours intense' }, { r: 'MD', range: '$700K–$2M+', note: 'High variance' }],
+    signal: 'Highest nominal comp; lowest work-life scores. Bonus can equal or exceed base.', bar: '#5A1A8A' },
+  { id: 'pe', name: 'Private equity / VC', icon: 'ti-coins', tcv: 92, growth: 75, ai: 40, equity: 95, wl: 25,
+    roles: [{ r: 'Associate', range: '$200K–$400K', note: 'Carry is the real prize' }, { r: 'VP / Principal', range: '$300K–$600K', note: 'Carry begins to compound' }, { r: 'Partner', range: '$500K–$5M+', note: 'Carry-driven wealth creation' }],
+    signal: 'Carry (fund profit-sharing) is where generational wealth is built. Base is secondary.', bar: '#1A6B3C' },
+  { id: 'saas', name: 'SaaS / growth tech', icon: 'ti-rocket', tcv: 80, growth: 92, ai: 78, equity: 85, wl: 60,
+    roles: [{ r: 'Product manager', range: '$140K–$280K', note: 'Equity refreshes add significant TCV' }, { r: 'Revenue ops', range: '$120K–$200K', note: 'High demand, fast-growing path' }, { r: 'GTM / PMM', range: '$130K–$220K', note: 'Strategy + analytics blend' }],
+    signal: 'Fastest-growing comp segment. AI fluency commands premium. RSU refresh cadence matters.', bar: '#1E6B3C' },
+  { id: 'healthcare', name: 'Healthcare / biotech', icon: 'ti-heart-rate-monitor', tcv: 65, growth: 70, ai: 62, equity: 55, wl: 55,
+    roles: [{ r: 'Strategy manager', range: '$130K–$200K', note: 'Growing rapidly post-COVID' }, { r: 'Operations lead', range: '$110K–$175K', note: 'Supply chain + ops demand' }, { r: 'Commercial / GTM', range: '$140K–$220K', note: 'Pharma & medtech strong' }],
+    signal: 'Resilient to downturns. AI adoption in clinical ops accelerating. Steady growth path.', bar: '#8A1A1A' },
+  { id: 'cpg', name: 'CPG / consumer brands', icon: 'ti-shopping-bag', tcv: 58, growth: 52, ai: 48, equity: 30, wl: 65,
+    roles: [{ r: 'Brand manager', range: '$100K–$160K', note: 'Classic MBA pathway' }, { r: 'Trade / category mgr', range: '$110K–$170K', note: 'Analytics increasingly valued' }, { r: 'GM / P&L owner', range: '$160K–$250K', note: 'Strong path to GM roles' }],
+    signal: 'Solid but slower growth. Strong training ground for general management. Less equity.', bar: '#5A5A8A' },
+  { id: 'supply', name: 'Supply chain / ops', icon: 'ti-truck', tcv: 60, growth: 65, ai: 55, equity: 20, wl: 62,
+    roles: [{ r: 'Ops strategy', range: '$110K–$175K', note: 'Increasingly data-driven' }, { r: 'Procurement lead', range: '$120K–$185K', note: 'High demand post-pandemic' }, { r: 'SC director', range: '$170K–$260K', note: '5–8 yr path' }],
+    signal: 'Strong stability. AI & analytics layering into ops roles. Good SLC market.', bar: '#1A6B5A' },
+  { id: 'ai', name: 'AI / data & analytics', icon: 'ti-brain', tcv: 88, growth: 98, ai: 99, equity: 90, wl: 55,
+    roles: [{ r: 'AI product manager', range: '$180K–$380K', note: 'Fastest growing role category' }, { r: 'Analytics manager', range: '$140K–$250K', note: 'SQL + Python + storytelling' }, { r: 'ML strategy', range: '$160K–$320K', note: 'Hybrid technical / business' }],
+    signal: 'Highest growth trajectory. Technical + business hybrid wins. Priority path for Eccles MBAs.', bar: '#1A4F8A' },
+  { id: 'govt', name: 'Government / nonprofit', icon: 'ti-building', tcv: 38, growth: 35, ai: 30, equity: 5, wl: 85,
+    roles: [{ r: 'Policy analyst', range: '$75K–$120K', note: 'Mission-driven; stable' }, { r: 'Program director', range: '$90K–$150K', note: 'Wide leadership scope' }, { r: 'Agency strategy', range: '$100K–$160K', note: 'Growing analytics demand' }],
+    signal: 'Strong work-life; lowest TCV. PSLF loan forgiveness may significantly alter ROI calculus.', bar: '#5A5A5A' },
+];
+
+var scoreDims = [
+  { label: 'Compensation (TCV)', weight: 0.25, key: 'comp' },
+  { label: 'Growth & promotion velocity', weight: 0.20, key: 'growth' },
+  { label: 'Brand & resume value', weight: 0.15, key: 'brand' },
+  { label: 'Leadership exposure', weight: 0.15, key: 'lead' },
+  { label: 'AI resilience', weight: 0.10, key: 'ai' },
+  { label: 'Work-life fit', weight: 0.08, key: 'wlf' },
+  { label: 'Geographic preference', weight: 0.05, key: 'geo' },
+  { label: 'Exit optionality', weight: 0.07, key: 'exit' },
+];
+var scores = { a: {}, b: {} };
+scoreDims.forEach(function(d) { scores.a[d.key] = 3; scores.b[d.key] = 3; });
+
+var skills = [
+  { name: 'AI / ML fluency', cat: 'ai', p: 92, trend: 'Very high premium', c: '#1A4F8A' },
+  { name: 'Prompt engineering', cat: 'ai', p: 84, trend: 'Emerging premium', c: '#1A4F8A' },
+  { name: 'SQL & data querying', cat: 'ai', p: 80, trend: 'High premium', c: '#1A4F8A' },
+  { name: 'Workforce analytics', cat: 'ai', p: 74, trend: 'High premium', c: '#1A4F8A' },
+  { name: 'Product analytics', cat: 'tech', p: 78, trend: 'High premium', c: '#1E6B3C' },
+  { name: 'Python (business use)', cat: 'tech', p: 75, trend: 'High premium', c: '#1E6B3C' },
+  { name: 'Power BI / Tableau', cat: 'tech', p: 64, trend: 'Medium-high premium', c: '#1E6B3C' },
+  { name: 'Financial modeling', cat: 'biz', p: 72, trend: 'High premium', c: '#8A5A00' },
+  { name: 'GTM strategy', cat: 'biz', p: 70, trend: 'High premium', c: '#8A5A00' },
+  { name: 'Revenue operations', cat: 'biz', p: 71, trend: 'High premium', c: '#8A5A00' },
+  { name: 'Executive communication', cat: 'biz', p: 68, trend: 'High premium', c: '#8A5A00' },
+  { name: 'Change management', cat: 'biz', p: 54, trend: 'Medium premium', c: '#8A5A00' },
+];
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function fmtK(n) { return '$' + Math.round(n / 1000) + 'K'; }
+
+function showTab(id, btn) {
+  document.querySelectorAll('.sec').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected', 'true'); }
+}
+
+function calcTCV() {
+  var base = +document.getElementById('t-base').value || 0;
+  var bonus = +document.getElementById('t-bonus').value || 0;
+  var rsu = +document.getElementById('t-rsu').value || 0;
+  var sign = +document.getElementById('t-sign').value || 0;
+  var ret = (+(document.getElementById('t-ret').value || 0)) / 100 * base;
+  var ben = +document.getElementById('t-ben').value || 0;
+  var brand = +document.getElementById('t-brand').value || 1;
+  var remote = +document.getElementById('t-remote').value || 0;
+  var hrs = +document.getElementById('t-hrs').value || 40;
+  var signAnn = sign / 3;
+  var tcvRaw = base + bonus + rsu + signAnn + ret + ben;
+  var tcv = tcvRaw * brand;
+  var effHr = base / (Math.max(hrs, 1) * 50);
+  var remSav = remote * 5200;
+  var promoLabel = document.getElementById('t-promo').value === '1' ? '~18 months' : document.getElementById('t-promo').value === '2' ? '~24–30 months' : '36+ months';
+  document.getElementById('tcv-metrics').innerHTML =
+    '<div class="mc"><div class="ml">True comp value (TCV)</div><div class="mv hi">' + fmtK(tcv) + '</div></div>' +
+    '<div class="mc"><div class="ml">Base salary</div><div class="mv">' + fmtK(base) + '</div></div>' +
+    '<div class="mc"><div class="ml">Annual equity (RSUs)</div><div class="mv">' + fmtK(rsu) + '</div></div>' +
+    '<div class="mc"><div class="ml">Effective hourly rate</div><div class="mv">$' + Math.round(effHr) + '/hr</div></div>' +
+    '<div class="mc"><div class="ml">Remote savings / yr</div><div class="mv">' + fmtK(remSav) + '</div></div>' +
+    '<div class="mc"><div class="ml">Promotion timeline</div><div class="mv" style="font-size:14px">' + promoLabel + '</div></div>';
+  var comps = [
+    { label: 'Base salary', val: base, c: '#CC0000' },
+    { label: 'Annual bonus', val: bonus, c: '#1E6B3C' },
+    { label: 'RSU / equity', val: rsu, c: '#1A4F8A' },
+    { label: 'Sign-on (ann.)', val: signAnn, c: '#8A5A00' },
+    { label: 'Retirement match', val: ret, c: '#5A1A8A' },
+    { label: 'Benefits value', val: ben, c: '#1A6B5A' },
+    { label: 'Brand premium', val: (brand - 1) * base, c: '#8A1A1A' },
+  ];
+  var html = '<div class="card-title">Compensation breakdown</div>';
+  comps.forEach(function(c) {
+    var pct = base > 0 ? Math.min(100, Math.round(Math.max(0, c.val) / base * 100)) : 0;
+    html += '<div class="br-row"><span class="bl">' + c.label + '</span><div class="bt"><div class="bf" style="width:' + pct + '%;background:' + c.c + '"></div></div><span class="bv">' + fmtK(Math.max(0, c.val)) + '</span></div>';
+  });
+  document.getElementById('tcv-bars').innerHTML = html;
+
+  // Handoff note for the MBA Compensation & Negotiation Tool (advisory text, not parsed)
+  var brandLabel = document.getElementById('t-brand').selectedOptions[0].textContent;
+  document.getElementById('handoffNote').value =
+    'From the Compensation Intelligence Framework:\n' +
+    'Modeled offer — base ' + fmt(base) + ', bonus ' + fmt(bonus) + ', equity ' + fmt(rsu) + '/yr, brand tier: ' + brandLabel + '.\n' +
+    'True Compensation Value (TCV) estimate: ' + fmt(tcv) + '.\n' +
+    'Use this as a reference point when you set your own baseline market salary in Step 1 of the Compensation & Negotiation Tool — it is not a verified benchmark source on its own.';
+}
+
+function copyHandoffNote(){
+  var t = document.getElementById('handoffNote').value;
+  var msg = document.getElementById('handoffMsg');
+  function done(){ msg.textContent = 'Copied'; setTimeout(function(){ msg.textContent=''; }, 2000); }
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done, function(){ fallbackCopyNote(t, done); }); }
+    else { fallbackCopyNote(t, done); }
+  }catch(e){ msg.textContent = 'Copy failed — select the text manually'; }
+}
+function fallbackCopyNote(t, done){
+  try{ var ta = document.createElement('textarea'); ta.value = t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
+  catch(e){ document.getElementById('handoffMsg').textContent = 'Copy failed — select the text manually'; }
+}
+
+function calcCOL() {
+  var aC = document.getElementById('col-a-city').value;
+  var bC = document.getElementById('col-b-city').value;
+  var aComp = +document.getElementById('col-a-comp').value || 0;
+  var bComp = +document.getElementById('col-b-comp').value || 0;
+  var aD = colData[aC]; var bD = colData[bC];
+  var aNorm = aComp / aD.idx * 100;
+  var bNorm = bComp / bD.idx * 100;
+  var aTax = aComp * (1 - aD.tax / 100);
+  var bTax = bComp * (1 - bD.tax / 100);
+  var winner = aNorm >= bNorm ? 'A' : 'B';
+  document.getElementById('col-metrics').innerHTML =
+    '<div class="mc"><div class="ml">Offer A — purchasing power</div><div class="mv ' + (winner === 'A' ? 'hi' : '') + '">' + fmtK(aNorm) + '</div></div>' +
+    '<div class="mc"><div class="ml">Offer B — purchasing power</div><div class="mv ' + (winner === 'B' ? 'hi' : '') + '">' + fmtK(bNorm) + '</div></div>' +
+    '<div class="mc"><div class="ml">Offer A — after-tax est.</div><div class="mv">' + fmtK(aTax) + '</div></div>' +
+    '<div class="mc"><div class="ml">Offer B — after-tax est.</div><div class="mv">' + fmtK(bTax) + '</div></div>';
+  var diff = Math.abs(aNorm - bNorm);
+  var winCity = winner === 'A' ? aD.name : bD.name;
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.85rem">';
+  [aD, bD].forEach(function(d) {
+    html += '<div style="border:1px solid var(--u-border);border-radius:var(--radius);padding:.65rem .85rem">';
+    html += '<p style="font-size:12px;font-weight:500;margin-bottom:3px">' + d.name + '</p>';
+    html += '<p style="font-size:11px;color:var(--u-muted)">COL index: ' + d.idx + ' (US avg = 100)</p>';
+    html += '<p style="font-size:11px;color:var(--u-muted)">Top marginal income tax: ' + d.tax + '%</p>';
+    html += '<p style="font-size:11px;color:var(--u-muted);margin-top:3px">' + d.note + '</p></div>';
+  });
+  html += '</div>';
+  html += '<div style="padding:.75rem;background:var(--u-surface);border-radius:var(--radius);font-size:13px;line-height:1.6">';
+  html += '<strong>' + winCity + '</strong> delivers approximately <strong>' + fmtK(diff) + '</strong> more purchasing power annually — even if the nominal offer appears lower.';
+  html += '</div>';
+  document.getElementById('col-detail').innerHTML = html;
+}
+
+function setHMDim(dim, btn) {
+  hmDim = dim;
+  document.querySelectorAll('#hm-filter-btns .hm-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderHeatmap();
+}
+
+var colorStops = ['#BFCFE8', '#7FA3CC', '#3D72A4', '#1A4F8A', '#0D2D55'];
+var textStops =  ['#0D2D55', '#0D2D55', '#E8F0F8', '#E8F0F8', '#E8F0F8'];
+var subStops =   ['#1A4F8A', '#1A4F8A', '#7FA3CC', '#7FA3CC', '#BFCFE8'];
+
+function renderHeatmap() {
+  var sorted = industries.slice().sort(function(a, b) { return b[hmDim] - a[hmDim]; });
+  var dimLabel = { tcv: 'TCV score', growth: 'Growth', ai: 'AI resilience', equity: 'Equity', wl: 'Work-life' }[hmDim];
+  var html = '';
+  sorted.forEach(function(ind) {
+    var val = ind[hmDim];
+    var ci = val >= 80 ? 4 : val >= 65 ? 3 : val >= 50 ? 2 : val >= 35 ? 1 : 0;
+    html += '<div class="hm-cell' + (hmSelected === ind.id ? ' selected' : '') + '" style="background:' + colorStops[ci] + '" onclick="selectHM(\'' + ind.id + '\')" role="button" tabindex="0" aria-label="' + ind.name + ' ' + dimLabel + ' ' + val + ' out of 100">';
+    html += '<div class="hm-name" style="color:' + textStops[ci] + '"><i class="ti ' + ind.icon + '" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>' + ind.name + '</div>';
+    html += '<div class="hm-val" style="color:' + textStops[ci] + '">' + val + '<span style="font-size:10px;font-weight:400">/100</span></div>';
+    html += '<div class="hm-sub" style="color:' + subStops[ci] + '">' + dimLabel + '</div></div>';
+  });
+  document.getElementById('hm-grid').innerHTML = html;
+  if (hmSelected) renderHMDetail(hmSelected);
+}
+
+function selectHM(id) {
+  hmSelected = id;
+  renderHeatmap();
+  renderHMDetail(id);
+  // Reflect the chosen industry in the TCV handoff note too
+  var ind = industries.find(function(i){ return i.id === id; });
+  if(ind){
+    var noteEl = document.getElementById('handoffNote');
+    if(noteEl && !noteEl.value.includes('Industry of interest')){
+      noteEl.value = 'Industry of interest: ' + ind.name + ' (TCV score ' + ind.tcv + '/100). ' + ind.signal + '\n\n' + noteEl.value;
+    }
+  }
+}
+
+function renderHMDetail(id) {
+  var ind = industries.find(function(i) { return i.id === id; });
+  if (!ind) return;
+  var panel = document.getElementById('hm-detail');
+  panel.style.display = 'block';
+  var dims = [
+    { label: 'Total comp (TCV)', val: ind.tcv, c: '#CC0000' },
+    { label: 'Growth trajectory', val: ind.growth, c: '#1E6B3C' },
+    { label: 'AI resilience', val: ind.ai, c: '#1A4F8A' },
+    { label: 'Equity upside', val: ind.equity, c: '#8A5A00' },
+    { label: 'Work-life fit', val: ind.wl, c: '#5A1A8A' },
+  ];
+  var html = '<div class="dp-head">';
+  html += '<div class="dp-icon" style="background:#F0F4F9"><i class="ti ' + ind.icon + '" style="color:' + ind.bar + ';font-size:18px" aria-hidden="true"></i></div>';
+  html += '<div><p style="font-size:14px;font-weight:500">' + ind.name + '</p><p style="font-size:11px;color:var(--u-muted);line-height:1.5">' + ind.signal + '</p></div></div>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">';
+  html += '<div><p style="font-size:11px;font-weight:500;color:var(--u-muted);margin-bottom:.5rem">Dimension scores</p>';
+  dims.forEach(function(d) {
+    html += '<div class="br-row"><span class="bl" style="width:120px;font-size:11px">' + d.label + '</span><div class="bt"><div class="bf" style="width:' + d.val + '%;background:' + d.c + '"></div></div><span class="bv" style="font-size:11px">' + d.val + '</span></div>';
+  });
+  html += '</div><div><p style="font-size:11px;font-weight:500;color:var(--u-muted);margin-bottom:.5rem">MBA entry roles & ranges</p>';
+  ind.roles.forEach(function(r) {
+    html += '<div class="role-row"><span style="font-weight:500">' + r.r + '</span><span style="color:' + ind.bar + ';font-size:11px">' + r.range + '</span></div>';
+    html += '<p style="font-size:11px;color:var(--u-muted);padding:2px 0 6px">' + r.note + '</p>';
+  });
+  html += '</div></div>';
+  panel.innerHTML = html;
+}
+
+function renderScorecard() {
+  var aName = document.getElementById('sc-a-name').value || 'Offer A';
+  var bName = document.getElementById('sc-b-name').value || 'Offer B';
+  var html = '<div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:0;margin-bottom:.5rem">';
+  html += '<div style="font-size:11px;font-weight:500;color:var(--u-muted)">Dimension (weight)</div>';
+  html += '<div style="font-size:11px;font-weight:500;color:var(--u-muted);text-align:center">' + aName + '</div>';
+  html += '<div style="font-size:11px;font-weight:500;color:var(--u-muted);text-align:center">' + bName + '</div></div>';
+  scoreDims.forEach(function(d) {
+    html += '<div class="sr-row">';
+    html += '<div style="min-width:0;flex:1"><div class="srl">' + d.label + '</div><div class="srw">' + Math.round(d.weight * 100) + '% weight</div></div>';
+    ['a', 'b'].forEach(function(o) {
+      html += '<div style="display:flex;justify-content:center;gap:3px;min-width:0;flex:1">';
+      for (var i = 1; i <= 5; i++) {
+        html += '<div class="star' + (scores[o][d.key] >= i ? ' sel' : '') + '" onclick="setScore(\'' + o + '\',\'' + d.key + '\',' + i + ')" role="button" tabindex="0" aria-label="' + i + ' out of 5">' + i + '</div>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('scorecard-body').innerHTML = html;
+  calcScore();
+}
+
+function setScore(o, key, val) { scores[o][key] = val; renderScorecard(); }
+
+function calcScore() {
+  var aName = document.getElementById('sc-a-name').value || 'Offer A';
+  var bName = document.getElementById('sc-b-name').value || 'Offer B';
+  var aT = 0, bT = 0;
+  scoreDims.forEach(function(d) { aT += scores.a[d.key] * d.weight; bT += scores.b[d.key] * d.weight; });
+  var aS = Math.round(aT * 20), bS = Math.round(bT * 20);
+  function verdict(s) {
+    if (s >= 80) return { label: 'Strong accept', cls: 'pg' };
+    if (s >= 65) return { label: 'Accept with negotiation', cls: 'pb' };
+    if (s >= 50) return { label: 'Proceed with caution', cls: 'pa' };
+    return { label: 'Decline or renegotiate', cls: 'pr' };
+  }
+  var html = '';
+  [{ name: aName, score: aS, v: verdict(aS) }, { name: bName, score: bS, v: verdict(bS) }].forEach(function(o) {
+    html += '<div class="tsd"><p style="font-size:12px;font-weight:500;margin-bottom:.4rem">' + o.name + '</p>';
+    html += '<div class="bs" style="color:' + (o.score >= 70 ? 'var(--u-red-dark)' : o.score >= 50 ? 'var(--u-amber)' : '#A32D2D') + '">' + o.score + '</div>';
+    html += '<div style="font-size:11px;color:var(--u-muted);margin:3px 0 8px">out of 100</div>';
+    html += '<span class="pill ' + o.v.cls + '">' + o.v.label + '</span></div>';
+  });
+  document.getElementById('score-results').innerHTML = html;
+}
+
+function filterSkills(cat, btn) {
+  document.querySelectorAll('#sk-filter .sk-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  var filtered = cat === 'all' ? skills : skills.filter(function(s) { return s.cat === cat; });
+  var html = '';
+  filtered.sort(function(a, b) { return b.p - a.p; }).forEach(function(s) {
+    html += '<div class="skc"><div class="skn">' + s.name + '</div><div class="skt"><div class="skb" style="width:' + s.p + '%;background:' + s.c + '"></div></div><div class="skm">' + s.trend + ' — ' + s.p + '/100</div></div>';
+  });
+  document.getElementById('skills-grid').innerHTML = html;
+}
+
+function saveNotes() {
+  var data = {
+    student: document.getElementById('note-student').value,
+    offers: document.getElementById('note-offers').value,
+    nego: document.getElementById('note-nego').value,
+    next: document.getElementById('note-next').value,
+    saved: new Date().toLocaleString()
+  };
+  try {
+    try { localStorage.setItem('cif-coach-notes', JSON.stringify(data)); } catch(e) {}
+  } catch(e) {}
+  var confirm = document.getElementById('save-confirm');
+  confirm.style.display = 'block';
+  setTimeout(function() { confirm.style.display = 'none'; }, 3000);
+}
+
+function loadNotes() {
+  try {
+    var saved = localStorage.getItem('cif-coach-notes');
+    if (saved) {
+      var data = JSON.parse(saved);
+      if (data.student) document.getElementById('note-student').value = data.student;
+      if (data.offers) document.getElementById('note-offers').value = data.offers;
+      if (data.nego) document.getElementById('note-nego').value = data.nego;
+      if (data.next) document.getElementById('note-next').value = data.next;
+    }
+  } catch(e) {}
+}
+
+calcTCV();
+calcCOL();
+renderHeatmap();
+renderScorecard();
+filterSkills('all', document.querySelector('#sk-filter .sk-btn'));
+loadNotes();
+</script>
+</body>
+</html>
