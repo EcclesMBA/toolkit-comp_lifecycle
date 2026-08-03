@@ -618,7 +618,7 @@
       <p style="font-size:11px;color:var(--u-muted)">TCV = Base + Bonus + Equity (RSUs) + Sign-On (amortized over 3 yrs) + Retirement Match + Benefits, adjusted for brand multiplier. Remote savings estimated at $5,200/remote day/yr.</p>
 
       <div class="handoff-box">
-        <div class="card-title" style="color:var(--u-blue);margin-bottom:2px;">Continue to the MBA Compensation &amp; Negotiation Tool</div>
+        <div class="card-title" style="color:var(--u-blue);margin-bottom:2px;">Continue to the Comp Negotiation Tool</div>
         <p style="font-size:11.5px;color:var(--u-muted);">This is advisory context, not structured offer data — there's no "offer" yet at this stage, just a ballpark. Paste this note into that tool's Step 1 as a reference when you set your baseline market salary manually.</p>
         <textarea id="handoffNote" readonly></textarea>
         <button class="handoff-btn" onclick="copyHandoffNote()">Copy note</button>
@@ -1022,7 +1022,7 @@ function calcTCV() {
   });
   document.getElementById('tcv-bars').innerHTML = html;
 
-  // Handoff note for the MBA Compensation & Negotiation Tool (advisory text, not parsed)
+  // Handoff note for the Comp Negotiation Tool (advisory text, not parsed)
   var brandLabel = document.getElementById('t-brand').selectedOptions[0].textContent;
   document.getElementById('handoffNote').value =
     'From the Compensation Intelligence Framework:\n' +
