@@ -1,7 +1,11 @@
 # Comp Lifecycle Toolkit
 
 **Full-Time MBA Program · David Eccles School of Business**
-Version 1.1 · Three-tool web toolkit
+Version 1.2 · Three-tool web toolkit
+
+**v1.2 changes:** removed stale clawback/tax-rate mentions from §2 (both were cut from the Comp Negotiation Tool); added `quick_negotiation_practice.html` to the repo structure and teaching sequence; corrected the repo structure diagram, which incorrectly implied the standalone/teaching editions live as extra files in this repo — they're actually in entirely separate repos, now listed explicitly in §3.
+
+**v1.1 changes:** filled the Compensation Intelligence Framework README gap flagged in v1.0 — added `README_compensation_intelligence_framework.md` and updated §4's known-gaps entry to explain that this toolkit's CIF copy is a fork of a separately-owned standalone tool, not a synced copy of it.
 
 Three standalone tools covering the full arc of a compensation decision — **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
 
@@ -28,43 +32,51 @@ Each tool is a single self-contained HTML file — no build step, no server, no 
 The three tools are **intentionally standalone** — none depends on another being open, hosted together, or even existing. Where they do connect:
 
 - **Compensation Intelligence Framework → Comp Negotiation Tool:** a short advisory note (industry pick + rough TCV estimate) you copy and paste in as context. Not parsed — it isn't offer-shaped data, it's a reference point.
-- **Comp Negotiation Tool ⇄ Offer Compensation Planner:** structured **transfer text** — a labeled block of offer terms (base, signing, bonus %, equity, vesting, clawback, tax rate) you copy from one tool's "Send This Offer to..." box and paste into the other's "Bring In an Offer from..." box, which auto-fills the matching fields. Works in both directions, Corporate mode only (the Planner's Startup mode has no equivalent on the other side).
+- **Comp Negotiation Tool ⇄ Offer Compensation Planner:** structured **transfer text** — a labeled block of offer terms (base, signing, bonus %, equity, vesting) you copy from one tool's "Send This Offer to..." box and paste into the other's "Bring In an Offer from..." box, which auto-fills the matching fields. Works in both directions, Corporate mode only (the Planner's Startup mode has no equivalent on the other side). Clawback and tax rate were removed from the Comp Negotiation Tool as low-value noise, so they're no longer part of this transfer text on that side — the Offer Compensation Planner still models both on its own.
 
 There is also an **invisible, optional convenience**: if all three tools happen to be hosted at the same address and opened in the same browser, a shared `shared/comp-profile.js` module auto-fills some fields without any copy-paste. Treat this as a bonus, never a requirement — the transfer-text boxes are the guaranteed mechanism and work regardless of hosting setup, browser, or device.
 
 ## 3. Teaching sequence
 
-Recommended order for introducing this to students: **ID → Negotiate → Offer**, matching the table above. Two standalone/teaching editions also exist, stripped of the cross-tool transfer-text feature, for teaching each tool's mechanics in isolation before showing how the full toolkit connects:
+Recommended order for introducing this to students: **ID → Negotiate → Offer**, matching the table above.
 
-- `mba_comp_negotiation_tool_standalone.html` + `README_comp_negotiation_tool_standalone.md`
-- `offer_compensation_planner_standalone.html` (no dedicated README yet — see §5)
+**An even lighter entry point exists first:** `quick_negotiation_practice.html` is a bare, zero-setup practice rep (pick a scenario, respond, get one piece of feedback, no sources, no rubric). It links out to the full Comp Negotiation Tool for anyone who wants more depth. A copy of this file needs to sit alongside whichever tool links to it, since the link between them is relative — both this repo's `mba_comp_negotiation_tool.html` and `index.html`, and the separately-hosted standalone Comp Negotiation Tool, link to it and each need their own copy.
 
-These are separate files from the live toolkit tools and are **not** kept in version lockstep with them — see each standalone README's own "keeping in sync" note.
+**Standalone/teaching editions exist for each tool, stripped of the cross-tool transfer-text feature — but they live in entirely separate GitHub repos, not inside this one:**
+
+| Tool | Standalone repo |
+|---|---|
+| Compensation Intelligence Framework | a separately-owned repo maintained independently by CJ's team (see `README_compensation_intelligence_framework.md` §0) |
+| Comp Negotiation Tool | `comp-negotiation-tool` |
+| Offer Compensation Planner | `comp_calculator` |
+
+These are **not** kept in version lockstep with the toolkit-integrated tools in this repo — see each standalone README's own "keeping in sync" note. Do not assume a fix made here has propagated to any of them.
 
 ---
 
 ## 4. Operational guide
 
 ### Repo structure
+This repo (`toolkit-comp_lifecycle`) contains only the toolkit-integrated tools — the standalone editions are separate repos, see §3.
 ```
 /
 ├── index.html                                    ← toolkit hub page, links to all three tools
 ├── compensation_intelligence_framework.html       ← Tool 1 (ID)
 ├── mba_comp_negotiation_tool.html                 ← Tool 2 (Negotiate) — filename predates the v1.8 display-name change
 ├── offer_compensation_planner.html                ← Tool 3 (Offer)
+├── quick_negotiation_practice.html                ← lightweight entry point, linked from index.html and Tool 2
 ├── shared/
 │   └── comp-profile.js                           ← optional cross-tool auto-fill module
 ├── README.md                                      ← this file (toolkit-level)
 ├── README_comp_negotiation_tool.md                ← Tool 2's dedicated manual
-├── README_offer_compensation_planner.md           ← Tool 3's dedicated manual
-├── mba_comp_negotiation_tool_standalone.html       ← teaching edition of Tool 2
-└── README_comp_negotiation_tool_standalone.md      ← its manual
+├── README_compensation_intelligence_framework.md  ← Tool 1's dedicated manual (fork disclosure in §0)
+└── README_offer_compensation_planner.md           ← Tool 3's dedicated manual
 ```
 
 ### Naming conventions
 - **Display names vs. filenames deliberately diverge in places.** The Comp Negotiation Tool's file is still `mba_comp_negotiation_tool.html` even though its on-page title reads "Comp Negotiation Tool" — renaming the file would break every existing link (this README, the combined manuals, the hub page), so only display text was changed. Don't assume filename and display name always match.
 - **Each tool's dedicated README is named `README_<tool>.md`**, except this toolkit-level one, which occupies the plain `README.md` slot so GitHub displays it as the repo's front page.
-- **Standalone/teaching editions** are named `<tool-file>_standalone.html` with a matching `README_<tool>_standalone.md`.
+- **Standalone/teaching editions live in their own separate repos** (see §3), not as additional files in this one — don't expect to find `*_standalone.html` files here.
 
 ### Branding history
 - Originally "Compensation Toolkit," renamed to **"Comp Lifecycle Toolkit"** for consistency and to signal the ID → Negotiate → Offer sequence explicitly (a student's compensation cycle recurs across their career — explore, negotiate, evaluate, repeat at the next job).
@@ -83,10 +95,6 @@ These are separate files from the live toolkit tools and are **not** kept in ver
 2. **Offer Compensation Planner's standalone/teaching edition has no dedicated README yet** — exists as an HTML file only (see §3).
 3. **No version-number tracking at the toolkit level until now** — each tool's own README tracks its own version independently; this document introduces v1.0 as the toolkit-level baseline going forward.
 4. This document doesn't duplicate any individual tool's step-by-step usage instructions — see each tool's own README for that.
-
----
-
-**v1.1 changes:** filled the Compensation Intelligence Framework README gap flagged in v1.0 — added `README_compensation_intelligence_framework.md` and updated §4's known-gaps entry to explain that this toolkit's CIF copy is a fork of a separately-owned standalone tool, not a synced copy of it.
 
 ---
 
