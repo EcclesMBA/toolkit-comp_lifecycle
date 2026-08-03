@@ -91,6 +91,7 @@
 
   /* AI chat */
   .prompt-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .scenario-line{font-family:var(--serif);font-size:16.5px;font-weight:600;color:var(--crimson-dark);margin:0 0 12px;}
   .ptab{font-family:var(--mono);font-size:12px;padding:8px 14px;border:1px solid var(--line);background:var(--panel);border-radius:20px;cursor:pointer;color:var(--ink-soft);}
   .ptab.active{background:var(--crimson);color:#fff;border-color:var(--crimson);}
   .chat-window{border:1px solid var(--line);border-radius:3px;background:var(--panel);min-height:340px;max-height:460px;overflow-y:auto;padding:16px;margin-bottom:12px;}
@@ -112,6 +113,15 @@
   select.score{width:64px;font-family:var(--mono);}
 
   footer{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;color:var(--ink-soft);text-align:center;}
+
+  .glossary details{border:1px solid var(--line);border-radius:3px;margin-bottom:8px;background:var(--panel);}
+  .glossary summary{cursor:pointer;padding:12px 16px;font-family:var(--serif);font-size:15px;font-weight:600;color:var(--crimson-dark);list-style:none;display:flex;align-items:center;gap:8px;}
+  .glossary summary::-webkit-details-marker{display:none;}
+  .glossary summary::before{content:'+';font-family:var(--mono);color:var(--ink-soft);width:14px;}
+  .glossary details[open] summary::before{content:'−';}
+  .glossary .g-body{padding:0 16px 16px 38px;font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+  .glossary .g-body strong{color:var(--ink);}
+  .glossary .g-body ul{margin:8px 0 8px 18px;padding:0;}
 </style>
 </head>
 <body>
@@ -122,8 +132,9 @@
       <p class="eyebrow">David Eccles School of Business · Full-Time MBA Program</p>
       <h1>Comp Negotiation Tool</h1>
       <p class="subtitle">Triangulate a defensible salary target, compare competing offers on a risk-adjusted basis, then practice the conversation before you're in it.</p>
+      <p class="subtitle" style="margin-top:6px;">New to this? <a href="./quick_negotiation_practice.html">Try the 90-second Quick Practice tool first →</a></p>
     </div>
-    <span class="version-tag">v1.8 · web</span>
+    <span class="version-tag">v3.11 · web</span>
   </div>
 </div>
 
@@ -131,13 +142,101 @@
 
 <div class="wrap">
 
+  <!-- ============ TAB 0: GUIDE ============ -->
+  <section class="panel" id="tab-guide">
+    <h2>Guide — What This Tool Does &amp; Why</h2>
+    <p class="section-note">Six steps, in order: benchmark sources build a defensible target, you compare a real offer against your counter, you practice the conversation, then you score and track it. Everything below is reference material — skim it now, or come back to a specific term whenever a step doesn't make sense. Nothing here is required reading before you start.</p>
+    <div class="card glossary">
+      <details>
+        <summary>Why 88% and 110%?</summary>
+        <div class="g-body">
+          These bands aren't a market statistic — they're a negotiation heuristic.
+          <ul>
+            <li>The <strong>88% floor</strong> approximates a walk-away sanity check: a number meaningfully below target that should prompt you to pause and reassess, not an offer to reject automatically.</li>
+            <li>The <strong>110% stretch</strong> is a deliberately ambitious opening ask — high enough to leave room to move down to your actual target without looking unreasonable, a standard anchoring tactic in negotiation.</li>
+          </ul>
+          Treat both as reference points to reason from, not thresholds the tool is telling you to enforce.
+          <p class="hint" style="margin-top:10px;font-style:italic;">No external citation backs the specific 88%/110% figures — they're this tool's own instructional design choice, not a number pulled from a study.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Why are sources weighted differently? (Step 1)</summary>
+        <div class="g-body">
+          Each benchmark source you can pick from carries a preset weight from 1.00 (Eccles Employment Report) down to 0.50 ("Other," unverified). The <strong>ranking</strong> reflects a widely-accepted general principle in compensation research: government and institutional data (BLS, DOL, your program's own employment report) is harder to game and easier to verify than crowdsourced, self-reported platforms, so it counts for more in the weighted average.
+          <p class="hint" style="margin-top:10px;font-style:italic;">The ranking order is a defensible general principle. The exact numbers (why Levels.fyi is 0.70 and not 0.65 or 0.75, for instance) are this tool's own editorial judgment, not values drawn from a specific cited study.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Experience premium &amp; geographic differential</summary>
+        <div class="g-body">
+          <strong>Experience (years):</strong> years of direct, differentiating experience above what this role already expects — not your total years worked.<br><br>
+          <strong>Experience premium rate:</strong> how much each qualifying year adds to your baseline, before the cap is applied. Default 1.5%/year.<br><br>
+          <strong>Experience premium cap:</strong> the maximum total premium your experience can add, no matter how many years you claim. Default 7.5%.<br><br>
+          <strong>Geographic differential:</strong> adjusts your baseline for cost-of-labor differences in your target city. Default 5% — for your own city's actual figure, use <a href="https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area" target="_blank" rel="noopener">BEA Regional Price Parities</a> or <a href="https://www.bls.gov/oes/" target="_blank" rel="noopener">BLS Occupational Employment &amp; Wage Statistics</a> — not a local CPI index.<br><br>
+          The experience premium is a teaching assumption, not a labor-market rule. Apply it only to direct, differentiating experience above what the role already expects.
+          <p class="hint" style="margin-top:10px;font-style:italic;">The 1.5%/year rate and 7.5% cap are this tool's own instructional defaults, not figures drawn from a cited study — BEA and BLS above are real external sources for the geographic differential itself, but the experience-premium numbers aren't sourced the same way.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Target, Floor &amp; Stretch — how they're calculated</summary>
+        <div class="g-body">
+          Three reference points derived from one calculation, not three independent numbers.<br><br>
+          <strong>Formula:</strong> Target = Baseline × (1 + capped experience premium) × (1 + geographic differential); Floor = Target × 0.88; Stretch = Target × 1.10.<br><br>
+          <strong>Why it matters:</strong> Target is your primary ask, grounded in the baseline and adjustments above. Floor is a walk-away sanity check, not a number to volunteer. Stretch is your opening ask, leaving room to negotiate down to Target without looking unreasonable.<br><br>
+          <strong>How to use it:</strong> open near Stretch, defend Target with the reasoning above, and treat Floor as a private signal to pause and reassess — never state it out loud to a recruiter.
+        </div>
+      </details>
+      <details>
+        <summary>Risk weight — what it actually is</summary>
+        <div class="g-body">
+          Risk weight is <strong>not calculated from anything you enter</strong> — it's a fixed assumption, the same for every student: base salary 1.00, signing bonus 0.95, bonus 0.70, equity 0.50. It represents how likely that dollar is to actually show up: base is nearly certain, a bonus assumes roughly 70% attainment, and equity is discounted hardest because of vesting risk and uncertain future value. The risk-adjusted figures in Step 3 apply these weights so an offer heavy on equity or bonus isn't mistaken for an offer of equal guaranteed cash.
+          <p class="hint" style="margin-top:10px;font-style:italic;">These four numbers are this tool's own editorial judgment, not coefficients pulled from a named compensation study. Real research on bonus attainment exists (compensation-consulting surveys of large companies), but none of it validates 0.70 specifically over a nearby number like 0.65 or 0.75 — treat these as reasonable, not authoritative.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Why risk-adjusted value? (Step 3)</summary>
+        <div class="g-body">
+          A dollar of unvested equity is not a dollar of base salary — it can be reduced, delayed, or lost if you leave early or the company underperforms. Risk weights (shown per row in the Offer Terms table) discount less-certain components so the comparison reflects that, rather than treating every dollar in an offer as equally guaranteed.
+        </div>
+      </details>
+      <details>
+        <summary>Why practice cold first? (Step 4)</summary>
+        <div class="g-body">
+          Attempt your response before seeing any AI coaching. That's what makes the improvement after feedback real, not rehearsed — if you see the "right answer" first, you're just copying it, not building the skill.
+        </div>
+      </details>
+      <details>
+        <summary>Pacing and length — practice tips (not scored)</summary>
+        <div class="g-body">
+          <strong>Pacing:</strong> research led by MIT Sloan's Jared Curhan, published in the <em>Journal of Applied Psychology</em>, found that pausing 3–9 seconds before responding tends to precede negotiation breakthroughs — rushing to fill silence, or answering instantly, is associated with less reflective, weaker outcomes for both sides. Practice sitting with a pause before you respond, especially after a lowball or a deadline threat, instead of rushing to fill the silence.<br><br>
+          <strong>Length:</strong> there's no ideal word count, and this isn't graded — but over-explaining (justifying your ask at length, oversharing personal financial reasons) can reveal leverage you didn't mean to give away, while an answer that's too terse can read as cold or dismissive. Aim for a considered sentence or two, not a monologue or a one-line demand.<br><br>
+          Neither of these is something this tool actually measures — there's no live conversation or timer here. Treat this as coaching to apply in real practice, not a standard the rubric checks.
+        </div>
+      </details>
+      <details>
+        <summary>The AI scorer — how it actually works</summary>
+        <div class="g-body">
+          The heuristic scorer is a keyword scan, not an AI judgment. It reviews your logged response and pasted transcript for expected words and phrasing patterns — it does not evaluate your actual negotiation skill the way a coach or a live AI judge would. Treat every auto-filled score as a starting estimate, review and adjust it yourself.
+        </div>
+      </details>
+      <details>
+        <summary>Rubric criteria, level thresholds &amp; the Fundamentals Check</summary>
+        <div class="g-body">
+          Four criteria, 0–5 each, 20 points total: <strong>Evidence</strong>, <strong>Clear Ask</strong>, <strong>Professional Tone</strong>, <strong>Close</strong>.<br><br>
+          <strong>Level thresholds:</strong> 18–20 = Strong · 15–17 = Proficient · 11–14 = Developing · below 11 = Needs Rework.<br><br>
+          <strong>The Fundamentals Check:</strong> scoring 1 or below on Evidence or Clear Ask limits your level to "Developing," regardless of total — these two are treated as non-negotiable fundamentals, since a well-delivered ask with no evidence or no actual number behind it isn't yet a complete negotiation.
+        </div>
+      </details>
+    </div>
+  </section>
+
   <!-- ============ TAB 1: ATTESTATION ============ -->
   <section class="panel" id="tab-attestation">
     <h2>Step 1 — Benchmark Sources (optional)</h2>
     <p class="section-note">You can add up to three benchmark sources to strengthen your target. Sources are optional — this tool works with zero sources entered — but you are responsible for verifying the accuracy of any figures you rely on in a real negotiation.</p>
 
     <div class="card">
-      <h3>Sources</h3>
+      <h3>Comp Sources</h3>
       <p class="hint">Each source carries a preset weight based on how verifiable it is — pick a source and its weight shows automatically underneath. Institutional and government data count more toward your baseline than crowdsourced or self-reported figures, because they're harder to game and easier to check.</p>
       <div id="attestRows"></div>
       <button class="ghost" id="addSourceBtn">+ Add a source</button>
@@ -153,20 +252,16 @@
         <p class="hint" style="margin-top:8px;">This is where the weights actually matter: a source weighted 1.00 pulls the average toward its number twice as hard as one weighted 0.50. Two sources of equal dollar value but different weights don't count equally.</p>
         <div class="field-row" style="margin-top:14px;">
           <label class="field">Baseline market salary — used in Step 2 (editable)</label>
-          <input type="number" id="manualBaseline" value="125000">
+          <input type="number" id="manualBaseline" value="">
         </div>
         <button class="ghost" id="useAverageBtn">↺ Use average from sources</button>
+        <span id="useAverageMsg" class="hint" style="margin-left:10px;"></span>
         <p class="hint" style="margin-top:10px;">Pre-fill this from your sources, or type a number directly if you have zero sources.</p>
       </div>
       <div class="card">
-        <h3>Note</h3>
+        <h3>Before You Start</h3>
         <div class="flag">
-          <strong>Why 88% / 110%?</strong> These bands aren't a market statistic — they're a negotiation heuristic.
-          <ul style="margin:8px 0 8px 18px;padding:0;">
-            <li style="margin-bottom:6px;">The <strong>88% floor</strong> approximates a walk-away sanity check: a number meaningfully below target that should prompt you to pause and reassess, not an offer to reject automatically.</li>
-            <li>The <strong>110% stretch</strong> is a deliberately ambitious opening ask — high enough to leave room to move down to your actual target without looking unreasonable, a standard anchoring tactic in negotiation.</li>
-          </ul>
-          Treat both as reference points to reason from, not thresholds the tool is telling you to enforce.
+          <strong>Why 88% / 110%?</strong> These are negotiation heuristics, not market statistics — full explanation in the <strong>Guide</strong> tab.
         </div>
         <div class="flag" style="margin-top:10px;">
           <strong>Accountability:</strong> This tool does not verify that a source, URL, or dollar figure you enter is accurate. That responsibility is yours. Double-check anything you plan to cite in an actual negotiation.
@@ -180,31 +275,26 @@
     <h2>Step 2 — Base Salary Triangulation</h2>
     <p class="section-note">Anchors your ask in verified data before you speak to a recruiter, rather than a number based on personal need.</p>
 
-    <div class="grid2">
-      <div class="card">
-        <h3>Inputs</h3>
-        <div class="field-row"><label class="field">Relevant pre-MBA experience (years)</label><input type="number" id="expYears" value="3" step="0.5" min="0"></div>
-        <div class="field-row"><label class="field">Experience premium rate (per year)</label><input type="number" id="premRate" value="0.015" step="0.001"></div>
-        <div class="field-row"><label class="field">Experience premium cap</label><input type="number" id="premCap" value="0.075" step="0.001"></div>
-        <div class="field-row"><label class="field">Geographic differential</label><input type="number" id="geoDiff" value="0.05" step="0.001"></div>
-      </div>
-      <div class="card">
-        <h3>Intermediate calculation</h3>
-        <table>
-          <tr><td>Baseline market salary (Step 1)</td><td class="num" id="tBaseline">—</td></tr>
-          <tr><td>Uncapped experience premium</td><td class="num" id="tUncapped">—</td></tr>
-          <tr><td>Applied experience premium (capped)</td><td class="num" id="tApplied">—</td></tr>
-        </table>
-      </div>
+    <div class="card">
+      <h3>Your Info</h3>
+      <div class="field-row"><label class="field">Relevant pre-MBA experience (years)</label><input type="number" id="expYears" value="" step="0.5" min="0"></div>
+      <div class="field-row"><label class="field">Geographic differential (%)</label><input type="number" id="geoDiffPct" value="" step="0.1"></div>
+    </div>
+
+    <div class="card glossary">
+      <details>
+        <summary>Advanced: experience premium assumptions</summary>
+        <div class="g-body">
+          The default below is a reasonable teaching assumption — adjust only if you have a specific reason to.
+          <div class="field-row" style="margin-top:10px;"><label class="field">Experience premium rate (% per year)</label><input type="number" id="premRatePct" value="1.5" step="0.1"></div>
+          <div class="field-row"><label class="field">Experience premium cap (%)</label><input type="number" id="premCapPct" value="7.5" step="0.1"></div>
+        </div>
+      </details>
     </div>
 
     <div class="card">
       <h3>What these inputs mean</h3>
-      <p class="hint" style="margin-bottom:6px;"><strong>Experience (years):</strong> years of direct, differentiating experience above what this role already expects — not your total years worked.</p>
-      <p class="hint" style="margin-bottom:6px;"><strong>Experience premium rate:</strong> how much each qualifying year adds to your baseline, before the cap is applied. Default 1.5%/year.</p>
-      <p class="hint" style="margin-bottom:6px;"><strong>Experience premium cap:</strong> the maximum total premium your experience can add, no matter how many years you claim. Default 7.5%.</p>
-      <p class="hint" style="margin-bottom:6px;"><strong>Geographic differential:</strong> adjusts your baseline for cost-of-labor differences in your target city. Default 5% — use BEA Regional Price Parities or BLS OEWS wage data, not a local CPI index.</p>
-      <p class="hint">The experience premium is a teaching assumption, not a labor-market rule. Apply it only to direct, differentiating experience above what the role already expects.</p>
+      <p class="hint">Definitions for experience premium, its cap, and the geographic differential are in the <strong>Guide</strong> tab.</p>
     </div>
 
     <div class="card">
@@ -214,12 +304,15 @@
         <div class="out-cell target"><div class="lbl">Triangulated target base</div><div class="val" id="outTarget">—</div></div>
         <div class="out-cell stretch"><div class="lbl">Stretch base (110%)</div><div class="val" id="outStretch">—</div></div>
       </div>
-      <p class="hint" style="margin-top:12px;">
-        <strong>What this is:</strong> three reference points derived from one calculation, not three independent numbers.
-        <strong>How it's derived:</strong> Target = Baseline × (1 + capped experience premium) × (1 + geographic differential); Floor = Target × 0.88; Stretch = Target × 1.10.
-        <strong>Why it matters:</strong> Target is your primary ask, grounded in the baseline and adjustments above. Floor is a walk-away sanity check, not a number to volunteer. Stretch is your opening ask, leaving room to negotiate down to Target without looking unreasonable.
-        <strong>How to use it:</strong> open near Stretch, defend Target with the reasoning above, and treat Floor as a private signal to pause and reassess — never state it out loud to a recruiter.
-      </p>
+      <p class="hint" style="margin-top:12px;">Open near Stretch, defend Target, treat Floor as private — never state it out loud. Full formula and reasoning in the <strong>Guide</strong> tab.</p>
+      <details style="margin-top:14px;">
+        <summary style="cursor:pointer;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;">Show your work — intermediate calculation</summary>
+        <table style="margin-top:8px;">
+          <tr><td>Baseline market salary (Step 1)</td><td class="num" id="tBaseline">—</td></tr>
+          <tr><td>Uncapped experience premium</td><td class="num" id="tUncapped">—</td></tr>
+          <tr><td>Applied experience premium (capped)</td><td class="num" id="tApplied">—</td></tr>
+        </table>
+      </details>
     </div>
   </section>
 
@@ -229,58 +322,36 @@
     <p class="section-note">A dollar of unvested equity is not a dollar of base salary. Risk weights make that visible before you decide what to trade for what.</p>
 
     <div class="card">
-      <h3>Terms</h3>
+      <h3>Offer Terms</h3>
       <p class="hint">Fill in the initial offer column with what's on your actual offer letter. The counter column's base salary auto-fills from your Step 2 target; everything else you set yourself for what you plan to ask for.</p>
       <table id="offerTable">
-        <thead><tr><th>Metric</th><th class="num">Risk weight</th><th class="num">Initial offer</th><th class="num">Student counter</th><th class="num">Variance</th></tr></thead>
+        <thead><tr><th>Metric</th><th class="num">Risk weight</th><th class="num">Initial offer</th><th class="num">Your Counter</th><th class="num">Variance</th></tr></thead>
         <tbody></tbody>
       </table>
-    </div>
-
-    <div class="card">
-      <h3>Clawback terms</h3>
-      <p class="hint">Recovery of paid cash (e.g. signing bonus) if you leave before the clawback period ends — separate from equity vesting above.</p>
-      <div class="grid2">
-        <div>
-          <label class="field">Trigger — initial offer</label>
-          <select id="clawTriggerInitial"><option value="vol">Voluntary resignation only</option><option value="any">Any separation, incl. layoff</option><option value="cause">For-cause termination only</option></select>
-        </div>
-        <div>
-          <label class="field">Trigger — counter</label>
-          <select id="clawTriggerCounter"><option value="vol">Voluntary resignation only</option><option value="any">Any separation, incl. layoff</option><option value="cause">For-cause termination only</option></select>
-        </div>
-        <div>
-          <label class="field">Repayment basis — initial offer</label>
-          <select id="clawBasisInitial"><option value="gross">Gross (pre-tax amount)</option><option value="net">Net (after-tax amount received)</option></select>
-        </div>
-        <div>
-          <label class="field">Repayment basis — counter</label>
-          <select id="clawBasisCounter"><option value="gross">Gross (pre-tax amount)</option><option value="net">Net (after-tax amount received)</option></select>
-        </div>
-      </div>
-      <div class="flag" id="clawFlag" style="margin-top:14px;"></div>
-    </div>
-
-    <div class="card">
-      <h3>Send This Offer to the Offer Compensation Planner</h3>
-      <p class="hint"><strong>This sends data to the next step</strong> — a separate tool, not the box below on this page. Copy this transfer text, then open the Offer Compensation Planner and paste it into <em>its</em> "Bring In an Offer from the Comp Negotiation Tool" box (visible in that tool's Corporate mode) — it auto-fills the matching fields there, initial <em>and</em> counter. Corporate mode only: the Offer Compensation Planner's Startup mode (SAR stake, phantom equity, KPI-weighted bonus) has no equivalent here and can't be exchanged either direction.</p>
-      <textarea id="handoffBlock" rows="12" readonly style="font-family:var(--mono);font-size:12.5px;"></textarea>
-      <button class="ghost" id="copyHandoffBtn" style="margin-top:10px;">Copy transfer text</button>
-      <span id="handoffMsg" class="hint" style="margin-left:10px;"></span>
+      <p class="hint" style="margin-top:10px;">Signing bonuses often carry clawback terms — model the actual dollar exposure in the Offer Compensation Planner.</p>
     </div>
 
     <div class="card">
       <h3>Bring In an Offer from the Offer Compensation Planner</h3>
-      <p class="hint"><strong>This receives data — the reverse direction from the box above.</strong> Paste here the transfer text copied from the Offer Compensation Planner's own export box (its Corporate mode). Parsing it fills the Terms and Clawback fields above, on this page, with whatever the Offer Compensation Planner sent.</p>
+      <p class="hint"><strong>Already have a real offer modeled in the Offer Compensation Planner?</strong> Paste the transfer text copied from that tool's own export box (its Corporate mode) to fill the Offer Terms above instead of typing them. If you haven't used that tool yet, that's the normal case at this stage — just fill in Offer Terms manually above.</p>
       <textarea id="importFromPlanner" rows="6" placeholder="Paste transfer text here…" style="font-family:var(--mono);font-size:12.5px;"></textarea>
       <button class="ghost" id="importPlannerBtn" style="margin-top:10px;">Parse &amp; fill</button>
       <span id="importPlannerMsg" class="hint" style="margin-left:10px;"></span>
     </div>
 
     <div class="card">
+      <h3>Send This Offer to the Offer Compensation Planner</h3>
+      <p class="hint"><strong>Do this once your Offer Terms above reflect what you want to send</strong> — whether you filled them manually or imported them above. Copy this transfer text, then open the Offer Compensation Planner and paste it into <em>its</em> "Bring In an Offer from the Comp Negotiation Tool" box (visible in that tool's Corporate mode) — it auto-fills the matching fields there, initial <em>and</em> counter. Corporate mode only: the Offer Compensation Planner's Startup mode (SAR stake, phantom equity, KPI-weighted bonus) has no equivalent here and can't be exchanged either direction.</p>
+      <textarea id="handoffBlock" rows="12" readonly style="font-family:var(--mono);font-size:12.5px;"></textarea>
+      <button class="ghost" id="copyHandoffBtn" style="margin-top:10px;">Copy transfer text</button>
+      <span id="handoffMsg" class="hint" style="margin-left:10px;"></span>
+    </div>
+
+    <div class="card">
       <h3>Calculated outputs — Year 1</h3>
+      <p class="hint"><strong>Use this one: "Risk-adjusted economic value."</strong> It already accounts for how likely each part of the offer is to actually show up, so it's the number to lead with when deciding what to say. The other two rows are supporting context, not competing answers.</p>
       <table id="outputsTable">
-        <thead><tr><th>Output</th><th class="num">Initial offer</th><th class="num">Student counter</th><th class="num">Net gain</th></tr></thead>
+        <thead><tr><th>Output</th><th class="num">Initial offer</th><th class="num">Your Counter</th><th class="num">Net gain</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -288,7 +359,7 @@
     <div class="card">
       <h3>3-year projection <span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);">(3% annual merit assumption)</span></h3>
       <table id="projTable">
-        <thead><tr><th>Output</th><th class="num">Initial offer</th><th class="num">Student counter</th><th class="num">Net gain</th></tr></thead>
+        <thead><tr><th>Output</th><th class="num">Initial offer</th><th class="num">Your Counter</th><th class="num">Net gain</th></tr></thead>
         <tbody></tbody>
       </table>
       <p class="hint" style="margin-top:12px;">Vesting is modeled straight-line from Year 1. If your equity has a cliff longer than one year, the Year 1–2 vested-equity figures above will overstate what actually vests — adjust manually or treat Year 1 equity value as $0 until your cliff passes.</p>
@@ -298,38 +369,38 @@
   <!-- ============ TAB 4: AI PRACTICE ============ -->
   <section class="panel" id="tab-ai">
     <h2>Step 4 — Practice With AI</h2>
-    <p class="section-note">No API key is used by this tool. Try your response cold first, then get AI feedback — that order matters: attempting it yourself before seeing coaching is what makes the improvement after feedback visible and real.</p>
+    <p class="section-note">No API key is used by this tool. Four steps, in order: get the prompt, attempt your response before seeing any AI coaching, have the real AI conversation and paste it back, then score it. Attempting it yourself first is what makes the improvement after feedback real, not rehearsed.</p>
 
     <div class="prompt-tabs" id="promptTabs"></div>
-    <div id="promptDescription" class="hint" style="margin-bottom:10px;"></div>
 
     <div class="card">
-      <h3>A. Practice your response</h3>
-      <p class="hint">Type what you'd say, or use the microphone to dictate it (Chrome desktop works best — not all browsers support voice input). Try this on your own first — before any AI coaching — so you have something honest to compare against once you get feedback below. If you'd rather have direction or assistance first, skip ahead to B and C, then come back here.</p>
+      <h3>A. Copy this prompt</h3>
+      <p id="scenarioLine" class="scenario-line"></p>
+      <textarea id="promptText" rows="8" readonly style="font-family:var(--sans);"></textarea>
+      <button class="ghost" id="copyPromptBtn" style="margin-top:10px;">Copy prompt</button>
+      <span id="copyMsg" class="hint" style="margin-left:10px;"></span>
+      <p class="hint" style="margin-top:8px;">Paste this into Claude, ChatGPT, or any AI assistant. Have the full conversation there — then come back for Step B.</p>
+    </div>
+
+    <div class="card">
+      <h3>B. Practice your response</h3>
+      <p class="hint">Before you go have the AI conversation, write or say what <strong>you</strong> would actually respond in this scenario. Type it, or use the microphone (Chrome desktop works best). This is your unaided attempt — nothing to look up, nothing to get right, just what you'd really say.</p>
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
         <button class="ghost" id="micBtn">🎤 Start speaking</button>
         <button class="ghost" id="clearResponseBtn">Clear</button>
       </div>
-      <textarea id="responseLog" rows="6" placeholder="Type your negotiation response here, or use the microphone…"></textarea>
-    </div>
-
-    <div class="card">
-      <h3>B. Copy this prompt</h3>
-      <textarea id="promptText" rows="8" readonly style="font-family:var(--sans);"></textarea>
-      <button class="ghost" id="copyPromptBtn" style="margin-top:10px;">Copy prompt</button>
-      <span id="copyMsg" class="hint" style="margin-left:10px;"></span>
-      <p class="hint" style="margin-top:8px;">Paste this into Claude, ChatGPT, or any AI assistant you already have — then come back here once the conversation's done.</p>
+      <textarea id="responseLog" rows="6" placeholder="Type your response here, or use the microphone…"></textarea>
     </div>
 
     <div class="card">
       <h3>C. Paste your AI conversation transcript</h3>
-      <p class="hint"><strong>Do this — it's where the scoring actually gets its signal.</strong> Paste your full conversation from Claude/ChatGPT here. Without it, the scorer in step D only has your own logged lines to work with, which is a much thinner basis for a score.</p>
-      <textarea id="externalTranscript" rows="6" placeholder="Paste your full conversation from Claude/ChatGPT here — this is the main input the scorer uses."></textarea>
+      <p class="hint">Now go have the conversation using the prompt from Step A, then paste the full transcript here. This is the main input Step D uses to score your practice.</p>
+      <textarea id="externalTranscript" rows="6" placeholder="Paste your full conversation from Claude/ChatGPT here…"></textarea>
     </div>
 
     <div class="card">
       <h3>D. Score this practice</h3>
-      <p class="hint">Heuristic keyword-based scoring — a starting estimate, not a substitute for your own or a coach's judgment. Every score lands in Step 5, where you can review and adjust it.</p>
+      <p class="hint">Click below for a rough, keyword-based score. This is not a real AI judgment — review and adjust every result yourself. Your score lands in Step 5.</p>
       <button class="send" id="scoreBtn">Score my response →</button>
       <div id="scoreSummary" style="margin-top:14px;"></div>
     </div>
@@ -338,9 +409,12 @@
   <!-- ============ TAB 5: RUBRIC ============ -->
   <section class="panel" id="tab-rubric">
     <h2>Roleplay Evaluation Rubric</h2>
-    <p class="section-note">Score your own transcript (or have a peer/coach score it) before submitting. Scored 0–5 per criterion.</p>
+    <p class="section-note">Score your own transcript, or ask a friend, mentor, or coach to score it with you. Scored 0–5 per criterion.</p>
     <div class="flag" style="margin-bottom:16px;">
-      <strong>How scores get here — both ways work:</strong> click <strong>Score my response</strong> in Step 4 and these fill in automatically from a keyword scan of your transcript/response (a rough estimate, not a judgment call) — or skip that and fill in every row yourself, or have a coach/peer do it. Auto-filled scores are meant to be reviewed and changed, not accepted as-is.
+      <strong>How scores get here:</strong> click <strong>Score my response</strong> in Step 4 and Evidence, Clear Ask, and Close fill in automatically from a keyword scan (a rough estimate, not a judgment call). <strong>Professional Tone always stays blank</strong> — that one takes actual judgment, so you (or a peer/coach) read the response and score it yourself. Auto-filled scores are meant to be reviewed and changed too, not accepted as-is.
+    </div>
+    <div class="flag" style="margin-bottom:16px;">
+      <strong>These scores are not saved automatically.</strong> Go to Step 6 (Tracker) and click "Save current session" before you leave this page, or your scores are lost.
     </div>
     <div class="card">
       <table id="rubricTable">
@@ -349,23 +423,27 @@
       </table>
     </div>
     <div class="grid3">
-      <div class="card"><h3>Total score</h3><div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricTotal">0 / 50</div></div></div>
+      <div class="card"><h3>Total score</h3><div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricTotal">0 / 20</div></div></div>
       <div class="card"><h3>Performance level</h3><div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricLevel" style="font-size:18px;">—</div></div></div>
-      <div class="card"><h3>Automatic cap</h3><div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricCap" style="font-size:13px;font-family:var(--sans);color:var(--ink-soft);">—</div></div></div>
+      <div class="card">
+        <h3>Fundamentals Check</h3>
+        <div class="out-cell" style="border:none;padding:0;"><div class="val" id="rubricCap" style="font-size:13px;font-family:var(--sans);color:var(--ink-soft);line-height:1.5;">—</div></div>
+        <p class="hint" style="margin-top:6px;">Why this exists: see the <strong>Guide</strong> tab.</p>
+      </div>
     </div>
-    <div class="flag">Submission requirement: calculator screenshot + attestation (if used) + AI transcript + reflection.</div>
   </section>
 
   <!-- ============ TAB 6: TRACKER ============ -->
   <section class="panel" id="tab-tracker">
-    <h2>Practice Tracker</h2>
+    <h2>Progress Tracker</h2>
     <p class="section-note">Save a snapshot after each practice session to track improvement over time. Stored in this browser only — not shared or backed up elsewhere.</p>
     <div class="card">
       <button class="send" id="saveSessionBtn">+ Save current session</button>
+      <span id="saveMsg" class="hint" style="margin-left:10px;"></span>
     </div>
     <div class="card">
       <table id="trackerTable">
-        <thead><tr><th>Saved</th><th class="num">Target base</th><th class="num">Counter base</th><th class="num">Rubric score</th><th>Level</th><th></th></tr></thead>
+        <thead><tr><th>Saved</th><th class="num">Evidence</th><th class="num">Ask</th><th class="num">Tone</th><th class="num">Close</th><th class="num">Total</th><th>Level</th><th></th></tr></thead>
         <tbody></tbody>
       </table>
       <p class="hint" id="trackerEmpty">No sessions saved yet.</p>
@@ -383,12 +461,13 @@
 <script>
 /* ---------------- Tabs ---------------- */
 const TABS = [
-  {id:'attestation', label:'1 · Sources'},
+  {id:'guide', label:'Guide'},
+  {id:'attestation', label:'1 · Comp Sources'},
   {id:'triangulation', label:'2 · Triangulation'},
   {id:'comparison', label:'3 · Offer Comparison'},
   {id:'ai', label:'4 · AI Practice'},
-  {id:'rubric', label:'5 · Rubric'},
-  {id:'tracker', label:'6 · Tracker'},
+  {id:'rubric', label:'5 · Scoring Rubric'},
+  {id:'tracker', label:'6 · Progress Tracker'},
 ];
 const tabnav = document.getElementById('tabnavInner');
 TABS.forEach((t,i)=>{
@@ -403,41 +482,36 @@ function selectTab(id){
   document.querySelectorAll('.tabbtn').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
   document.querySelectorAll('section.panel').forEach(s=>s.classList.toggle('active', s.id==='tab-'+id));
 }
-selectTab('attestation');
+selectTab(TABS[0].id);
 
 // Preset reliability weights: institutional/government sources count more toward the baseline
 // than crowdsourced or self-reported ones, because they're harder to game and easier to verify.
 const INSTITUTIONS = [
-  { name: 'Eccles MBA Employment Report', weight: 1.00, tier: 'Institutional' },
-  { name: 'NACE Salary Survey', weight: 0.90, tier: 'Professional survey' },
-  { name: 'BLS Occupational Employment & Wage Statistics (OEWS)', weight: 0.90, tier: 'Government' },
-  { name: 'U.S. DOL H-1B / LCA Database', weight: 0.85, tier: 'Government' },
-  { name: 'Levels.fyi', weight: 0.70, tier: 'Crowdsourced, offer-verified' },
-  { name: 'Robert Half Salary Guide', weight: 0.65, tier: 'Staffing-firm published' },
-  { name: 'Glassdoor', weight: 0.60, tier: 'Crowdsourced, self-reported' },
-  { name: 'PayScale', weight: 0.60, tier: 'Survey-based aggregator' },
-  { name: 'LinkedIn Salary', weight: 0.55, tier: 'Self-reported estimate' },
-  { name: 'Other (type below)', weight: 0.50, tier: 'Unverified — lowest weight until you tell us otherwise' },
+  { name: 'Eccles MBA Employment Report', weight: 1.00, tier: 'Institutional', url: '' },
+  { name: 'NACE Salary Survey', weight: 0.90, tier: 'Professional survey', url: 'https://www.naceweb.org/job-market/compensation/' },
+  { name: 'BLS Occupational Employment & Wage Statistics (OEWS)', weight: 0.90, tier: 'Government', url: 'https://www.bls.gov/oes/' },
+  { name: 'U.S. DOL H-1B / LCA Database', weight: 0.85, tier: 'Government', url: 'https://flcdatacenter.com/' },
+  { name: 'Levels.fyi', weight: 0.70, tier: 'Crowdsourced, offer-verified', url: 'https://www.levels.fyi/' },
+  { name: 'Robert Half Salary Guide', weight: 0.65, tier: 'Staffing-firm published', url: 'https://www.roberthalf.com/salary-guide' },
+  { name: 'Glassdoor', weight: 0.60, tier: 'Crowdsourced, self-reported', url: 'https://www.glassdoor.com/Salaries/index.htm' },
+  { name: 'PayScale', weight: 0.60, tier: 'Survey-based aggregator', url: 'https://www.payscale.com/' },
+  { name: 'LinkedIn Salary', weight: 0.55, tier: 'Self-reported estimate', url: 'https://www.linkedin.com/salary/' },
+  { name: 'Other (type below)', weight: 0.50, tier: 'Unverified — lowest weight until you tell us otherwise', url: '' },
 ];
 function institutionByName(name){ return INSTITUTIONS.find(i=>i.name===name) || INSTITUTIONS[INSTITUTIONS.length-1]; }
 
 /* ---------------- State ---------------- */
 const state = {
   attest: [], // up to 3 rows: {institution, customName, value, url}
-  expYears:3, premRate:0.015, premCap:0.075, geoDiff:0.05,
+  expYears:0, premRate:0.015, premCap:0.075, geoDiff:0,
   offer: {
-    base:      {weight:1.00, initial:120000, counter:null}, // counter auto = target base
-    signing:   {weight:0.95, initial:10000, counter:15000},
-    bonusPct:  {weight:0.70, initial:0.10, counter:0.10},
-    equity:    {weight:0.50, initial:20000, counter:20000},
-    vestYears: {initial:4, counter:4},
-    clawback:  {initial:12, counter:12},
-    clawbackTrigger: {initial:'vol', counter:'vol'},
-    clawbackBasis: {initial:'gross', counter:'gross'},
-    taxRate:   {initial:0.30, counter:0.30},
+    base:      {weight:1.00, initial:0, counter:null}, // counter auto = target base
+    signing:   {weight:0.95, initial:0, counter:0},
+    bonusPct:  {weight:0.70, initial:0, counter:0},
+    equity:    {weight:0.50, initial:0, counter:0},
+    vestYears: {initial:0, counter:0},
   }
 };
-const TRIGGER_LABEL = {vol:'Voluntary resignation only', any:'Any separation, including layoff', cause:'For-cause termination only'};
 
 /* ---------------- Attestation (sources) ---------------- */
 function renderAttest(){
@@ -460,15 +534,25 @@ function renderAttest(){
     wrap.appendChild(div);
     const badge = document.createElement('p');
     badge.className = 'hint';
-    badge.style.cssText = 'margin:2px 0 14px;';
+    badge.style.cssText = 'margin:2px 0 4px;';
     badge.innerHTML = `<strong>Weight: ${inst.weight.toFixed(2)}×</strong> — ${inst.tier}. Higher-weighted sources count for more in the average below.`;
     wrap.appendChild(badge);
+    if(inst.url){
+      const urlHint = document.createElement('p');
+      urlHint.className = 'hint';
+      urlHint.style.cssText = 'margin:0 0 14px;';
+      urlHint.innerHTML = `Starting point — this is ${inst.name}'s general site. Replace it with the specific page or report you actually used.`;
+      wrap.appendChild(urlHint);
+    }
   });
   wrap.querySelectorAll('select,input').forEach(el=>{
     el.addEventListener(el.tagName==='SELECT'?'change':'input', e=>{
       const i=+e.target.dataset.i, f=e.target.dataset.f;
       state.attest[i][f] = f==='value' ? parseFloat(e.target.value)||0 : e.target.value;
-      if(f==='institution') renderAttest();
+      if(f==='institution'){
+        state.attest[i].url = institutionByName(e.target.value).url || '';
+        renderAttest();
+      }
       recalcAll();
     });
   });
@@ -483,24 +567,34 @@ function renderAttest(){
 }
 document.getElementById('addSourceBtn').addEventListener('click', ()=>{
   if(state.attest.length>=3) return;
-  state.attest.push({institution:INSTITUTIONS[0], customName:'', value:'', url:''});
+  state.attest.push({institution:INSTITUTIONS[0].name, customName:'', value:'', url:INSTITUTIONS[0].url||''});
   renderAttest(); recalcAll();
 });
 document.getElementById('useAverageBtn').addEventListener('click', ()=>{
   const entered = state.attest.filter(r=>r.value && parseFloat(r.value)>0);
+  const msg = document.getElementById('useAverageMsg');
   if(entered.length){
     const totalW = entered.reduce((s,r)=>s+institutionByName(r.institution).weight,0);
     const avg = entered.reduce((s,r)=>s+parseFloat(r.value)*institutionByName(r.institution).weight,0)/(totalW||1);
     document.getElementById('manualBaseline').value = Math.round(avg);
     recalcAll();
+    msg.textContent = `✓ Applied — weighted average of ${entered.length} source${entered.length>1?'s':''}`;
+    msg.style.color = 'var(--green)';
+  } else {
+    msg.textContent = 'No sources with a value entered yet — add one above, or type a baseline directly.';
+    msg.style.color = 'var(--amber)';
   }
+  setTimeout(()=>{ msg.textContent=''; }, 3500);
 });
 document.getElementById('manualBaseline').addEventListener('input', recalcAll);
 renderAttest();
 
-['expYears','premRate','premCap','geoDiff'].forEach(id=>{
-  document.getElementById(id).addEventListener('input', e=>{
-    state[id]=parseFloat(e.target.value)||0; recalcAll();
+document.getElementById('expYears').addEventListener('input', e=>{
+  state.expYears = parseFloat(e.target.value)||0; recalcAll();
+});
+[['geoDiffPct','geoDiff'],['premRatePct','premRate'],['premCapPct','premCap']].forEach(([domId,stateKey])=>{
+  document.getElementById(domId).addEventListener('input', e=>{
+    state[stateKey] = (parseFloat(e.target.value)||0)/100; recalcAll();
   });
 });
 
@@ -511,8 +605,6 @@ const OFFER_ROWS = [
   {key:'bonusPct', label:'Annual target bonus (%)', hasWeight:true, isPct:true},
   {key:'equity', label:'Equity / RSU grant ($)', hasWeight:true, isPct:false},
   {key:'vestYears', label:'Equity vesting period (years)', hasWeight:false, isPct:false},
-  {key:'clawback', label:'Signing bonus clawback (months)', hasWeight:false, isPct:false},
-  {key:'taxRate', label:'Estimated effective cash tax rate', hasWeight:false, isPct:true},
 ];
 const offerBody = document.querySelector('#offerTable tbody');
 function renderOfferTable(){
@@ -524,10 +616,10 @@ function renderOfferTable(){
     tr.innerHTML = `
       <td>${r.label}</td>
       <td class="num">${r.hasWeight ? o.weight.toFixed(2) : '—'}</td>
-      <td class="num"><input type="number" data-key="${r.key}" data-side="initial" value="${o.initial}" step="${r.isPct?'0.01':'1'}"></td>
+      <td class="num"><input type="number" data-key="${r.key}" data-side="initial" value="${o.initial || ''}" step="${r.isPct?'0.01':'1'}"></td>
       <td class="num">${counterIsAuto
           ? `<span id="counterBaseDisplay">—</span> <span class="hint" style="font-family:var(--sans);">(= target base)</span>`
-          : `<input type="number" data-key="${r.key}" data-side="counter" value="${o.counter}" step="${r.isPct?'0.01':'1'}">`}
+          : `<input type="number" data-key="${r.key}" data-side="counter" value="${o.counter || ''}" step="${r.isPct?'0.01':'1'}">`}
       </td>
       <td class="num" id="variance-${r.key}">—</td>
     `;
@@ -542,17 +634,6 @@ function renderOfferTable(){
   });
 }
 renderOfferTable();
-
-['clawTriggerInitial','clawTriggerCounter','clawBasisInitial','clawBasisCounter'].forEach(id=>{
-  document.getElementById(id).value = id.includes('Initial') ? (id.includes('Trigger')?state.offer.clawbackTrigger.initial:state.offer.clawbackBasis.initial) : (id.includes('Trigger')?state.offer.clawbackTrigger.counter:state.offer.clawbackBasis.counter);
-  document.getElementById(id).addEventListener('change', e=>{
-    if(id==='clawTriggerInitial') state.offer.clawbackTrigger.initial = e.target.value;
-    if(id==='clawTriggerCounter') state.offer.clawbackTrigger.counter = e.target.value;
-    if(id==='clawBasisInitial') state.offer.clawbackBasis.initial = e.target.value;
-    if(id==='clawBasisCounter') state.offer.clawbackBasis.counter = e.target.value;
-    recalcAll();
-  });
-});
 
 /* ---------------- Formatting ---------------- */
 const fmt$ = n => n===null||isNaN(n) ? '—' : '$' + Math.round(n).toLocaleString();
@@ -600,24 +681,21 @@ function recalcAll(){
     bonusPct: o.bonusPct.counter - o.bonusPct.initial,
     equity: o.equity.counter - o.equity.initial,
     vestYears: o.vestYears.counter - o.vestYears.initial,
-    clawback: o.clawback.counter - o.clawback.initial,
-    taxRate: o.taxRate.counter - o.taxRate.initial,
   };
   OFFER_ROWS.forEach(r=>{
     const el = document.getElementById('variance-'+r.key);
     const v = varianceMap[r.key];
-    const disp = r.isPct ? fmtPct(v) : (r.key==='vestYears'||r.key==='clawback' ? v : fmt$(v));
+    const disp = r.isPct ? fmtPct(v) : (r.key==='vestYears' ? v : fmt$(v));
     el.textContent = (v>0?'+':'') + disp;
     el.className = 'num ' + (v>0?'delta-pos':(v<0?'delta-neg':''));
   });
 
   function yr1(side){
-    const b=o.base[side], s=o.signing[side], bp=o.bonusPct[side], e=o.equity[side], vy=o.vestYears[side], tax=o.taxRate[side];
+    const b=o.base[side], s=o.signing[side], bp=o.bonusPct[side], e=o.equity[side], vy=o.vestYears[side];
     const nominal = b + s + (b*bp) + (vy>0 ? e/vy : 0);
     const guaranteed = b + s;
     const riskAdj = b*o.base.weight + s*o.signing.weight + (b*bp)*o.bonusPct.weight + (vy>0?e/vy:0)*o.equity.weight;
-    const afterTax = (b + s + (b*bp)) * (1-tax);
-    return {nominal, guaranteed, riskAdj, afterTax};
+    return {nominal, guaranteed, riskAdj};
   }
   const y1i = yr1('initial'), y1c = yr1('counter');
 
@@ -636,13 +714,12 @@ function recalcAll(){
 
   const outputsBody = document.querySelector('#outputsTable tbody');
   const outRows = [
-    ['Nominal Year 1 total compensation', y1i.nominal, y1c.nominal],
-    ['Guaranteed / contractual cash — Year 1', y1i.guaranteed, y1c.guaranteed],
-    ['Risk-adjusted economic value — Year 1', y1i.riskAdj, y1c.riskAdj],
-    ['Estimated after-tax cash — Year 1', y1i.afterTax, y1c.afterTax],
+    ['Nominal Year 1 total compensation', y1i.nominal, y1c.nominal, false],
+    ['Guaranteed / contractual cash — Year 1', y1i.guaranteed, y1c.guaranteed, false],
+    ['Risk-adjusted economic value — Year 1 ★ use this one', y1i.riskAdj, y1c.riskAdj, true],
   ];
-  outputsBody.innerHTML = outRows.map(([label,i,c])=>`
-    <tr><td>${label}</td><td class="num">${fmt$(i)}</td><td class="num">${fmt$(c)}</td>
+  outputsBody.innerHTML = outRows.map(([label,i,c,primary])=>`
+    <tr${primary?' style="background:#FBF3E4;font-weight:600;"':''}><td>${label}</td><td class="num">${fmt$(i)}</td><td class="num">${fmt$(c)}</td>
     <td class="num ${c-i>0?'delta-pos':'delta-neg'}">${c-i>0?'+':''}${fmt$(c-i)}</td></tr>`).join('');
 
   const projBody = document.querySelector('#projTable tbody');
@@ -653,14 +730,6 @@ function recalcAll(){
       <td class="num ${t3c.riskAdjTotal-t3i.riskAdjTotal>0?'delta-pos':'delta-neg'}">${t3c.riskAdjTotal-t3i.riskAdjTotal>0?'+':''}${fmt$(t3c.riskAdjTotal-t3i.riskAdjTotal)}</td></tr>
   `;
 
-  // Clawback interpretive note (ported from the Offer Compensation Planner)
-  const trigI = o.clawbackTrigger.initial, trigC = o.clawbackTrigger.counter;
-  const basisI = o.clawbackBasis.initial, basisC = o.clawbackBasis.counter;
-  let clawNote = `<strong>Initial —</strong> ${TRIGGER_LABEL[trigI]}. ${basisI==='gross' ? 'Gross basis: you repay the full pre-tax amount even though you received less after tax.' : 'Net basis: you repay only what you actually received after tax.'}`;
-  if(trigI==='any') clawNote += ' You would owe this even if let go through no fault of your own — a strong point to push back on.';
-  clawNote += `<br><strong>Counter —</strong> ${TRIGGER_LABEL[trigC]}. ${basisC==='gross' ? 'Gross basis.' : 'Net basis.'}`;
-  document.getElementById('clawFlag').innerHTML = clawNote;
-
   // Handoff block for the Offer Compensation Planner (labels must match its importHandoff() parser)
   const handoffText = [
     `Schema: comp-handoff-v2`,
@@ -669,34 +738,28 @@ function recalcAll(){
     `Annual bonus % (initial): ${Math.round(o.bonusPct.initial*100)}%`,
     `Equity grant (initial): $${Math.round(o.equity.initial).toLocaleString()}`,
     `Vesting years (initial): ${o.vestYears.initial}`,
-    `Clawback trigger (initial): ${TRIGGER_LABEL[o.clawbackTrigger.initial]}`,
-    `Clawback basis (initial): ${o.clawbackBasis.initial==='gross'?'Gross (pre-tax amount)':'Net (after-tax amount received)'}`,
-    `Tax rate (initial): ${Math.round(o.taxRate.initial*100)}%`,
     '',
     `Counter base: $${target!=null?Math.round(target).toLocaleString():'—'}`,
     `Signing bonus (counter): $${Math.round(o.signing.counter).toLocaleString()}`,
     `Annual bonus % (counter): ${Math.round(o.bonusPct.counter*100)}%`,
     `Equity grant (counter): $${Math.round(o.equity.counter).toLocaleString()}`,
     `Vesting years (counter): ${o.vestYears.counter}`,
-    `Clawback trigger (counter): ${TRIGGER_LABEL[o.clawbackTrigger.counter]}`,
-    `Clawback basis (counter): ${o.clawbackBasis.counter==='gross'?'Gross (pre-tax amount)':'Net (after-tax amount received)'}`,
-    `Tax rate (counter): ${Math.round(o.taxRate.counter*100)}%`,
   ].join('\n');
   const hbEl = document.getElementById('handoffBlock');
   if(hbEl) hbEl.value = handoffText;
 
   LAST = {
     target, floor, stretch, hasTarget: target!=null,
-    initial: {base:o.base.initial, signing:o.signing.initial, bonusPct:o.bonusPct.initial, equity:o.equity.initial, vestYears:o.vestYears.initial, clawback:o.clawback.initial, clawbackTrigger:trigI, clawbackBasis:basisI, taxRate:o.taxRate.initial},
-    counter: {base:o.base.counter, signing:o.signing.counter, bonusPct:o.bonusPct.counter, equity:o.equity.counter, vestYears:o.vestYears.counter, clawback:o.clawback.counter, clawbackTrigger:trigC, clawbackBasis:basisC, taxRate:o.taxRate.counter},
+    initial: {base:o.base.initial, signing:o.signing.initial, bonusPct:o.bonusPct.initial, equity:o.equity.initial, vestYears:o.vestYears.initial},
+    counter: {base:o.base.counter, signing:o.signing.counter, bonusPct:o.bonusPct.counter, equity:o.equity.counter, vestYears:o.vestYears.counter},
   };
 
   // Sync to the shared cross-tool offer profile (fails silently if unavailable)
   if(window.CompProfile){
     window.CompProfile.patch({
       triangulation: {target, floor, stretch, modelValid:true},
-      initial: {base:o.base.initial, signing:o.signing.initial, bonusPct:o.bonusPct.initial, equity:o.equity.initial, vestYears:o.vestYears.initial, clawbackMonths:o.clawback.initial, clawbackTrigger:trigI, clawbackBasis:basisI, taxRate:o.taxRate.initial},
-      counter: {base:o.base.counter, signing:o.signing.counter, bonusPct:o.bonusPct.counter, equity:o.equity.counter, vestYears:o.vestYears.counter, clawbackMonths:o.clawback.counter, clawbackTrigger:trigC, clawbackBasis:basisC, taxRate:o.taxRate.counter},
+      initial: {base:o.base.initial, signing:o.signing.initial, bonusPct:o.bonusPct.initial, equity:o.equity.initial, vestYears:o.vestYears.initial},
+      counter: {base:o.base.counter, signing:o.signing.counter, bonusPct:o.bonusPct.counter, equity:o.equity.counter, vestYears:o.vestYears.counter},
     }, 'mba-comp-tool');
   }
 }
@@ -710,8 +773,6 @@ function recalcAll(){
   if(p.initial && p.initial.bonusPct!=null) state.offer.bonusPct.initial = p.initial.bonusPct;
   if(p.initial && p.initial.equity!=null) state.offer.equity.initial = p.initial.equity;
   if(p.initial && p.initial.vestYears!=null) state.offer.vestYears.initial = p.initial.vestYears;
-  if(p.initial && p.initial.clawbackMonths!=null) state.offer.clawback.initial = p.initial.clawbackMonths;
-  if(p.initial && p.initial.taxRate!=null) state.offer.taxRate.initial = p.initial.taxRate;
 })();
 
 recalcAll();
@@ -730,7 +791,6 @@ document.getElementById('copyHandoffBtn').addEventListener('click', ()=>{
 });
 
 // ---------------- Import from Offer Compensation Planner (reverse handoff) ----------------
-const REV_TRIGGER = {}; Object.entries(TRIGGER_LABEL).forEach(([k,v])=>{ REV_TRIGGER[v]=k; });
 function grabField(text, label){
   const re = new RegExp(label + '\\s*:\\s*\\$?([\\d,\\.]+)', 'i');
   const m = text.match(re);
@@ -754,17 +814,11 @@ document.getElementById('importPlannerBtn').addEventListener('click', ()=>{
   const bp = grabField(text, 'Annual bonus % \\(initial\\)'); if(bp!=null){ state.offer.bonusPct.initial=bp/100; filled++; }
   const e = grabField(text, 'Equity grant \\(initial\\)'); if(e!=null){ state.offer.equity.initial=e; filled++; }
   const vy = grabField(text, 'Vesting years \\(initial\\)'); if(vy!=null){ state.offer.vestYears.initial=vy; filled++; }
-  const tr = grabText(text, 'Clawback trigger \\(initial\\)'); if(tr && REV_TRIGGER[tr]){ state.offer.clawbackTrigger.initial=REV_TRIGGER[tr]; filled++; }
-  const cb = grabText(text, 'Clawback basis \\(initial\\)'); if(cb){ state.offer.clawbackBasis.initial = /gross/i.test(cb)?'gross':'net'; filled++; }
-  const tx = grabField(text, 'Tax rate \\(initial\\)'); if(tx!=null){ state.offer.taxRate.initial=tx/100; filled++; }
   // Counter fields — Tool 2 now models these independently from the initial offer (as of both tools' latest version)
   const cs = grabField(text, 'Signing bonus \\(counter\\)'); if(cs!=null){ state.offer.signing.counter=cs; filled++; }
   const cbp = grabField(text, 'Annual bonus % \\(counter\\)'); if(cbp!=null){ state.offer.bonusPct.counter=cbp/100; filled++; }
   const ce = grabField(text, 'Equity grant \\(counter\\)'); if(ce!=null){ state.offer.equity.counter=ce; filled++; }
   const cvy = grabField(text, 'Vesting years \\(counter\\)'); if(cvy!=null){ state.offer.vestYears.counter=cvy; filled++; }
-  const ctr = grabText(text, 'Clawback trigger \\(counter\\)'); if(ctr && REV_TRIGGER[ctr]){ state.offer.clawbackTrigger.counter=REV_TRIGGER[ctr]; filled++; }
-  const ccb = grabText(text, 'Clawback basis \\(counter\\)'); if(ccb){ state.offer.clawbackBasis.counter = /gross/i.test(ccb)?'gross':'net'; filled++; }
-  const ctx = grabField(text, 'Tax rate \\(counter\\)'); if(ctx!=null){ state.offer.taxRate.counter=ctx/100; filled++; }
   if(filled===0){
     msg.textContent = 'Couldn\u2019t find matching fields — check the transfer text matches the expected format.';
   } else {
@@ -776,16 +830,10 @@ document.getElementById('importPlannerBtn').addEventListener('click', ()=>{
 
 /* ---------------- Rubric ---------------- */
 const RUBRIC = [
-  ['Opening & Rapport','Defensive, abrupt, or no enthusiasm.','Polite but generic.','Expresses genuine enthusiasm and frames the negotiation collaboratively.'],
-  ['Validated Market Evidence','No evidence or a personal-need anchor.','Mentions data without source or relevance.','Uses 2+ attested sources and explains role/location comparability.'],
-  ['Institutional Baseline','Ignores program outcomes.','References program data vaguely.','Uses the track/geography-specific baseline correctly.'],
-  ['Competency Premium','Claims value without evidence.','Lists experience but doesn\u2019t connect it to outcomes.','Connects differentiated experience to specific employer value without double-counting.'],
-  ['Clear Ask','No number, or multiple conflicting asks.','States a range but lacks prioritization.','States a precise, defensible primary ask tied to calculator outputs.'],
-  ['Collaborative Framing','Adversarial or entitled.','Mostly professional but transactional.','Uses mutual-value language and invites problem-solving.'],
-  ['Pushback Handling','Concedes, argues, or repeats.','Responds but loses structure.','Acknowledges the constraint, restates evidence, asks a calibrated question.'],
-  ['Pivot Strategy','No alternative.','Offers an unfocused list.','Trades intelligently among base, sign-on, equity, PTO, title, or review timing.'],
-  ['Deadline Management','Accepts artificial pressure or reacts emotionally.','Requests time without rationale.','Clarifies the deadline, requests reasonable review time, preserves rapport.'],
-  ['Close & Next Step','Ends ambiguously.','Confirms interest only.','Summarizes the ask, confirms commitment, sets a specific next step.'],
+  ['Evidence','No evidence, or a personal-need anchor.','Mentions data or experience, but vaguely or without a source.','Cites specific sources and/or concrete relevant experience, tied directly to your value.'],
+  ['Clear Ask','No number, or multiple conflicting asks.','States a range but lacks prioritization.','States one precise, defensible ask tied to your calculator outputs.'],
+  ['Professional Tone','Adversarial, entitled, or defensive throughout.','Professional but rigid — doesn\u2019t engage pushback or explore alternatives.','Collaborative framing, handles pushback calmly, explores alternatives (equity, PTO, start date) when base is capped.'],
+  ['Close','Ends ambiguously.','Confirms interest only.','Summarizes the ask, confirms commitment, sets a specific next step.'],
 ];
 const rubricBody = document.querySelector('#rubricTable tbody');
 RUBRIC.forEach((row,i)=>{
@@ -806,15 +854,23 @@ rubricBody.querySelectorAll('select').forEach(sel=>{
 function updateRubric(){
   const filled = scores.filter(s=>s!==null);
   const total = filled.reduce((a,b)=>a+b,0);
-  document.getElementById('rubricTotal').textContent = `${total} / 50`;
+  document.getElementById('rubricTotal').textContent = `${total} / 20`;
+  // Fundamentals Check tied to Evidence(0) and Clear Ask(1) — the two non-negotiable fundamentals
+  const capTriggers = [0,1].some(i=>scores[i]!==null && scores[i]<=1);
   let level='—';
   if(filled.length===RUBRIC.length){
-    level = total>=45?'Strong':total>=38?'Proficient':total>=28?'Developing':'Needs Rework';
+    level = total>=18?'Strong':total>=15?'Proficient':total>=11?'Developing':'Needs Rework';
+    if(capTriggers && (level==='Strong'||level==='Proficient')) level='Developing';
   }
   document.getElementById('rubricLevel').textContent = level;
-  // caps tied to Validated Market Evidence(1), Institutional Baseline(2), Clear Ask(4) — indices 1,2,4
-  const capTriggers = [1,2,4].some(i=>scores[i]!==null && scores[i]<=1);
-  document.getElementById('rubricCap').textContent = capTriggers ? 'Maximum final rating: Developing' : 'No cap';
+  const capEl = document.getElementById('rubricCap');
+  if(capTriggers){
+    capEl.innerHTML = '⚠ Evidence or Clear Ask scored too low — your level is limited to "Developing" until those improve.';
+    capEl.style.color = 'var(--amber)';
+  } else {
+    capEl.innerHTML = '✓ Evidence and Clear Ask are both solid — full range available.';
+    capEl.style.color = 'var(--green)';
+  }
 }
 updateRubric();
 
@@ -822,7 +878,7 @@ updateRubric();
 const PROMPTS = [
   {
     id:'roleplay', label:'1 · Recruiter Roleplay',
-    desc:'Paste this into your own Claude/ChatGPT chat to rehearse against a resistant recruiter. Log your responses below as you go.',
+    scenario:'Scenario: you already have the offer. This is a resistant recruiter who will push back before agreeing to your ask.',
     system: () => `Act as a Senior Talent Acquisition Manager at a mid-sized tech or Fortune 500 firm. You have just extended an offer with base salary $${LAST.initial?.base ?? 120000}, signing bonus $${LAST.initial?.signing ?? 10000}, target annual bonus ${((LAST.initial?.bonusPct ?? 0.10)*100).toFixed(0)}%, and equity $${LAST.initial?.equity ?? 20000} over ${LAST.initial?.vestYears ?? 4} years.
 The candidate's calculator outputs are: target base $${LAST.target ?? '—'}, reference floor $${LAST.floor ?? '—'}, stretch base $${LAST.stretch ?? '—'}.
 Rules: (1) Stay in character, do not coach the candidate mid-roleplay. (2) Be professional but firm — cite realistic pay-band and internal-equity constraints. (3) Only move if the candidate uses market evidence, differentiated role-relevant value, or a reasonable trade (e.g., trading base for sign-on). (4) Use at least two pushbacks, including one deadline or "top of range" objection. (5) Do not invent company facts beyond this scenario. (6) When the candidate types END ROLEPLAY, break character and give feedback. Start now by delivering the offer and asking for their immediate reaction.`,
@@ -830,7 +886,7 @@ Rules: (1) Stay in character, do not coach the candidate mid-roleplay. (2) Be pr
   },
   {
     id:'modeler', label:'2 · Comp Modeler',
-    desc:'An executive compensation analyst who audits your numbers over a 3-year horizon — using only assumptions you supply.',
+    scenario:'Scenario: you want a neutral, numbers-only breakdown of what one or more offers are really worth over three years.',
     system: () => `Act as an executive compensation analyst. Use only the assumptions I provide — do not invent tax rates, bonus attainment, equity growth, or vesting terms.
 For reference, my calculator currently shows: target base $${LAST.target ?? '—'}, initial offer base $${LAST.initial?.base ?? '—'}, counter base $${LAST.counter?.base ?? '—'}, signing bonus $${LAST.initial?.signing ?? '—'} vs $${LAST.counter?.signing ?? '—'}, equity $${LAST.initial?.equity ?? '—'} over ${LAST.initial?.vestYears ?? '—'} years.
 Ask me for any offer parameters you still need (base, merit assumption, bonus target and expected attainment, signing bonus and clawback terms, equity/vesting/cliff, refresh grants, effective tax rate, location). Then output: (1) Year 1–3 gross compensation by component, (2) guaranteed cash vs. variable cash vs. deferred equity vs. estimated after-tax liquidity, (3) base/downside/upside equity scenarios, (4) three hidden variables to clarify with HR, (5) a clear label that any tax figure is educational, not tax advice.`,
@@ -838,7 +894,7 @@ Ask me for any offer parameters you still need (base, merit assumption, bonus ta
   },
   {
     id:'critique', label:'3 · Counter-Offer Critique',
-    desc:'Paste your draft counter-offer email and get it rewritten with collaborative, evidence-backed language.',
+    scenario:'Scenario: you\u2019ve drafted a counter-offer email and want it sharpened before you send it.',
     system: () => `I am a Full-Time MBA student drafting a counter-offer email. My target base is $${LAST.target ?? '—'}, reference floor $${LAST.floor ?? '—'}. Please: (1) identify weak, personal-need-based, apologetic, or unsupported language in what I paste, (2) flag any market claim I make that isn't backed by evidence I supply — do not invent data on my behalf, (3) rewrite the email using concise, collaborative language connecting my ask to market evidence and role-relevant value, (4) include one clear base-salary ask, one pivot option, and a courteous next step, (5) keep the final email under 180 words. Ask me for my draft, role title, initial offer, leverage points, and preferred pivot if you don't already have them.`,
     opener: 'Paste this along with your draft email, then log the rewritten version below.'
   }
@@ -857,13 +913,25 @@ PROMPTS.forEach(p=>{
 function switchPrompt(id){
   activePrompt = PROMPTS.find(p=>p.id===id);
   document.querySelectorAll('.ptab').forEach(b=>b.classList.toggle('active', b.dataset.id===id));
-  document.getElementById('promptDescription').textContent = activePrompt.desc;
-  document.getElementById('promptText').value = activePrompt.system() + '\n\n' + activePrompt.opener;
+  document.getElementById('scenarioLine').textContent = activePrompt.scenario;
+  if(!LAST.initial || !LAST.initial.base){
+    document.getElementById('promptText').value = 'Fill in Step 3 (Offer Terms) first — this prompt is generated from your actual offer numbers, so it has nothing real to work with yet.';
+  } else {
+    document.getElementById('promptText').value = activePrompt.system() + '\n\n' + activePrompt.opener;
+  }
 }
 switchPrompt(activePrompt.id);
 // Refresh prompt text whenever the calculator recalculates, so it always reflects live numbers
 const _origRecalcAll = recalcAll;
-recalcAll = function(){ _origRecalcAll(); if(document.getElementById('promptText')) document.getElementById('promptText').value = activePrompt.system() + '\n\n' + activePrompt.opener; };
+recalcAll = function(){
+  _origRecalcAll();
+  const pt = document.getElementById('promptText');
+  if(pt){
+    pt.value = (!LAST.initial || !LAST.initial.base)
+      ? 'Fill in Step 3 (Offer Terms) first — this prompt is generated from your actual offer numbers, so it has nothing real to work with yet.'
+      : activePrompt.system() + '\n\n' + activePrompt.opener;
+  }
+};
 
 document.getElementById('copyPromptBtn').addEventListener('click', ()=>{
   const t = document.getElementById('promptText').value;
@@ -914,16 +982,10 @@ document.getElementById('micBtn').addEventListener('click', ()=>{
 // Keyword patterns per rubric criterion (index-matched to RUBRIC below). This is a rough,
 // transparent keyword heuristic — not an AI judgment — so scores should be reviewed, not trusted blindly.
 const SCORE_PATTERNS = [
-  [/thank you|appreciate|excited|glad|pleasure/i],                                   // Opening & Rapport
-  [/data|report|survey|bls|oews|levels\.fyi|glassdoor|market|benchmark|research/i],   // Validated Market Evidence
-  [/eccles|program|track|school|mba (program|cohort)/i],                             // Institutional Baseline
-  [/years? of experience|my experience|managed|led|prior role|background in/i],      // Competency Premium
+  [/data|report|survey|bls|oews|levels\.fyi|glassdoor|market|benchmark|research|years? of experience|my experience|managed|led|prior role|background in/i], // Evidence
   [/\$[\d,]+|ask for|my target|i(?:'d| would) like to (?:request|ask)/i],            // Clear Ask
-  [/we|together|mutual|understand|appreciate your|work with/i],                      // Collaborative Framing
-  [/i understand|that said|given that|i hear you|with that in mind/i],               // Pushback Handling
-  [/sign(?:ing)?[ -]?on|equity|pto|title|start date|review timing|vacation/i],       // Pivot Strategy
-  [/by (?:friday|monday|\w+day|the \d)|time to (?:consider|review)|deadline/i],       // Deadline Management
-  [/next step|follow up|confirm|looking forward|touch base/i],                        // Close & Next Step
+  [/we|together|mutual|appreciate|understand|i hear you|that said|given that|sign(?:ing)?[ -]?on|equity|pto|title|start date|review timing|time to (?:consider|review)|deadline/i], // Professional Tone
+  [/next step|follow up|confirm|looking forward|touch base/i],                        // Close
 ];
 function heuristicScore(text){
   return SCORE_PATTERNS.map(patterns=>{
@@ -939,27 +1001,31 @@ document.getElementById('scoreBtn').addEventListener('click', ()=>{
   }
   const suggested = heuristicScore(text);
   suggested.forEach((val,i)=>{
+    if(i===2) return; // Professional Tone is judgment, not a presence-of-fact check — always left for a human to score
     scores[i]=val;
     const sel = document.querySelector(`#rubricTable select[data-i="${i}"]`);
     if(sel) sel.value = String(val);
   });
   updateRubric();
+  const autoTotal = suggested[0]+suggested[1]+suggested[3];
   document.getElementById('scoreSummary').innerHTML =
-    `<div class="flag"><strong>Heuristic estimate applied —</strong> ${suggested.reduce((a,b)=>a+b,0)} / 50. These are keyword-based suggestions now sitting in Step 5 — review and adjust every score, then use the Tracker tab to save this session.</div>`;
+    `<div class="flag"><strong>Heuristic estimate applied to Evidence, Clear Ask, and Close —</strong> ${autoTotal} / 15 on those three. <strong>Professional Tone is left blank on purpose</strong> — that one's a judgment call a keyword scan can't make. Read your response and pick it yourself, then use the Tracker tab to save this session.</div>`;
 });
 
 /* ---------------- Tracker (Tab 6) ---------------- */
 const TRACKER_KEY = 'mba-comp-tracker-v1';
 function loadTracker(){ try{ return JSON.parse(localStorage.getItem(TRACKER_KEY)||'[]'); }catch(e){ return []; } }
 function saveTracker(arr){ try{ localStorage.setItem(TRACKER_KEY, JSON.stringify(arr)); return true; }catch(e){ return false; } }
+function scoreCell(v){ return `<td class="num">${v===null||v===undefined?'—':v}</td>`; }
 function renderTracker(){
   const entries = loadTracker();
   const tbody = document.querySelector('#trackerTable tbody');
   const empty = document.getElementById('trackerEmpty');
   tbody.innerHTML = entries.slice().reverse().map((e,idx)=>{
     const realIdx = entries.length-1-idx;
-    return `<tr><td>${new Date(e.ts).toLocaleString()}</td><td class="num">${fmt$(e.target)}</td><td class="num">${fmt$(e.counterBase)}</td>
-      <td class="num">${e.rubricTotal} / 50</td><td>${e.rubricLevel}</td>
+    const s = e.scores || [null,null,null,null];
+    return `<tr><td>${new Date(e.ts).toLocaleString()}</td>${scoreCell(s[0])}${scoreCell(s[1])}${scoreCell(s[2])}${scoreCell(s[3])}
+      <td class="num">${e.rubricTotal} / 20</td><td>${e.rubricLevel}</td>
       <td><button class="ghost" data-idx="${realIdx}" data-action="del">Delete</button></td></tr>`;
   }).join('');
   empty.style.display = entries.length ? 'none' : 'block';
@@ -976,9 +1042,16 @@ document.getElementById('saveSessionBtn').addEventListener('click', ()=>{
   const rubricTotal = filled.reduce((a,b)=>a+b,0);
   const rubricLevel = document.getElementById('rubricLevel').textContent;
   const arr = loadTracker();
-  arr.push({ ts:Date.now(), target:LAST.target, counterBase:LAST.counter?.base, rubricTotal, rubricLevel });
-  if(saveTracker(arr)) renderTracker();
-  else alert('Saving isn\u2019t available in this browser (private/incognito mode may block it).');
+  arr.push({ ts:Date.now(), scores:scores.slice(), rubricTotal, rubricLevel });
+  const msg = document.getElementById('saveMsg');
+  if(saveTracker(arr)){
+    renderTracker();
+    msg.textContent = '✓ Saved';
+    msg.style.color = 'var(--green)';
+    setTimeout(()=>{ msg.textContent=''; }, 2500);
+  } else {
+    alert('Saving isn\u2019t available in this browser (private/incognito mode may block it).');
+  }
 });
 document.getElementById('clearTrackerBtn').addEventListener('click', ()=>{
   if(confirm('Clear all saved practice sessions? This can\u2019t be undone.')){ saveTracker([]); renderTracker(); }
