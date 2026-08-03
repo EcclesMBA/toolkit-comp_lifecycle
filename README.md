@@ -5,7 +5,7 @@ Version 1.2 · Three-tool web toolkit
 
 This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions — this document doesn't repeat those in depth; it explains how the three fit together and how to maintain the toolkit as a whole.
 
-Three standalone tools covering the full arc ('odyssey') of a compensation decision — **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
+Three standalone tools covering the full arc ('odyssey') of a compensation decision - **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
 ---
 
 **▶ Live toolkit hub:** **[Comp Lifecycle Toolkit](https://coryjburk.github.io/toolkit-comp_lifecycle/)**
