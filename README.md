@@ -8,9 +8,11 @@ Three standalone tools covering the full arc ('odyssey') of a compensation decis
 This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions — this document doesn't repeat those in depth; it explains how the three fit together and how to maintain the toolkit as a whole.
 
 ---
-
+ 
 **▶ Live toolkit hub:** **[Comp Lifecycle Toolkit](https://coryjburk.github.io/toolkit-comp_lifecycle/)**
-
+ 
+**▶ Kickoff presentation:** **[Comp Lifecycle Toolkit - Kick Off.pptx](https://coryjburk.github.io/toolkit-comp_lifecycle/Comp%20Lifecycle%20Toolkit%20-%20Kick%20Off.pptx)**
+ 
 ---
 
 ## The Compensation 'Odyssey'
