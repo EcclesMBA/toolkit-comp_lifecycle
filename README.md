@@ -5,10 +5,35 @@ Version 1.2 · Three-tool web toolkit
 
 This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions — this document doesn't repeat those in depth; it explains how the three fit together and how to maintain the toolkit as a whole.
 
+Three standalone tools covering the full arc ('Odyssey') of a compensation decision — **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
 ---
 
 **▶ Live toolkit hub:** **[Comp Lifecycle Toolkit](https://coryjburk.github.io/toolkit-comp_lifecycle/)**
 
+---
+
+## The Compensation 'Odyssey'
+ 
+Practice alone first, then connect the dots. This is training before trial...
+ 
+The three standalones are each a solo "workout" for one skill:
+- "ID" (*Compensation Intelligence Framework*): figure out which industries/roles fit you and roughly what they pay.
+- "Negotiate" (*Comp Negotiation Tool*): turn that into a real number, then practice actually saying it out loud.
+- "Offer" (*Offer Compensation Planner*): once an offer's on the table, model exactly what it's worth.
+Use each one by itself, to practice, until it becomes known and natural.
+ 
+Then the toolkit shows you they're one story, not three ("3-in-1").
+- Same three tools
+- Same order
+- Now connected
+A note from "ID" carries into "Negotiate", and a completed negotiation carries into "Offer".
+ 
+You are not starting from scratch three times, you are walking one path from "what should I even go after" to "here's exactly what this offer is worth and what I should ask for instead."
+ 
+*Learn each step alone, then walk the whole path together — ID → Negotiate → Offer.*
+ 
+*"You 'Odyssey' deez tools!!!"*
+ 
 ---
 
 ## 1. The three tools, in order
