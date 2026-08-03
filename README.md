@@ -3,13 +3,7 @@
 **Full-Time MBA Program · David Eccles School of Business**
 Version 1.2 · Three-tool web toolkit
 
-**v1.2 changes:** removed stale clawback/tax-rate mentions from §2 (both were cut from the Comp Negotiation Tool); added `quick_negotiation_practice.html` to the repo structure and teaching sequence; corrected the repo structure diagram, which incorrectly implied the standalone/teaching editions live as extra files in this repo — they're actually in entirely separate repos, now listed explicitly in §3.
-
-**v1.1 changes:** filled the Compensation Intelligence Framework README gap flagged in v1.0 — added `README_compensation_intelligence_framework.md` and updated §4's known-gaps entry to explain that this toolkit's CIF copy is a fork of a separately-owned standalone tool, not a synced copy of it.
-
-Three standalone tools covering the full arc of a compensation decision — **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
-
-This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions — this document doesn't repeat those in depth, it explains how the three fit together and how to maintain the toolkit as a whole.
+This document is the **toolkit-level overview and operational guide**. Each individual tool has its own dedicated README with full usage instructions — this document doesn't repeat those in depth; it explains how the three fit together and how to maintain the toolkit as a whole.
 
 ---
 
@@ -95,6 +89,14 @@ This repo (`toolkit-comp_lifecycle`) contains only the toolkit-integrated tools 
 2. **Offer Compensation Planner's standalone/teaching edition has no dedicated README yet** — exists as an HTML file only (see §3).
 3. **No version-number tracking at the toolkit level until now** — each tool's own README tracks its own version independently; this document introduces v1.0 as the toolkit-level baseline going forward.
 4. This document doesn't duplicate any individual tool's step-by-step usage instructions — see each tool's own README for that.
+
+---
+
+**v1.2 changes:** removed stale clawback/tax-rate mentions from §2 (both were cut from the Comp Negotiation Tool); added `quick_negotiation_practice.html` to the repo structure and teaching sequence; corrected the repo structure diagram, which incorrectly implied the standalone/teaching editions live as extra files in this repo — they're actually in entirely separate repos, now listed explicitly in §3.
+
+**v1.1 changes:** filled the Compensation Intelligence Framework README gap flagged in v1.0 — added `README_compensation_intelligence_framework.md` and updated §4's known-gaps entry to explain that this toolkit's CIF copy is a fork of a separately-owned standalone tool, not a synced copy of it.
+
+Three standalone tools covering the full arc of a compensation decision — **ID the industry → Negotiate the target → Model the offer.** Each tool works fully on its own; together they cover a compensation decision start to finish.
 
 ---
 
