@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Negotiation Practice — Eccles School of Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F5F1; --ink:#1D1B18; --ink-soft:#5B564E;
+    --crimson:#CC0000; --crimson-dark:#990000; --line:#D9D3C7; --panel:#FFFFFF;
+    --green:#2F6F4E; --amber:#B7791F;
+    --serif:'EB Garamond', Georgia, serif; --sans:'DM Sans', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px 60px;}
+  .masthead{border-bottom:3px solid var(--crimson);padding:32px 20px 20px;background:var(--panel);text-align:center;}
+  .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--crimson-dark);margin:0 0 8px;font-weight:600;}
+  h1{font-family:var(--serif);font-size:30px;font-weight:600;margin:0;}
+  .subtitle{font-size:14px;color:var(--ink-soft);margin:8px auto 0;max-width:480px;}
+  .version-tag{display:inline-block;margin-top:10px;font-size:11px;color:var(--ink-soft);border:1px solid var(--line);padding:3px 10px;border-radius:20px;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:24px;margin-top:24px;}
+  .card h2{font-family:var(--serif);font-size:19px;margin:0 0 6px;}
+  .card .hint{font-size:13px;color:var(--ink-soft);margin:0 0 16px;}
+
+  .scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:480px){.scenario-grid{grid-template-columns:1fr;}}
+  .scenario-btn{background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:14px 16px;text-align:left;cursor:pointer;font-family:var(--sans);font-size:13.5px;color:var(--ink);transition:border-color .12s,background .12s;}
+  .scenario-btn:hover{border-color:var(--crimson);background:#FBF3F3;}
+  .scenario-btn strong{display:block;font-size:14px;margin-bottom:3px;color:var(--crimson-dark);}
+  .scenario-btn.surprise{grid-column:1/-1;text-align:center;font-weight:600;color:var(--crimson-dark);border-style:dashed;}
+
+  .quote{background:var(--paper);border-left:3px solid var(--crimson);border-radius:0 6px 6px 0;padding:14px 16px;font-size:15px;font-style:italic;margin-bottom:16px;}
+  textarea{width:100%;font-family:var(--sans);font-size:14px;padding:12px;border:1px solid var(--line);border-radius:6px;background:#FEFEFD;color:var(--ink);resize:vertical;min-height:100px;}
+  textarea:focus{outline:2px solid var(--crimson);outline-offset:1px;border-color:var(--crimson);}
+
+  .btn-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+  button.primary{font-family:var(--sans);font-weight:600;font-size:13.5px;background:var(--crimson);color:#fff;border:none;padding:11px 20px;border-radius:6px;cursor:pointer;}
+  button.primary:hover{background:var(--crimson-dark);}
+  button.ghost{font-family:var(--sans);font-size:13px;background:none;border:1px solid var(--line);color:var(--ink-soft);padding:10px 16px;border-radius:6px;cursor:pointer;}
+  button.ghost:hover{border-color:var(--crimson);color:var(--crimson-dark);}
+  button.mic{font-family:var(--sans);font-size:13px;background:none;border:1px solid var(--line);color:var(--ink-soft);padding:10px 16px;border-radius:6px;cursor:pointer;}
+  button.mic.on{background:var(--crimson);color:#fff;border-color:var(--crimson);}
+
+  .feedback{border-radius:6px;padding:16px 18px;margin-top:18px;font-size:14px;line-height:1.6;}
+  .feedback.strong{background:#EAF4EE;border-left:4px solid var(--green);color:#1e4a34;}
+  .feedback.mid{background:#FBF3E4;border-left:4px solid var(--amber);color:#6b5220;}
+  .feedback.weak{background:#FBE9EA;border-left:4px solid var(--crimson);color:#7a1414;}
+  .feedback strong{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+
+  .hidden{display:none !important;}
+  .bridge{margin-top:28px;background:#fff;border:2px solid var(--crimson);border-radius:6px;padding:18px 20px;text-align:center;}
+  .bridge p{font-size:13.5px;color:var(--ink-soft);margin:0 0 10px;}
+  .bridge a{display:inline-block;font-family:var(--sans);font-weight:600;font-size:14px;color:#fff;background:var(--crimson);padding:11px 22px;border-radius:6px;text-decoration:none;}
+  .bridge a:hover{background:var(--crimson-dark);}
+
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:11.5px;color:var(--ink-soft);text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <p class="eyebrow">David Eccles School of Business · Full-Time MBA Program</p>
+  <h1>Quick Negotiation Practice</h1>
+  <p class="subtitle">One scenario, one rep, one piece of feedback. No setup, no sources, no external AI required.</p>
+  <span class="version-tag">v1.1 · web</span>
+</div>
+
+<div class="wrap">
+
+  <div class="card" id="pickCard">
+    <h2>Pick a scenario</h2>
+    <p class="hint">Each one drops you straight into a moment from a real negotiation. Pick one, or let it choose for you.</p>
+    <div class="scenario-grid" id="scenarioGrid"></div>
+  </div>
+
+  <div class="card hidden" id="practiceCard">
+    <h2 id="scenarioTitle"></h2>
+    <div class="quote" id="scenarioQuote"></div>
+    <p class="hint">Say (or type) what you'd actually respond. There's no wrong answer here — just your real attempt.</p>
+    <textarea id="responseBox" placeholder="Type your response here, or use the microphone…"></textarea>
+    <div class="btn-row">
+      <button class="mic" id="micBtn">🎤 Start speaking</button>
+      <button class="primary" id="feedbackBtn">Get feedback →</button>
+      <button class="ghost" id="newScenarioBtn">New scenario</button>
+    </div>
+    <div id="feedbackArea"></div>
+
+    <div id="round2" class="hidden">
+      <p class="hint" style="margin-top:18px;font-weight:600;color:var(--crimson-dark);">The recruiter pushes back further:</p>
+      <div class="quote" id="pushbackQuote"></div>
+      <p class="hint">How do you respond now?</p>
+      <textarea id="responseBox2" placeholder="Type your follow-up response here, or use the microphone…"></textarea>
+      <div class="btn-row">
+        <button class="mic" id="micBtn2">🎤 Start speaking</button>
+        <button class="primary" id="finalFeedbackBtn">Get final feedback →</button>
+      </div>
+      <div id="finalFeedbackArea"></div>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <p>Want more depth — sources, risk-adjusted comparisons, a full rubric?</p>
+    <a href="https://coryjburk.github.io/toolkit-comp_lifecycle/mba_comp_negotiation_tool.html">Try the full Comp Negotiation Tool →</a>
+  </div>
+
+  <footer>
+    Developed by Cory Burk, Senior Manager, Program Management · Full-Time MBA Program · David Eccles School of Business.<br>
+    © 2026 University of Utah, David Eccles School of Business. All rights reserved.
+  </footer>
+</div>
+
+<script>
+const SCENARIOS = [
+  {
+    id:'pushback', label:'Pushback on your ask',
+    quote:'"Thanks for sharing your target. Unfortunately, that\u2019s above the range we have approved for this role. How would you like to proceed?"',
+    pushback:'"I hear you, but I need something more concrete than a general range — what specifically would justify going above our approved band?"'
+  },
+  {
+    id:'lowball', label:'Lowball counter',
+    quote:'"We can offer $5,000 above your current base — that\u2019s really the best we can do given internal equity."',
+    pushback:'"I understand the ask, but internal equity really does box us in here. What would make this work for you within that constraint?"'
+  },
+  {
+    id:'deadline', label:'Deadline pressure',
+    quote:'"We need your decision by end of day tomorrow, or we may need to move forward with other candidates."',
+    pushback:'"I get that this is fast, but the timeline isn\u2019t something I control. Can you commit today, or should we assume you\u2019re passing?"'
+  },
+  {
+    id:'skeptic', label:'Doubts your leverage',
+    quote:'"Honestly, I doubt you have another offer at that level. Convince me why we should move on this."',
+    pushback:'"I\u2019ll be direct — without seeing anything in writing, that\u2019s hard for me to act on internally. What else can you tell me?"'
+  },
+  {
+    id:'flatno', label:'Flat no, final offer',
+    quote:'"I hear you, but there\u2019s simply no room here. This is our final offer."',
+    pushback:'"I want to be straightforward with you — the number itself isn\u2019t moving. Is there anything else that would make this work?"'
+  },
+];
+
+const grid = document.getElementById('scenarioGrid');
+SCENARIOS.forEach(s=>{
+  const b = document.createElement('button');
+  b.className='scenario-btn';
+  b.innerHTML = `<strong>${s.label}</strong>Practice responding to this in the moment.`;
+  b.onclick=()=>startScenario(s.id);
+  grid.appendChild(b);
+});
+const surpriseBtn = document.createElement('button');
+surpriseBtn.className='scenario-btn surprise';
+surpriseBtn.textContent='🎲 Surprise me';
+surpriseBtn.onclick=()=>startScenario(SCENARIOS[Math.floor(Math.random()*SCENARIOS.length)].id);
+grid.appendChild(surpriseBtn);
+
+let current = null;
+function startScenario(id){
+  current = SCENARIOS.find(s=>s.id===id);
+  document.getElementById('scenarioTitle').textContent = current.label;
+  document.getElementById('scenarioQuote').textContent = current.quote;
+  document.getElementById('responseBox').value='';
+  document.getElementById('responseBox2').value='';
+  document.getElementById('feedbackArea').innerHTML='';
+  document.getElementById('finalFeedbackArea').innerHTML='';
+  document.getElementById('round2').classList.add('hidden');
+  document.getElementById('practiceCard').classList.remove('hidden');
+  const pc = document.getElementById('practiceCard');
+  if(pc.scrollIntoView) pc.scrollIntoView({behavior:'smooth', block:'start'});
+}
+document.getElementById('newScenarioBtn').addEventListener('click', ()=>{
+  document.getElementById('practiceCard').classList.add('hidden');
+  const pick = document.getElementById('pickCard');
+  if(pick.scrollIntoView) pick.scrollIntoView({behavior:'smooth', block:'start'});
+});
+
+/* Microphone — same lightweight pattern as the full tool, Chrome desktop primarily */
+function setupMic(btnId, textareaId){
+  let recognition=null, recognizing=false;
+  const btn=document.getElementById(btnId);
+  btn.addEventListener('click', ()=>{
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){ alert('Voice input isn\u2019t supported in this browser — Chrome on desktop works best. You can type instead.'); return; }
+    if(!recognition){
+      recognition=new SR(); recognition.continuous=true; recognition.interimResults=false; recognition.lang='en-US';
+      recognition.onresult=e=>{
+        let t=''; for(let i=e.resultIndex;i<e.results.length;i++){ t+=e.results[i][0].transcript+' '; }
+        const ta=document.getElementById(textareaId);
+        ta.value += (ta.value && !ta.value.endsWith(' ') ? ' ' : '') + t;
+      };
+      recognition.onend=()=>{ recognizing=false; btn.textContent='🎤 Start speaking'; btn.classList.remove('on'); };
+      recognition.onerror=()=>{ recognizing=false; btn.textContent='🎤 Start speaking'; btn.classList.remove('on'); };
+    }
+    if(recognizing){ recognition.stop(); recognizing=false; btn.textContent='🎤 Start speaking'; btn.classList.remove('on'); }
+    else{ recognition.start(); recognizing=true; btn.textContent='⏹ Stop'; btn.classList.add('on'); }
+  });
+}
+setupMic('micBtn', 'responseBox');
+setupMic('micBtn2', 'responseBox2');
+
+/* Heuristic, single-reaction feedback — same spirit as the full tool's scorer: transparent keyword signals, not a real AI judgment */
+function getFeedback(text){
+  const hasAsk = /\$[\d,]+|ask for|my target|i(?:'d| would) like to|i propose|i(?:'m| am) requesting/i.test(text);
+  const hasEvidence = /data|market|research|experience|years?|comparable|benchmark|similar roles?/i.test(text);
+  const hasTone = /we|together|understand|appreciate|happy to|glad to|hear you|that said/i.test(text);
+  const signals = [hasAsk, hasEvidence, hasTone].filter(Boolean).length;
+
+  if(!text.trim()){
+    return {cls:'weak', label:'Nothing to react to yet', body:'Type or speak a response above, then try again.'};
+  }
+  if(signals===3){
+    return {cls:'strong', label:'Strong rep', body:'You stated a specific ask, backed it with a reason, and kept the tone collaborative. That\u2019s the combination that tends to land well — try the same scenario again and see if you can make it even more concise.'};
+  }
+  if(signals===2){
+    let missing = !hasAsk ? 'a specific number or ask' : !hasEvidence ? 'one concrete reason (data, experience, a comparable role)' : 'a more collaborative, "we" framing';
+    return {cls:'mid', label:'Solid — one thing to add', body:`Good attempt. Next time, try adding ${missing} — that\u2019s usually what turns a decent response into a strong one.`};
+  }
+  return {cls:'weak', label:'Good rep to build on', body:'Try again with three things in the same response: one specific number, one reason behind it, and language that keeps things collaborative rather than purely reactive.'};
+}
+document.getElementById('feedbackBtn').addEventListener('click', ()=>{
+  const text = document.getElementById('responseBox').value||'';
+  const fb = getFeedback(text);
+  document.getElementById('feedbackArea').innerHTML =
+    `<div class="feedback ${fb.cls}"><strong>${fb.label}</strong>${fb.body}</div>`;
+  if(text.trim()){
+    document.getElementById('pushbackQuote').textContent = current.pushback;
+    document.getElementById('round2').classList.remove('hidden');
+  }
+});
+document.getElementById('finalFeedbackBtn').addEventListener('click', ()=>{
+  const combined = (document.getElementById('responseBox').value||'') + ' ' + (document.getElementById('responseBox2').value||'');
+  const fb = getFeedback(combined);
+  const roundNote = document.getElementById('responseBox2').value.trim()
+    ? 'This reflects how you handled the full exchange, including the pushback.'
+    : '';
+  document.getElementById('finalFeedbackArea').innerHTML =
+    `<div class="feedback ${fb.cls}"><strong>Final reaction</strong>${fb.body} ${roundNote}</div>`;
+});
+</script>
+</body>
+</html>
