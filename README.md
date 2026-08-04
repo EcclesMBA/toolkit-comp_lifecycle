@@ -9,9 +9,9 @@ This document is the **toolkit-level overview and operational guide**. Each indi
 
 ---
  
-**▶ Live toolkit hub:** **[Comp Lifecycle Toolkit](https://coryjburk.github.io/toolkit-comp_lifecycle/)**
+**▶ Live toolkit hub:** **[Comp Lifecycle Toolkit](https://ecclesmba.github.io/toolkit-comp_lifecycle/)**
  
-**▶ Kickoff presentation:** **[Comp Lifecycle Toolkit - Kick Off.pptx](https://coryjburk.github.io/toolkit-comp_lifecycle/Comp%20Lifecycle%20Toolkit%20-%20Kick%20Off.pptx)**
+**▶ Kickoff presentation:** **[Comp Lifecycle Toolkit - Kick Off.pptx](https://ecclesmba.github.io/toolkit-comp_lifecycle/Comp%20Lifecycle%20Toolkit%20-%20Kick%20Off.pptx)**
  
 ---
 
